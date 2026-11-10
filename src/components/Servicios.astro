@@ -1,0 +1,30 @@
+---
+import Icono from './Icono.astro';
+import datos from '../data/servicios.json';
+---
+
+<section id="servicios" class="seccion" aria-labelledby="servicios-titulo">
+  <div class="contenedor">
+    <p class="etiqueta">// 01 · Servicios</p>
+    <h2 id="servicios-titulo" class="titulo-seccion mt-3">{datos.titulo}</h2>
+    <p class="mt-4 max-w-2xl text-suave">{datos.intro}</p>
+
+    <ul class="mt-10 grid gap-5 sm:grid-cols-2">
+      {
+        datos.items.map((s) => (
+          <li class="tarjeta flex flex-col">
+            <span class="grid h-12 w-12 place-items-center rounded-lg border border-borde bg-fondo text-turquesa">
+              <Icono nombre={s.icono as 'codigo' | 'grafico' | 'cerebro' | 'sensor'} class="h-7 w-7" />
+            </span>
+            <h3 class="mt-5 text-xl font-semibold">{s.titulo}</h3>
+            <p class="mt-2 text-suave">{s.descripcion}</p>
+            <p class="mt-auto border-t border-borde pt-4 text-sm text-suave">
+              <span class="etiqueta mb-1 block">Ejemplo</span>
+              {s.ejemplo}
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

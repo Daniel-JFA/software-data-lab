@@ -1,0 +1,62 @@
+---
+import Icono from './Icono.astro';
+import datos from '../data/lab.json';
+import { mostrarPendientes, redesActivas, todasLasRedes, vacio } from '../lib/site';
+
+const redes = redesActivas();
+const pendientes = todasLasRedes().filter((r) => vacio(r.url));
+---
+
+<section
+  id="lab"
+  class="seccion overflow-hidden border-y border-borde/60 bg-superficie/40"
+  aria-labelledby="lab-titulo"
+>
+  <div class="contenedor">
+    <p class="etiqueta">// 04 · {datos.titulo}</p>
+    <h2 id="lab-titulo" class="titulo-seccion mt-3 max-w-3xl">{datos.frase}</h2>
+
+    <h3 class="mt-10 font-mono text-sm uppercase tracking-widest text-suave">{datos.seriesTitulo}</h3>
+    <ul class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        datos.series.map((s) => (
+          <li class="tarjeta">
+            <p class="etiqueta">{s.formato}</p>
+            <h4 class="mt-2 text-lg font-semibold">{s.nombre}</h4>
+            <p class="mt-1 text-suave">{s.descripcion}</p>
+          </li>
+        ))
+      }
+    </ul>
+
+    {
+      (redes.length > 0 || (mostrarPendientes && pendientes.length > 0)) && (
+        <div class="mt-10">
+          <p class="font-mono text-sm uppercase tracking-widest text-suave">Síguenos</p>
+          <ul class="mt-4 flex flex-wrap gap-3">
+            {redes.map((r) => (
+              <li>
+                <a
+                  href={r.url}
+                  class="btn btn-secundario !min-h-11"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Icono nombre={r.id} class="h-5 w-5" />
+                  {r.nombre}
+                  <span class="sr-only"> (se abre en otra pestaña)</span>
+                </a>
+              </li>
+            ))}
+            {mostrarPendientes &&
+              pendientes.map((r) => (
+                <li>
+                  <span class="pendiente">[PENDIENTE] {r.nombre}: src/data/site.json</span>
+                </li>
+              ))}
+          </ul>
+        </div>
+      )
+    }
+  </div>
+</section>

@@ -1,0 +1,33 @@
+{
+  "titulo": "El Lab",
+  "frase": "Un laboratorio abierto: tutoriales, noticias y experimentos de datos e IA.",
+  "seriesTitulo": "Series del Lab",
+  "series": [
+    {
+      "nombre": "Lab en 60 segundos",
+      "formato": "VIDEO CORTO",
+      "descripcion": "Una idea de datos, software o IA en un minuto."
+    },
+    {
+      "nombre": "Tutorial del Lab",
+      "formato": "TUTORIAL",
+      "descripcion": "Paso a paso para construir algo desde cero."
+    },
+    {
+      "nombre": "Noticias del Lab",
+      "formato": "NOTICIAS",
+      "descripcion": "Lo que pasa en datos e IA, explicado sin humo."
+    },
+    {
+      "nombre": "Experimento del Lab",
+      "formato": "EXPERIMENTO",
+      "descripcion": "Probamos una idea y te contamos qué funcionó."
+    },
+    {
+      "nombre": "Lab abierto",
+      "formato": "ABIERTO",
+      "descripcion": "Avances y proyectos del Lab a la vista de todos."
+    }
+  ],
+  "_redes": "Los enlaces de Facebook, Instagram y YouTube se configuran en src/data/site.json (campo 'redes')."
+}

@@ -1,0 +1,51 @@
+---
+// Textura de líneas topográficas generada en el build (curvas de nivel determinísticas).
+// Es decorativa: aria-hidden y sin interacción.
+interface Props {
+  semilla?: number;
+  class?: string;
+}
+const { semilla = 1, class: clase = '' } = Astro.props;
+
+const ANCHO = 800;
+const ALTO = 600;
+const PUNTOS = 56;
+
+function anillo(cx: number, cy: number, radio: number, fase: number, amplitud: number): string {
+  const pts: string[] = [];
+  for (let i = 0; i < PUNTOS; i++) {
+    const a = (i / PUNTOS) * Math.PI * 2;
+    const ruido =
+      Math.sin(3 * a + fase) * 0.5 + Math.sin(5 * a + fase * 1.7) * 0.3 + Math.sin(2 * a + fase * 0.6) * 0.4;
+    const r = radio * (1 + amplitud * ruido);
+    pts.push(`${(cx + r * Math.cos(a) * 1.35).toFixed(1)} ${(cy + r * Math.sin(a)).toFixed(1)}`);
+  }
+  return `M${pts.join('L')}Z`;
+}
+
+// Dos "cumbres" con anillos concéntricos que se deforman hacia afuera.
+const centros = [
+  { x: ANCHO * 0.72, y: ALTO * 0.38, anillos: 13, paso: 26 },
+  { x: ANCHO * 0.18, y: ALTO * 0.82, anillos: 9, paso: 24 },
+];
+
+const trazos: string[] = [];
+centros.forEach((c, k) => {
+  for (let i = 1; i <= c.anillos; i++) {
+    trazos.push(anillo(c.x, c.y, i * c.paso, semilla * 1.3 + i * 0.22 + k * 2, 0.05 + i * 0.012));
+  }
+});
+---
+
+<svg
+  class={clase}
+  viewBox={`0 0 ${ANCHO} ${ALTO}`}
+  preserveAspectRatio="xMidYMid slice"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1"
+  aria-hidden="true"
+  focusable="false"
+>
+  {trazos.map((d) => <path d={d} vector-effect="non-scaling-stroke" />)}
+</svg>

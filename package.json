@@ -1,0 +1,22 @@
+{
+  "name": "software-data-lab",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Landing de Software Data Lab (sdl.danielflorez.dev)",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "og": "node scripts/generar-og.mjs"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "@tailwindcss/vite": "^4.3.5",
+    "astro": "^7.4.10",
+    "tailwindcss": "^4.3.5"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.0"
+  }
+}

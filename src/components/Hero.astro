@@ -1,0 +1,54 @@
+---
+import TopoFondo from './TopoFondo.astro';
+import Icono from './Icono.astro';
+import { site, whatsappUrl } from '../lib/site';
+
+const { inicio } = site;
+const wa = whatsappUrl();
+const enlaceExterno = wa.startsWith('http');
+---
+
+<section id="inicio" class="relative overflow-hidden" aria-labelledby="inicio-titulo">
+  <TopoFondo semilla={3} class="absolute inset-0 h-full w-full text-turquesa opacity-[0.16]" />
+  <div
+    class="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-fondo to-transparent"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="contenedor relative grid items-center gap-10 pb-20 pt-14 md:pb-32 md:pt-24 lg:grid-cols-[1.4fr_1fr]">
+    <div>
+      <p class="etiqueta">{inicio.etiqueta}</p>
+      <h1
+        id="inicio-titulo"
+        class="mt-5 text-[2.15rem] font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl"
+      >
+        {inicio.titulo}
+      </h1>
+      <p class="mt-6 max-w-xl text-lg leading-relaxed text-suave">{inicio.subtitulo}</p>
+
+      <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+        <a
+          href={wa}
+          class="btn btn-primario"
+          data-evento="whatsapp_click"
+          data-ubicacion="hero"
+          target={enlaceExterno ? '_blank' : undefined}
+          rel={enlaceExterno ? 'noopener noreferrer' : undefined}
+        >
+          <Icono nombre="whatsapp" class="h-5 w-5" />
+          {inicio.botonPrincipal}
+        </a>
+        <a href="#lab" class="btn btn-secundario">
+          {inicio.botonSecundario}
+          <Icono nombre="flecha" class="h-5 w-5" />
+        </a>
+      </div>
+      <p class="mt-4 font-mono text-xs text-suave">{inicio.nota}</p>
+    </div>
+
+    <div class="hidden justify-self-center lg:block" aria-hidden="true">
+      <img src="/icono.svg" alt="" width="320" height="320" class="h-72 w-72 xl:h-80 xl:w-80" />
+    </div>
+  </div>
+</section>

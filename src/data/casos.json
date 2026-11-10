@@ -1,0 +1,37 @@
+{
+  "_ayuda": "Revisa cada texto antes de publicar: son borradores sin cifras. Deja 'enlace' vacío si no hay página pública (el botón se oculta en producción). Las tecnologías vacías se marcan como pendientes solo en modo desarrollo.",
+  "titulo": "Casos",
+  "intro": "Sistemas que ya están en marcha.",
+  "items": [
+    {
+      "id": "rentmotor",
+      "nombre": "RentMotor",
+      "categoria": "Gestión de alquiler de vehículos",
+      "problema": "Llevar vehículos, reservas y pagos por separado genera errores y reprocesos.",
+      "solucion": "Un sistema que centraliza la flota, las reservas y el cobro en un solo lugar.",
+      "tecnologias": [],
+      "enlace": "",
+      "enlaceTexto": "Ver caso"
+    },
+    {
+      "id": "vetpro",
+      "nombre": "VetPro",
+      "categoria": "Software de gestión veterinaria",
+      "problema": "Las clínicas veterinarias manejan pacientes, citas e inventario en herramientas sueltas.",
+      "solucion": "Una plataforma que reúne pacientes, consultas y citas, con transcripción de audio por IA.",
+      "tecnologias": ["Angular", "Node.js", "PostgreSQL", "Whisper"],
+      "enlace": "",
+      "enlaceTexto": "Ver caso"
+    },
+    {
+      "id": "gps-deportivo",
+      "nombre": "Plataforma GPS deportiva",
+      "categoria": "Perfiles físicos de deportistas amateur",
+      "problema": "Los deportistas amateur casi nunca cuentan con datos propios sobre su rendimiento.",
+      "solucion": "Una plataforma que procesa datos de GPS y arma el perfil físico de cada deportista.",
+      "tecnologias": [],
+      "enlace": "",
+      "enlaceTexto": "Ver caso"
+    }
+  ]
+}

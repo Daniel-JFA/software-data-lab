@@ -1,0 +1,22 @@
+{
+  "_ayuda": "Los títulos y resúmenes de las lecciones son borradores. Cámbialos por los reales del curso.",
+  "etiqueta": "CURSO GRATIS",
+  "titulo": "Análisis de fútbol con datos",
+  "subtitulo": "6 lecciones gratis",
+  "descripcion": "Aprende a leer un partido con datos. Sin fórmulas raras y con ejemplos reales.",
+  "lecciones": [
+    { "titulo": "Qué datos tiene un partido", "resumen": "Eventos, posiciones y tiempos: de dónde sale cada dato." },
+    { "titulo": "Cómo leer una tabla", "resumen": "Qué dice una tabla de posiciones y qué se le escapa." },
+    { "titulo": "Goles esperados (xG)", "resumen": "Una forma simple de medir la calidad de un remate." },
+    { "titulo": "Pases y posesión", "resumen": "Cuándo la posesión importa y cuándo no." },
+    { "titulo": "Mapas de tiros y de calor", "resumen": "Visualiza dónde pasa el juego." },
+    { "titulo": "Tu primer análisis", "resumen": "Juntas todo y analizas un partido completo." }
+  ],
+  "formulario": {
+    "titulo": "Entra a la lista de espera",
+    "descripcion": "Te escribimos cuando abramos las lecciones. Sin spam.",
+    "boton": "Quiero entrar",
+    "exito": "Listo. Quedaste en la lista de espera.",
+    "consentimiento": "Al suscribirte aceptas recibir correos del Lab. Puedes salirte cuando quieras."
+  }
+}

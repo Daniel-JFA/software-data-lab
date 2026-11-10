@@ -1,0 +1,75 @@
+---
+import Icono from './Icono.astro';
+import { site, whatsappUrl } from '../lib/site';
+
+const wa = whatsappUrl();
+const enlaceExterno = wa.startsWith('http');
+---
+
+<header class="sticky top-0 z-50 border-b border-borde/70 bg-fondo/92 backdrop-blur">
+  <div class="contenedor flex h-16 items-center justify-between gap-4">
+    <a href="#inicio" class="flex shrink-0 items-center" aria-label={`${site.nombre}, ir al inicio`}>
+      <img src="/logo.svg" alt={site.nombre} width="180" height="40" class="h-9 w-auto" />
+    </a>
+
+    <nav aria-label="Principal" class="hidden items-center gap-6 lg:flex">
+      {
+        site.navegacion.map((n) => (
+          <a href={n.href} class="text-sm text-suave transition-colors hover:text-turquesa-claro">
+            {n.etiqueta}
+          </a>
+        ))
+      }
+    </nav>
+
+    <a
+      href={wa}
+      class="btn btn-primario hidden !min-h-10 !px-4 !py-2 text-sm lg:inline-flex"
+      data-evento="whatsapp_click"
+      data-ubicacion="header"
+      target={enlaceExterno ? '_blank' : undefined}
+      rel={enlaceExterno ? 'noopener noreferrer' : undefined}
+    >
+      Diagnóstico gratis
+    </a>
+
+    <button
+      type="button"
+      id="menu-boton"
+      class="grid h-11 w-11 place-items-center rounded-lg border border-borde text-texto lg:hidden"
+      aria-expanded="false"
+      aria-controls="menu-movil"
+      aria-label="Abrir menú"
+    >
+      <span data-icono-abrir><Icono nombre="menu" /></span>
+      <span data-icono-cerrar hidden><Icono nombre="cerrar" /></span>
+    </button>
+  </div>
+
+  <div id="menu-movil" hidden class="border-t border-borde/70 bg-fondo lg:hidden">
+    <nav aria-label="Principal (móvil)" class="contenedor flex flex-col py-3">
+      {
+        site.navegacion.map((n) => (
+          <a
+            href={n.href}
+            class="border-b border-borde/50 py-3 text-lg text-texto last:border-0"
+            data-cerrar-menu
+          >
+            {n.etiqueta}
+          </a>
+        ))
+      }
+      <a
+        href={wa}
+        class="btn btn-primario mt-4"
+        data-evento="whatsapp_click"
+        data-ubicacion="menu-movil"
+        data-cerrar-menu
+        target={enlaceExterno ? '_blank' : undefined}
+        rel={enlaceExterno ? 'noopener noreferrer' : undefined}
+      >
+        Agenda tu diagnóstico gratis
+      </a>
+    </nav>
+  </div>
+</header>

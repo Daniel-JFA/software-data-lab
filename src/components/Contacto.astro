@@ -1,0 +1,106 @@
+---
+import Icono from './Icono.astro';
+import TopoFondo from './TopoFondo.astro';
+import {
+  correoListo,
+  correoUrl,
+  mostrarPendientes,
+  site,
+  vacio,
+  whatsappListo,
+  whatsappUrl,
+} from '../lib/site';
+
+const c = site.contactoSeccion;
+const wa = whatsappUrl();
+const enlaceExterno = wa.startsWith('http');
+---
+
+<section id="contacto" class="seccion relative overflow-hidden" aria-labelledby="contacto-titulo">
+  <TopoFondo semilla={7} class="absolute inset-0 h-full w-full text-turquesa opacity-[0.1]" />
+
+  <div class="contenedor relative grid gap-10 lg:grid-cols-2 lg:gap-14">
+    <div>
+      <p class="etiqueta">// 07 · Contacto</p>
+      <h2 id="contacto-titulo" class="titulo-seccion mt-3">{c.titulo}</h2>
+      <p class="mt-4 max-w-md text-suave">{c.subtitulo}</p>
+
+      <div class="mt-8 flex flex-col gap-4">
+        <a
+          href={wa}
+          class="btn btn-primario w-full sm:w-fit"
+          data-evento="whatsapp_click"
+          data-ubicacion="contacto"
+          target={enlaceExterno ? '_blank' : undefined}
+          rel={enlaceExterno ? 'noopener noreferrer' : undefined}
+        >
+          <Icono nombre="whatsapp" class="h-5 w-5" />
+          {c.botonWhatsapp}
+        </a>
+
+        {
+          whatsappListo() ? (
+            <p class="font-mono text-sm text-suave">{site.contacto.whatsappVisible || ''}</p>
+          ) : (
+            mostrarPendientes && <span class="pendiente w-fit">[WHATSAPP] número en src/data/site.json</span>
+          )
+        }
+
+        {
+          correoListo() ? (
+            <a
+              href={correoUrl()}
+              class="inline-flex w-fit items-center gap-2 text-turquesa underline-offset-4 hover:text-turquesa-claro hover:underline"
+              data-evento="correo_click"
+              data-ubicacion="contacto"
+            >
+              <Icono nombre="correo" class="h-5 w-5" />
+              {site.contacto.correo}
+            </a>
+          ) : (
+            mostrarPendientes && <span class="pendiente w-fit">[CORREO] en src/data/site.json</span>
+          )
+        }
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3 class="text-xl font-semibold">{c.formularioTitulo}</h3>
+
+      <form
+        class="mt-6 space-y-4"
+        data-formspree={site.formularios.contactoFormspreeId}
+        data-nombre="contacto"
+        data-evento-exito="formulario_enviado"
+        data-exito={c.exito}
+      >
+        <div>
+          <label for="ct-nombre" class="mb-1 block text-sm font-medium">Nombre</label>
+          <input id="ct-nombre" name="nombre" type="text" class="campo" autocomplete="name" required maxlength="120" />
+        </div>
+        <div>
+          <label for="ct-empresa" class="mb-1 block text-sm font-medium">Empresa u organización</label>
+          <input id="ct-empresa" name="empresa" type="text" class="campo" autocomplete="organization" maxlength="160" />
+        </div>
+        <div>
+          <label for="ct-contacto" class="mb-1 block text-sm font-medium">Correo o WhatsApp para responderte</label>
+          <input id="ct-contacto" name="contacto" type="text" class="campo" autocomplete="email" required maxlength="160" />
+        </div>
+        <div>
+          <label for="ct-necesidad" class="mb-1 block text-sm font-medium">¿Qué necesitas?</label>
+          <textarea id="ct-necesidad" name="necesidad" rows="4" class="campo resize-y" required maxlength="2000"></textarea>
+        </div>
+
+        <input type="hidden" name="_subject" value="Nuevo contacto desde la landing de Software Data Lab" />
+        <div class="absolute -left-[9999px]" aria-hidden="true">
+          <label>No llenes este campo <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" /></label>
+        </div>
+
+        <button type="submit" class="btn w-full bg-turquesa text-fondo hover:bg-turquesa-claro disabled:opacity-60">
+          {c.boton}
+        </button>
+        <p data-estado role="status" aria-live="polite" class="min-h-6 text-sm"></p>
+      </form>
+    </div>
+  </div>
+</section>

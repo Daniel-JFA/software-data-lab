@@ -1,0 +1,36 @@
+---
+import datos from '../data/proceso.json';
+---
+
+<section
+  id="proceso"
+  class="seccion border-y border-borde/60 bg-superficie/40"
+  aria-labelledby="proceso-titulo"
+>
+  <div class="contenedor">
+    <p class="etiqueta">// 06 · Proceso</p>
+    <h2 id="proceso-titulo" class="titulo-seccion mt-3">{datos.titulo}</h2>
+    <p class="mt-4 max-w-2xl text-suave">{datos.intro}</p>
+
+    <ol
+      class="relative mt-12 grid gap-10 before:absolute before:bottom-4 before:left-[1.1rem] before:top-4 before:w-px before:bg-borde md:grid-cols-4 md:gap-6 md:before:bottom-auto md:before:left-4 md:before:right-4 md:before:top-[1.1rem] md:before:h-px md:before:w-auto"
+    >
+      {
+        datos.pasos.map((p, i) => (
+          <li class="relative pl-14 md:pl-0 md:pt-14">
+            <span
+              class:list={[
+                'absolute left-0 top-0 z-10 grid h-9 w-9 place-items-center rounded-full border bg-fondo font-mono text-xs',
+                i === datos.pasos.length - 1 ? 'border-ambar text-ambar' : 'border-turquesa text-turquesa',
+              ]}
+            >
+              {p.paso}
+            </span>
+            <h3 class="text-lg font-semibold">{p.titulo}</h3>
+            <p class="mt-2 text-suave">{p.descripcion}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

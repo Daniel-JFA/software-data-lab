@@ -1,0 +1,26 @@
+{
+  "titulo": "Cómo trabajamos",
+  "intro": "Cuatro pasos. Sin sorpresas.",
+  "pasos": [
+    {
+      "paso": "01",
+      "titulo": "Diagnóstico gratis",
+      "descripcion": "30 minutos por WhatsApp. Entendemos tu proceso y dónde se pierde el tiempo."
+    },
+    {
+      "paso": "02",
+      "titulo": "Propuesta",
+      "descripcion": "Te enviamos alcance, tiempos y costo por escrito. Claro y sin letra pequeña."
+    },
+    {
+      "paso": "03",
+      "titulo": "Desarrollo por entregas",
+      "descripcion": "Construimos en ciclos cortos. Ves avances reales y ajustas sobre la marcha."
+    },
+    {
+      "paso": "04",
+      "titulo": "Soporte",
+      "descripcion": "Seguimos contigo después de entregar: ajustes, mejoras y respuesta a tus dudas."
+    }
+  ]
+}

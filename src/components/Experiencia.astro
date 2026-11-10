@@ -1,0 +1,52 @@
+---
+import datos from '../data/clientes.json';
+import { mostrarPendientes } from '../lib/site';
+
+type Cliente = { nombre: string; logo: string; url?: string };
+const clientes = datos.clientes as Cliente[];
+---
+
+<section
+  id="experiencia"
+  class="seccion border-y border-borde/60 bg-superficie/40"
+  aria-labelledby="experiencia-titulo"
+>
+  <div class="contenedor">
+    <p class="etiqueta">// 02 · {datos.titulo}</p>
+    <h2 id="experiencia-titulo" class="titulo-seccion mt-3 max-w-3xl">{datos.frase}</h2>
+
+    <ul class="mt-8 flex flex-wrap gap-3" aria-label="Sectores">
+      {
+        datos.sectores.map((s) => (
+          <li class="rounded-full border border-borde bg-fondo px-4 py-2 font-mono text-sm text-turquesa-claro">
+            {s}
+          </li>
+        ))
+      }
+    </ul>
+
+    {
+      clientes.length > 0 ? (
+        <ul class="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4" aria-label="Clientes">
+          {clientes.map((c) => (
+            <li class="grid h-24 place-items-center rounded-lg bg-texto p-4">
+              {c.url ? (
+                <a href={c.url} target="_blank" rel="noopener noreferrer" aria-label={`Sitio de ${c.nombre}`}>
+                  <img src={c.logo} alt={`Logo de ${c.nombre}`} height="56" loading="lazy" class="max-h-14 w-auto" />
+                </a>
+              ) : (
+                <img src={c.logo} alt={`Logo de ${c.nombre}`} height="56" loading="lazy" class="max-h-14 w-auto" />
+              )}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        mostrarPendientes && (
+          <p class="pendiente mt-10">
+            [PENDIENTE] Logos de clientes autorizados: agrégalos en src/data/clientes.json
+          </p>
+        )
+      )
+    }
+  </div>
+</section>

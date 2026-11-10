@@ -1,0 +1,70 @@
+---
+import Icono from './Icono.astro';
+import datos from '../data/casos.json';
+import { mostrarPendientes, vacio } from '../lib/site';
+---
+
+<section id="casos" class="seccion" aria-labelledby="casos-titulo">
+  <div class="contenedor">
+    <p class="etiqueta">// 03 · Casos</p>
+    <h2 id="casos-titulo" class="titulo-seccion mt-3">{datos.titulo}</h2>
+    <p class="mt-4 max-w-2xl text-suave">{datos.intro}</p>
+
+    <ul class="mt-10 grid gap-5 lg:grid-cols-3">
+      {
+        datos.items.map((c) => (
+          <li class="tarjeta flex flex-col gap-5">
+            <div>
+              <p class="etiqueta">{c.categoria}</p>
+              <h3 class="mt-2 text-2xl font-semibold">{c.nombre}</h3>
+            </div>
+
+            <dl class="space-y-4 text-suave">
+              <div>
+                <dt class="etiqueta">Problema</dt>
+                <dd class="mt-1">{c.problema}</dd>
+              </div>
+              <div>
+                <dt class="etiqueta">Solución</dt>
+                <dd class="mt-1">{c.solucion}</dd>
+              </div>
+              <div>
+                <dt class="etiqueta">Tecnologías</dt>
+                <dd class="mt-2">
+                  {c.tecnologias.length > 0 ? (
+                    <ul class="flex flex-wrap gap-2">
+                      {c.tecnologias.map((t) => (
+                        <li class="rounded border border-borde bg-fondo px-2 py-1 font-mono text-xs text-turquesa-claro">
+                          {t}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    mostrarPendientes && <span class="pendiente">[PENDIENTE] tecnologías</span>
+                  )}
+                </dd>
+              </div>
+            </dl>
+
+            <div class="mt-auto pt-2">
+              {!vacio(c.enlace) ? (
+                <a
+                  href={c.enlace}
+                  class="inline-flex items-center gap-2 font-semibold text-turquesa underline-offset-4 hover:text-turquesa-claro hover:underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {c.enlaceTexto}
+                  <span class="sr-only"> de {c.nombre} (se abre en otra pestaña)</span>
+                  <Icono nombre="externo" class="h-4 w-4" />
+                </a>
+              ) : (
+                mostrarPendientes && <span class="pendiente">[PENDIENTE] enlace del caso</span>
+              )}
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

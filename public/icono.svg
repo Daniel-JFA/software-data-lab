@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" fill="none" stroke="#7FD6CB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Software Data Lab">
+  <!-- PLACEHOLDER: reemplaza este archivo por tu icono real -->
+  <path d="M6 82h84"/>
+  <path d="M6 82 28 46l16 36"/>
+  <path d="M24 82 52 22l28 60"/>
+  <path d="M62 82l16-26 14 26"/>
+  <path d="M35 68q17-11 34 0" stroke="#2A9D8F"/>
+  <path d="M42 54q10-6 20 0" stroke="#2A9D8F"/>
+  <path d="M52 22 43 36M52 22l9 14M43 36l-5 11M43 36l5 11M61 36l-5 11M61 36l5 11" stroke="#9BE5DA" stroke-width="1.6"/>
+  <circle cx="43" cy="36" r="2.4" fill="#0B1F2A"/>
+  <circle cx="61" cy="36" r="2.4" fill="#0B1F2A"/>
+  <circle cx="38" cy="47" r="2" fill="#0B1F2A"/>
+  <circle cx="48" cy="47" r="2" fill="#0B1F2A"/>
+  <circle cx="56" cy="47" r="2" fill="#0B1F2A"/>
+  <circle cx="66" cy="47" r="2" fill="#0B1F2A"/>
+  <circle cx="52" cy="19" r="5" fill="#F2A93B" stroke="none"/>
+</svg>

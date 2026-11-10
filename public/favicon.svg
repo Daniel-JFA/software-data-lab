@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Software Data Lab">
+  <!-- PLACEHOLDER: reemplaza este archivo por tu favicon real -->
+  <rect width="96" height="96" rx="20" fill="#0B1F2A"/>
+  <g fill="none" stroke="#7FD6CB" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10 76h76"/>
+    <path d="M10 76 30 44l14 32"/>
+    <path d="M26 76 52 24l26 52"/>
+    <path d="M62 76l15-24 11 24"/>
+  </g>
+  <circle cx="52" cy="21" r="7" fill="#F2A93B"/>
+</svg>

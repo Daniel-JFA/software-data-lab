@@ -1,0 +1,66 @@
+{
+  "_ayuda": "Edita este archivo para cambiar datos globales. Todo lo marcado con [REEMPLAZAR] debe llenarse antes de publicar.",
+  "nombre": "Software Data Lab",
+  "nombreCorto": "SDL",
+  "autor": "Daniel Flórez",
+  "ciudad": "Medellín, Colombia",
+  "url": "https://sdl.danielflorez.dev",
+  "sitioPersonal": "https://danielflorez.dev",
+  "navegacion": [
+    { "etiqueta": "Servicios", "href": "#servicios" },
+    { "etiqueta": "Experiencia", "href": "#experiencia" },
+    { "etiqueta": "Casos", "href": "#casos" },
+    { "etiqueta": "El Lab", "href": "#lab" },
+    { "etiqueta": "Curso", "href": "#curso" },
+    { "etiqueta": "Cómo trabajamos", "href": "#proceso" },
+    { "etiqueta": "Contacto", "href": "#contacto" }
+  ],
+  "inicio": {
+    "etiqueta": "Medellín, Colombia · Software y datos",
+    "titulo": "Software a la medida para cualquier sector",
+    "subtitulo": "Convertimos tus datos y procesos en sistemas que funcionan. Software, analítica, IA e IoT desde Medellín.",
+    "botonPrincipal": "Agenda tu diagnóstico gratis",
+    "botonSecundario": "Explora el Lab",
+    "nota": "30 minutos. Sin costo. Por WhatsApp."
+  },
+  "contactoSeccion": {
+    "titulo": "Hablemos",
+    "subtitulo": "Cuéntanos qué necesitas. Te respondemos pronto.",
+    "botonWhatsapp": "Escríbenos por WhatsApp",
+    "formularioTitulo": "O déjanos un mensaje",
+    "boton": "Enviar mensaje",
+    "exito": "Mensaje enviado. Te respondemos pronto."
+  },
+  "pie": {
+    "copyright": "© Software Data Lab",
+    "enlaceTexto": "danielflorez.dev"
+  },
+  "seo": {
+    "titulo": "Software Data Lab | Software a la medida, datos e IA en Medellín",
+    "descripcion": "Software a la medida, analítica, IA aplicada e IoT desde Medellín. Agenda un diagnóstico gratis de 30 minutos por WhatsApp.",
+    "imagenOg": "/og.png",
+    "imagenOgAlt": "Software Data Lab: software a la medida para cualquier sector"
+  },
+  "contacto": {
+    "_ayuda_whatsapp": "Solo dígitos con indicativo de país, sin + ni espacios. Ejemplo Colombia: 573001234567",
+    "whatsapp": "",
+    "whatsappVisible": "",
+    "mensajeWhatsapp": "Hola Daniel, vi Software Data Lab y quiero agendar el diagnóstico gratis de 30 minutos.",
+    "correo": ""
+  },
+  "redes": {
+    "facebook": "",
+    "instagram": "",
+    "youtube": ""
+  },
+  "formularios": {
+    "_ayuda": "Crea dos formularios en formspree.io y pega aquí el ID (la parte final de https://formspree.io/f/XXXXXXXX). Si lo dejas vacío, el formulario avisa que aún no está activo.",
+    "contactoFormspreeId": "",
+    "cursoFormspreeId": ""
+  },
+  "analitica": {
+    "_ayuda": "El script está comentado en src/layouts/Base.astro. Cuando lo actives, los eventos ya están conectados. Ver README.",
+    "proveedor": "plausible",
+    "dominio": "sdl.danielflorez.dev"
+  }
+}

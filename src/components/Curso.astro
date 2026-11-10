@@ -1,0 +1,82 @@
+---
+import datos from '../data/curso.json';
+import { site } from '../lib/site';
+
+const f = datos.formulario;
+---
+
+<section id="curso" class="seccion" aria-labelledby="curso-titulo">
+  <div class="contenedor grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-14">
+    <div>
+      <p class="etiqueta">// 05 · {datos.etiqueta}</p>
+      <h2 id="curso-titulo" class="titulo-seccion mt-3">
+        {datos.titulo} — <span class="text-turquesa">{datos.subtitulo}.</span>
+      </h2>
+      <p class="mt-4 max-w-xl text-suave">{datos.descripcion}</p>
+
+      <ol class="mt-8 divide-y divide-borde border-y border-borde">
+        {
+          datos.lecciones.map((l, i) => (
+            <li class="flex gap-4 py-4">
+              <span class="pt-0.5 font-mono text-sm text-turquesa">{String(i + 1).padStart(2, '0')}</span>
+              <div>
+                <h3 class="font-semibold">{l.titulo}</h3>
+                <p class="text-sm text-suave">{l.resumen}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+
+    <div class="tarjeta h-fit lg:sticky lg:top-24">
+      <h3 class="text-xl font-semibold">{f.titulo}</h3>
+      <p class="mt-1 text-suave">{f.descripcion}</p>
+
+      <form
+        class="mt-6 space-y-4"
+        data-formspree={site.formularios.cursoFormspreeId}
+        data-nombre="curso-futbol"
+        data-evento-exito="suscripcion_curso"
+        data-exito={f.exito}
+      >
+        <div>
+          <label for="curso-nombre" class="mb-1 block text-sm font-medium">Nombre</label>
+          <input
+            id="curso-nombre"
+            name="nombre"
+            type="text"
+            class="campo"
+            autocomplete="name"
+            required
+            maxlength="120"
+          />
+        </div>
+        <div>
+          <label for="curso-correo" class="mb-1 block text-sm font-medium">Correo</label>
+          <input
+            id="curso-correo"
+            name="email"
+            type="email"
+            class="campo"
+            autocomplete="email"
+            inputmode="email"
+            required
+            maxlength="160"
+          />
+        </div>
+
+        <input type="hidden" name="_subject" value="Lista de espera: curso de análisis de fútbol" />
+        <div class="absolute -left-[9999px]" aria-hidden="true">
+          <label>No llenes este campo <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" /></label>
+        </div>
+
+        <button type="submit" class="btn w-full bg-turquesa text-fondo hover:bg-turquesa-claro disabled:opacity-60">
+          {f.boton}
+        </button>
+        <p data-estado role="status" aria-live="polite" class="min-h-6 text-sm"></p>
+        <p class="text-xs text-suave">{f.consentimiento}</p>
+      </form>
+    </div>
+  </div>
+</section>

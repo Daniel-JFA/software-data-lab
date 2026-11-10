@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 48" role="img" aria-label="Software Data Lab">
+  <!-- PLACEHOLDER: reemplaza este archivo por tu logo real -->
+  <g transform="translate(0 0) scale(0.5)" fill="none" stroke="#7FD6CB" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 82h84"/>
+    <path d="M6 82 28 46l16 36"/>
+    <path d="M24 82 52 22l28 60"/>
+    <path d="M62 82l16-26 14 26"/>
+    <path d="M35 68q17-11 34 0" stroke="#2A9D8F"/>
+    <path d="M52 22 43 36M52 22l9 14M43 36l-5 11M43 36l5 11M61 36l-5 11M61 36l5 11" stroke="#9BE5DA" stroke-width="2.6"/>
+    <circle cx="52" cy="19" r="6" fill="#F2A93B" stroke="none"/>
+  </g>
+  <text x="56" y="21" font-family="'Space Grotesk', 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="700" fill="#F4F7F6">Software Data Lab</text>
+  <text x="57" y="38" font-family="'JetBrains Mono', Menlo, monospace" font-size="9.5" letter-spacing="2.4" fill="#7FD6CB">SOFTWARE · DATOS · IA</text>
+</svg>

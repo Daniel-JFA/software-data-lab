@@ -1,0 +1,7 @@
+{
+  "_ayuda": "Agrega solo clientes que te hayan autorizado a mostrar su marca. Cada logo va en /public/clientes/ (SVG o PNG). Deja 'clientes' vacío si aún no tienes autorizaciones: en producción ese bloque se oculta.",
+  "titulo": "Experiencia",
+  "frase": "Hemos trabajado con el sector público, salud, fundaciones y educación.",
+  "sectores": ["Sector público", "Salud", "Fundaciones", "Educación"],
+  "clientes": []
+}
