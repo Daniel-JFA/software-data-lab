@@ -8,14 +8,14 @@ const enlaceExterno = wa.startsWith('http');
 
 <header class="sticky top-0 z-50 border-b border-borde/70 bg-fondo/92 backdrop-blur">
   <div class="contenedor flex h-16 items-center justify-between gap-4">
-    <a href="#inicio" class="flex shrink-0 items-center" aria-label={`${site.nombre}, ir al inicio`}>
+    <a href="/#inicio" class="flex shrink-0 items-center" aria-label={`${site.nombre}, ir al inicio`}>
       <img src="/logo.svg" alt={site.nombre} width="737" height="274" class="h-9 w-auto" />
     </a>
 
     <nav aria-label="Principal" class="hidden items-center gap-6 lg:flex">
       {
         site.navegacion.map((n) => (
-          <a href={n.href} class="text-sm text-suave transition-colors hover:text-turquesa-claro">
+          <a href={`/${n.href}`} class="text-sm text-suave transition-colors hover:text-turquesa-claro">
             {n.etiqueta}
           </a>
         ))
@@ -51,7 +51,7 @@ const enlaceExterno = wa.startsWith('http');
       {
         site.navegacion.map((n) => (
           <a
-            href={n.href}
+            href={`/${n.href}`}
             class="border-b border-borde/50 py-3 text-lg text-texto last:border-0"
             data-cerrar-menu
           >

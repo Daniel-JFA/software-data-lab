@@ -16,7 +16,7 @@ export const whatsappListo = (): boolean => numeroWhatsapp().length >= 8;
  */
 export function whatsappUrl(mensaje?: string): string {
   const numero = numeroWhatsapp();
-  if (numero.length < 8) return '#contacto';
+  if (numero.length < 8) return '/#contacto';
   const texto = mensaje ?? site.contacto.mensajeWhatsapp;
   return `https://wa.me/${numero}?text=${encodeURIComponent(texto)}`;
 }
@@ -24,7 +24,7 @@ export function whatsappUrl(mensaje?: string): string {
 export const correoListo = (): boolean => !vacio(site.contacto.correo);
 
 export const correoUrl = (): string =>
-  correoListo() ? `mailto:${site.contacto.correo.trim()}` : '#contacto';
+  correoListo() ? `mailto:${site.contacto.correo.trim()}` : '/#contacto';
 
 /** Todas las redes, configuradas o no (para mostrar pendientes en desarrollo). */
 export const todasLasRedes = () =>

@@ -1,0 +1,115 @@
+---
+import Base from '../layouts/Base.astro';
+import Icono from '../components/Icono.astro';
+import { etiquetaEstado, publicas } from '../lib/apps';
+import { mostrarPendientes } from '../lib/site';
+
+const lista = publicas();
+const estados = [...new Set(lista.map((a) => etiquetaEstado(a)).filter((e): e is string => !!e))];
+---
+
+<Base
+  titulo="Portafolio | Software Data Lab"
+  descripcion="Sistemas de software y datos que hemos construido en Software Data Lab, en Medellín. Mira el problema, la solución y las tecnologías de cada uno."
+>
+  <section class="seccion" aria-labelledby="portafolio-titulo">
+    <div class="contenedor">
+      <nav aria-label="Ruta de navegación" class="text-sm text-suave">
+        <a href="/" class="hover:text-turquesa-claro hover:underline">Inicio</a>
+        <span aria-hidden="true"> / </span>
+        <span aria-current="page" class="text-texto">Portafolio</span>
+      </nav>
+
+      <p class="etiqueta mt-8">// Portafolio</p>
+      <h1 id="portafolio-titulo" class="titulo-seccion mt-3">Aplicativos que hemos construido</h1>
+      <p class="mt-4 max-w-2xl text-suave">
+        Elige uno para ver el problema, la solución y las tecnologías.
+      </p>
+
+      {
+        estados.length > 1 && (
+          <div role="group" aria-label="Filtrar por estado" class="mt-8 flex flex-wrap gap-2">
+            <button type="button" data-filtro="todos" aria-pressed="true" class="filtro">
+              Todos
+            </button>
+            {estados.map((e) => (
+              <button type="button" data-filtro={e} aria-pressed="false" class="filtro">
+                {e}
+              </button>
+            ))}
+          </div>
+        )
+      }
+
+      <ul id="lista-apps" class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          lista.map((a) => (
+            <li class="tarjeta flex flex-col gap-4" data-estado={etiquetaEstado(a) ?? ''}>
+              <div>
+                <p class="etiqueta">{a.categoria}</p>
+                <h2 class="mt-2 text-2xl font-semibold">{a.nombre}</h2>
+              </div>
+              {etiquetaEstado(a) ? (
+                <p class="w-fit rounded-full border border-borde px-3 py-1 font-mono text-xs text-turquesa-claro">
+                  {etiquetaEstado(a)}
+                </p>
+              ) : (
+                mostrarPendientes && <span class="pendiente w-fit">[PENDIENTE] confirmar estado</span>
+              )}
+              <p class="text-suave">{a.resumen}</p>
+              <a
+                href={`/casos/${a.slug}`}
+                class="mt-auto inline-flex items-center gap-2 font-semibold text-turquesa underline-offset-4 hover:text-turquesa-claro hover:underline"
+              >
+                Ver caso<span class="sr-only"> de {a.nombre}</span>
+                <Icono nombre="flecha" class="h-4 w-4" />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <p id="sin-resultados" hidden class="mt-8 text-suave">No hay aplicativos con ese estado.</p>
+    </div>
+  </section>
+</Base>
+
+<style is:global>
+  .filtro {
+    border: 1px solid var(--color-borde);
+    border-radius: 9999px;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-suave);
+    min-height: 2.75rem;
+    cursor: pointer;
+  }
+  .filtro:hover {
+    border-color: var(--color-turquesa);
+  }
+  .filtro[aria-pressed='true'] {
+    border-color: var(--color-turquesa);
+    background: rgb(127 214 203 / 0.15);
+    color: var(--color-turquesa-claro);
+  }
+</style>
+
+<script>
+  const botones = document.querySelectorAll<HTMLButtonElement>('[data-filtro]');
+  const items = document.querySelectorAll<HTMLElement>('#lista-apps > li');
+  const sinResultados = document.getElementById('sin-resultados');
+
+  botones.forEach((boton) => {
+    boton.addEventListener('click', () => {
+      const filtro = boton.dataset.filtro;
+      botones.forEach((b) => b.setAttribute('aria-pressed', String(b === boton)));
+      let visibles = 0;
+      items.forEach((li) => {
+        const coincide = filtro === 'todos' || li.dataset.estado === filtro;
+        li.hidden = !coincide;
+        if (coincide) visibles++;
+      });
+      if (sinResultados) sinResultados.hidden = visibles > 0;
+    });
+  });
+</script>

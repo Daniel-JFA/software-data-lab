@@ -1,13 +1,11 @@
 ---
 import Icono from './Icono.astro';
 import datos from '../data/casos.json';
-import registro from '../data/apps.json';
-import { mostrarPendientes, vacio } from '../lib/site';
+import { destacadas } from '../lib/apps';
+import { mostrarPendientes } from '../lib/site';
 
-// Solo se muestran aplicativos destacados, públicos y con autorización.
-const destacados = registro.apps
-  .filter((a) => a.destacado && a.visibilidad === 'publica' && a.autorizado)
-  .sort((a, b) => (a.ordenDestacado ?? 99) - (b.ordenDestacado ?? 99));
+// Solo destacados, públicos y con autorización (la regla vive en lib/apps.ts).
+const destacados = destacadas();
 ---
 
 <section id="casos" class="seccion" aria-labelledby="casos-titulo">
@@ -53,24 +51,25 @@ const destacados = registro.apps
             </dl>
 
             <div class="mt-auto pt-2">
-              {!vacio(c.enlace) ? (
-                <a
-                  href={c.enlace}
-                  class="inline-flex items-center gap-2 font-semibold text-turquesa underline-offset-4 hover:text-turquesa-claro hover:underline"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {datos.enlaceTexto}
-                  <span class="sr-only"> de {c.nombre} (se abre en otra pestaña)</span>
-                  <Icono nombre="externo" class="h-4 w-4" />
-                </a>
-              ) : (
-                mostrarPendientes && <span class="pendiente">[PENDIENTE] enlace del caso</span>
-              )}
+              <a
+                href={`/casos/${c.slug}`}
+                class="inline-flex items-center gap-2 font-semibold text-turquesa underline-offset-4 hover:text-turquesa-claro hover:underline"
+              >
+                {datos.enlaceTexto}
+                <span class="sr-only"> de {c.nombre}</span>
+                <Icono nombre="flecha" class="h-4 w-4" />
+              </a>
             </div>
           </li>
         ))
       }
     </ul>
+
+    <p class="mt-8">
+      <a href="/portafolio" class="btn btn-secundario">
+        Ver todo el portafolio
+        <Icono nombre="flecha" class="h-5 w-5" />
+      </a>
+    </p>
   </div>
 </section>

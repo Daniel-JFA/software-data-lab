@@ -1,0 +1,113 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icono from '../../components/Icono.astro';
+import { etiquetaEstado, publicas } from '../../lib/apps';
+import { mostrarPendientes, vacio, whatsappUrl } from '../../lib/site';
+
+export function getStaticPaths() {
+  return publicas().map((app) => ({ params: { slug: app.slug }, props: { app } }));
+}
+
+const { app } = Astro.props;
+const estado = etiquetaEstado(app);
+const wa = whatsappUrl(
+  `Hola Daniel, vi el caso ${app.nombre} en Software Data Lab y quiero hablar de algo parecido.`,
+);
+const waExterno = wa.startsWith('http');
+---
+
+<Base titulo={`${app.nombre} | Caso de Software Data Lab`} descripcion={app.resumen}>
+  <article class="seccion" aria-labelledby="caso-titulo">
+    <div class="contenedor">
+      <div class="max-w-3xl">
+        <nav aria-label="Ruta de navegación" class="text-sm text-suave">
+          <a href="/" class="hover:text-turquesa-claro hover:underline">Inicio</a>
+          <span aria-hidden="true"> / </span>
+          <a href="/portafolio" class="hover:text-turquesa-claro hover:underline">Portafolio</a>
+          <span aria-hidden="true"> / </span>
+          <span aria-current="page" class="text-texto">{app.nombre}</span>
+        </nav>
+
+        <p class="etiqueta mt-8">{app.categoria}</p>
+        <h1 id="caso-titulo" class="titulo-seccion mt-3">{app.nombre}</h1>
+
+        {
+          estado ? (
+            <p class="mt-4 w-fit rounded-full border border-borde px-3 py-1 font-mono text-xs text-turquesa-claro">
+              {estado}
+            </p>
+          ) : (
+            mostrarPendientes && <span class="pendiente mt-4">[PENDIENTE] confirmar estado</span>
+          )
+        }
+
+        <p class="mt-6 text-lg text-suave">{app.resumen}</p>
+
+        <section class="mt-10" aria-labelledby="caso-problema">
+          <h2 id="caso-problema" class="etiqueta">Problema</h2>
+          <p class="mt-2 text-lg">{app.problema}</p>
+        </section>
+
+        <section class="mt-8" aria-labelledby="caso-solucion">
+          <h2 id="caso-solucion" class="etiqueta">Solución</h2>
+          <p class="mt-2 text-lg">{app.solucion}</p>
+        </section>
+
+        <section class="mt-8" aria-labelledby="caso-tecnologias">
+          <h2 id="caso-tecnologias" class="etiqueta">Tecnologías</h2>
+          {
+            app.tecnologias.length > 0 ? (
+              <ul class="mt-3 flex flex-wrap gap-2">
+                {app.tecnologias.map((t) => (
+                  <li class="rounded border border-borde bg-superficie px-3 py-1 font-mono text-sm text-turquesa-claro">
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              mostrarPendientes && <span class="pendiente mt-3">[PENDIENTE] tecnologías</span>
+            )
+          }
+        </section>
+
+        {
+          !vacio(app.enlace) ? (
+            <p class="mt-8">
+              <a
+                href={app.enlace}
+                class="inline-flex items-center gap-2 font-semibold text-turquesa underline-offset-4 hover:text-turquesa-claro hover:underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Visitar {app.nombre}
+                <span class="sr-only"> (se abre en otra pestaña)</span>
+                <Icono nombre="externo" class="h-4 w-4" />
+              </a>
+            </p>
+          ) : (
+            mostrarPendientes && <span class="pendiente mt-8">[PENDIENTE] enlace del aplicativo</span>
+          )
+        }
+
+        <div class="tarjeta mt-12">
+          <h2 class="text-xl font-semibold">¿Necesitas algo parecido?</h2>
+          <p class="mt-2 text-suave">Cuéntanos tu caso en un diagnóstico gratis de 30 minutos.</p>
+          <div class="mt-5 flex flex-col gap-3 sm:flex-row">
+            <a
+              href={wa}
+              class="btn btn-primario"
+              data-evento="whatsapp_click"
+              data-ubicacion={`caso-${app.slug}`}
+              target={waExterno ? '_blank' : undefined}
+              rel={waExterno ? 'noopener noreferrer' : undefined}
+            >
+              <Icono nombre="whatsapp" class="h-5 w-5" />
+              Agenda tu diagnóstico gratis
+            </a>
+            <a href="/portafolio" class="btn btn-secundario">Ver el portafolio</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+</Base>

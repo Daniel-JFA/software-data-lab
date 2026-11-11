@@ -75,6 +75,11 @@ Meta: sitio en `sdl.danielflorez.dev`, medible y con marca real.
 - **Hecho cuando:** agregar un aplicativo = editar una entrada y desplegar.
 
 ### S3 — Portafolio y páginas de caso (semana 5–6)
+**Estado: HECHO EN CÓDIGO (sin capturas).**
+- Hechas: S3-01 `/portafolio` (filtro por estado; el filtro por categoría no aplica porque cada aplicativo tiene una distinta), S3-02 `/casos/[slug]` con SEO propio, S3-04 permiso vía `autorizado` (una sola regla en `src/lib/apps.ts`), S3-05 sitemap y enlaces desde la landing, además de `404.astro` y navegación que funciona fuera del inicio.
+- Pendiente: S3-03 capturas optimizadas: no hay imágenes de los aplicativos; cuando existan, agregar campo `captura` al registro y usar `astro:assets`.
+- Pendiente: S3-06 (medición) Lighthouse de las páginas nuevas.
+
 - S3-01 Página `/portafolio` con filtro por categoría y estado.
 - S3-02 Página por caso `/casos/[slug]` generada desde el registro, con SEO y Open Graph propios.
 - S3-03 Capturas optimizadas (`astro:assets`, WebP/AVIF) con texto alternativo.
