@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import WhatsAppFlotante from '../components/WhatsAppFlotante.astro';
 import TopoFondo from '../components/TopoFondo.astro';
+import TemaSelector from '../components/TemaSelector.astro';
 import { redesActivas, site, whatsappListo, correoListo } from '../lib/site';
 
 interface Props {
@@ -47,7 +48,14 @@ if (import.meta.env.PROD) {
     <meta name="description" content={descripcion} />
     <link rel="canonical" href={canonical} />
     <meta name="theme-color" content="#0B1F2A" />
-    <meta name="color-scheme" content="dark" />
+    <meta name="color-scheme" content="dark light" />
+    <!-- Tema de color guardado (selector de la luna): se aplica antes de pintar para evitar parpadeos -->
+    <script is:inline>
+      try {
+        var t = localStorage.getItem('sdl-tema');
+        if (t === 'claro' || t === 'azul' || t === 'marca') document.documentElement.dataset.tema = t;
+      } catch (e) {}
+    </script>
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="sitemap" href="/sitemap-index.xml" />
@@ -118,6 +126,7 @@ if (import.meta.env.PROD) {
     </main>
     <Footer />
     <WhatsAppFlotante />
+    <TemaSelector />
 
     <script>
       import '../scripts/interacciones';

@@ -249,3 +249,67 @@
     display: inline-block;
   }
 }
+
+/* ---------- Temas de color (selector de la luna) ---------- */
+/* Marca = valores de @theme. Azul corporativo y Claro sobrescriben las variables. */
+html[data-tema='azul'] {
+  --color-fondo: #0a2342;
+  --color-superficie: #18304d;
+  --color-superficie-alta: #243a56;
+  --color-borde: #384d67;
+  --color-turquesa: #6fb1ff;
+  --color-turquesa-claro: #96c6fe;
+  --color-verde: #4c7fbd;
+  --color-texto: #f2f6fb;
+  --color-suave: #b1bbc7;
+}
+html[data-tema='claro'] {
+  color-scheme: light;
+  --color-fondo: #f4f1ea;
+  --color-superficie: #e7e5df;
+  --color-superficie-alta: #dbdad5;
+  --color-borde: #c7c8c4;
+  --color-turquesa: #16756b;
+  --color-turquesa-claro: #155c58;
+  --color-verde: #64a097;
+  --color-texto: #14232b;
+  --color-suave: #535d60;
+}
+/* Tema claro: las superficies de cristal y los blancos translúcidos pasan a tonos de tinta. */
+html[data-tema='claro'] .tarjeta {
+  background: rgba(255, 255, 255, 0.7);
+}
+html[data-tema='claro'] .btn-secundario {
+  background: rgba(20, 35, 43, 0.04);
+}
+html[data-tema='claro'] .btn-secundario:hover {
+  background: rgba(20, 35, 43, 0.08);
+  color: var(--color-texto);
+}
+html[data-tema='claro'] [class*='bg-white/'] {
+  background-color: rgba(20, 35, 43, 0.05);
+}
+html[data-tema='claro'] [class*='border-white/'] {
+  border-color: var(--color-borde);
+}
+html[data-tema='claro'] .text-white {
+  color: var(--color-texto);
+}
+html[data-tema='claro'] .campo {
+  background-color: #fff;
+  color: var(--color-texto);
+}
+/* El encabezado se mantiene oscuro en el tema claro (el logo es para fondo oscuro): su texto sigue claro. */
+html[data-tema='claro'] header .text-suave,
+html[data-tema='claro'] header .text-texto\/90,
+html[data-tema='claro'] #menu-movil a {
+  color: #d5e0e2;
+}
+html[data-tema='claro'] header a:hover,
+html[data-tema='claro'] #menu-movil a:hover {
+  color: #9be5da;
+}
+html[data-tema='claro'] header .btn-primario,
+html[data-tema='claro'] header .btn-primario:hover {
+  color: #0b1f2a;
+}

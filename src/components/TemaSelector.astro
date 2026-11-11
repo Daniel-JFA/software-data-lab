@@ -1,0 +1,167 @@
+---
+// Selector de tema de color (icono de luna). La elección se guarda en el navegador.
+// El atributo data-tema se aplica antes de pintar con un script en el <head> de Base.astro.
+const temas = [
+  { id: 'claro', nombre: 'Claro', colores: ['#f4f1ea', '#16756b', '#f2a93b'] },
+  { id: 'marca', nombre: 'Marca', colores: ['#0b1f2a', '#7fd6cb', '#f2a93b'] },
+  { id: 'azul', nombre: 'Azul corporativo', colores: ['#0a2342', '#6fb1ff', '#f2a93b'] },
+];
+---
+
+<div class="tema" id="tema">
+  <button
+    type="button"
+    id="tema-btn"
+    class="tema-btn"
+    aria-haspopup="true"
+    aria-expanded="false"
+    aria-controls="tema-lista"
+    aria-label="Cambiar el tema de color"
+  >
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path>
+    </svg>
+  </button>
+  <ul id="tema-lista" class="tema-lista" role="menu" aria-label="Tema de color" hidden>
+    {
+      temas.map((t) => (
+        <li role="none">
+          <button type="button" role="menuitemradio" aria-checked="false" data-tema-id={t.id}>
+            <i aria-hidden="true">
+              {t.colores.map((c) => (
+                <b style={`background:${c}`} />
+              ))}
+            </i>
+            {t.nombre}
+          </button>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style is:global>
+  .tema {
+    position: fixed;
+    left: 1rem;
+    bottom: 1rem;
+    z-index: 50;
+  }
+  .tema-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    color: var(--color-texto);
+    background: var(--color-superficie);
+    border: 1px solid var(--color-borde);
+    border-radius: 9999px;
+    cursor: pointer;
+  }
+  .tema-btn:hover {
+    border-color: var(--color-turquesa);
+  }
+  .tema-btn svg {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+  .tema-lista {
+    position: absolute;
+    left: 0;
+    bottom: 3.6rem;
+    min-width: 12.5rem;
+    margin: 0;
+    padding: 0.4rem;
+    list-style: none;
+    background: var(--color-superficie);
+    border: 1px solid var(--color-borde);
+    border-radius: 0.7rem;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+  }
+  .tema-lista[hidden] {
+    display: none;
+  }
+  .tema-lista button {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    width: 100%;
+    min-height: 2.75rem;
+    padding: 0.5rem 0.6rem;
+    font: 500 0.95rem var(--font-sans);
+    color: var(--color-texto);
+    text-align: left;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 0.4rem;
+    cursor: pointer;
+  }
+  .tema-lista button:hover {
+    background: var(--color-superficie-alta);
+  }
+  .tema-lista button[aria-checked='true'] {
+    border-color: var(--color-turquesa);
+  }
+  .tema-lista i {
+    display: inline-flex;
+    flex: none;
+    width: 1.9rem;
+    height: 1.1rem;
+    overflow: hidden;
+    border: 1px solid rgba(128, 128, 128, 0.45);
+    border-radius: 0.2rem;
+  }
+  .tema-lista i b {
+    flex: 1;
+  }
+</style>
+
+<script>
+  const IDS = ['claro', 'marca', 'azul'];
+  const KEY = 'sdl-tema';
+  const btn = document.getElementById('tema-btn') as HTMLButtonElement | null;
+  const lista = document.getElementById('tema-lista');
+  const caja = document.getElementById('tema');
+
+  if (btn && lista && caja) {
+    const actual = (): string => document.documentElement.dataset.tema ?? 'marca';
+    const marcar = (): void => {
+      lista.querySelectorAll<HTMLButtonElement>('button[data-tema-id]').forEach((b) => {
+        b.setAttribute('aria-checked', String(b.dataset.temaId === actual()));
+      });
+    };
+    const cerrar = (foco: boolean): void => {
+      lista.hidden = true;
+      btn.setAttribute('aria-expanded', 'false');
+      if (foco) btn.focus();
+    };
+
+    lista.querySelectorAll<HTMLButtonElement>('button[data-tema-id]').forEach((b) => {
+      b.addEventListener('click', () => {
+        const id = b.dataset.temaId ?? 'marca';
+        if (!IDS.includes(id)) return;
+        document.documentElement.dataset.tema = id;
+        try {
+          localStorage.setItem(KEY, id);
+        } catch {
+          /* sin almacenamiento: el tema vale solo para esta visita */
+        }
+        marcar();
+        cerrar(true);
+      });
+    });
+    btn.addEventListener('click', () => {
+      const abrir = lista.hidden;
+      lista.hidden = !abrir;
+      btn.setAttribute('aria-expanded', String(abrir));
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !lista.hidden) cerrar(true);
+    });
+    document.addEventListener('click', (e) => {
+      if (!lista.hidden && !caja.contains(e.target as Node)) cerrar(false);
+    });
+    marcar();
+  }
+</script>
