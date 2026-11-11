@@ -1,6 +1,6 @@
 # Software Data Lab — Landing
 
-Sitio estático con **Astro 7 + Tailwind CSS 4**. Sin backend ni base de datos: los formularios usan Formspree.
+Sitio estático con **Astro 7 + Tailwind CSS 4**. El sitio es estático; los formularios los recibe una API propia (`api/`, FastAPI + SQLite) en tu servidor.
 Destino: `https://sdl.danielflorez.dev`
 
 ## Comandos
@@ -25,7 +25,7 @@ npm run og         # regenera public/og.png (1200x630)
 ├── scripts/generar-og.mjs
 └── src/
     ├── data/               # ← AQUÍ EDITAS TODO EL CONTENIDO
-    │   ├── site.json       # WhatsApp, correo, redes, Formspree, textos de Inicio/Contacto/pie, SEO
+    │   ├── site.json       # WhatsApp, correo, redes, endpoints de formularios, textos de Inicio/Contacto/pie, SEO
     │   ├── apps.json       # registro único de aplicativos (alimenta los Casos); valida con `npm run validar`
     │   ├── servicios.json  clientes.json  casos.json
     │   ├── lab.json  curso.json  proceso.json
@@ -37,13 +37,47 @@ npm run og         # regenera public/og.png (1200x630)
     └── pages/index.astro
 ```
 
-## Formularios (Formspree)
+## Formularios (API propia en `api/`)
 
-1. Crea cuenta en formspree.io y dos formularios: **Contacto** y **Curso (lista de espera)**.
-2. Copia el ID de cada uno (`https://formspree.io/f/XXXXXXXX` → `XXXXXXXX`).
-3. Pégalos en `src/data/site.json` → `formularios.contactoFormspreeId` y `formularios.cursoFormspreeId`.
+Los formularios de contacto y de la lista de espera del curso se envían a `/api/contacto` y `/api/curso`. Los recibe un servicio **FastAPI** que guarda cada envío en **SQLite** y te avisa por **correo (SMTP)**. Corre en Docker en tu servidor, detrás de nginx.
 
-Incluyen campo trampa anti-bots. Mientras el ID esté vacío, el formulario avisa que aún no está activo.
+**Puesta en marcha en el servidor**
+
+```bash
+cd api
+cp .env.example .env     # completa SMTP_USER, SMTP_PASSWORD, MAIL_FROM, MAIL_TO e IP_SALT (openssl rand -hex 32)
+docker compose up -d --build
+curl http://127.0.0.1:8010/api/health   # {"ok":true}
+```
+
+Con Gmail necesitas una *contraseña de aplicación* (verificación en dos pasos activada): https://myaccount.google.com/apppasswords
+
+**nginx**: dentro del `server { ... }` del sitio agrega
+
+```nginx
+    location /api/ {
+        client_max_body_size 16k;
+        proxy_pass http://127.0.0.1:8010;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header Host $host;
+    }
+```
+
+**Qué hace**
+- Valida los campos, descarta bots con el campo trampa (`_gotcha`) y limita los envíos por IP (5 cada 10 minutos por formulario; ajustable en `.env`).
+- La IP se guarda solo como hash. La lista de espera no admite correos duplicados.
+- Si el correo falla, el envío igual queda guardado en la base.
+- `GET /api/health` sirve para el chequeo de salud del sprint 5.
+
+**Ver lo recibido**
+
+```bash
+docker exec sdl-api python -c "import sqlite3;[print(r) for r in sqlite3.connect('/data/sdl.db').execute('select id,tipo,creado,datos from envios order by id desc limit 20')]"
+```
+
+**Desarrollo local**: levanta la API (`docker compose up` en `api/`) y `npm run dev`; Astro reenvía `/api` al puerto 8010.
+
+> Datos personales: los envíos contienen nombres y correos. Haz copia de seguridad del volumen `sdl_data` y define cuánto tiempo los conservas.
 
 > El formulario de contacto pide además "Correo o WhatsApp para responderte"; sin ese dato no hay cómo contestar.
 
@@ -106,7 +140,7 @@ Después de publicar, verifica: `https://sdl.danielflorez.dev/sitemap-index.xml`
 - [ ] **Mensaje prellenado** de WhatsApp: revisa `contacto.mensajeWhatsapp`.
 - [ ] **Correo**: `site.json` → `contacto.correo`.
 - [ ] **Redes**: `site.json` → `redes.facebook`, `redes.instagram`, `redes.youtube`.
-- [ ] **Formspree**: los dos IDs en `site.json` → `formularios`.
+- [ ] **API de formularios**: `api/.env` con SMTP e `IP_SALT`, `docker compose up -d --build`, bloque `location /api/` en nginx y un envío de prueba de cada formulario.
 - [ ] **Logos de marca**: reemplaza `public/logo.svg`, `icono.svg`, `favicon.svg` (los actuales son provisionales).
 - [ ] **Imagen para compartir**: revisa `public/og.png` (o reemplázala por tu diseño de 1200×630).
 - [ ] **Logos de clientes**: solo los autorizados, en `src/data/clientes.json` + `public/clientes/`. Vacío = el bloque se oculta.

@@ -1,0 +1,14 @@
+services:
+  sdl-api:
+    build: .
+    container_name: sdl-api
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      # Solo localhost: nginx es quien publica /api/ hacia Internet.
+      - "127.0.0.1:8010:8000"
+    volumes:
+      - sdl_data:/data
+
+volumes:
+  sdl_data:

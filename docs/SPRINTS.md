@@ -47,13 +47,13 @@ Fuera del registro público (personales o sensibles): `trading`, `deriv-mcp`, `g
 **Estado: CERRADO CON PENDIENTES (el usuario decidió cerrar el sprint con lo disponible; los pendientes pasan al backlog).**
 - Hechas: S1-01 logos reales (`124ee2a`), S1-04 Plausible activo (`61ebf4d`), S1-05 en código: repo privado en GitHub (`Daniel-JFA/software-data-lab`) y guía de despliegue en servidor propio (`ff62292`).
 - **Backlog que se arrastra** (sin estos datos el sitio NO está listo para publicarse: los botones de WhatsApp apuntan a `#contacto` y los formularios están inactivos): S1-02, S1-03, S1-06, S1-07 y el despliegue real de S1-05, detallados abajo.
-- Pendientes: S1-02 contacto, S1-03 IDs de Formspree, S1-05 despliegue en servidor propio + DNS (repo privado en GitHub ya creado), S1-06 Lighthouse y revisión a 375 px (Chrome headless no abre en esta máquina), S1-07 textos reales de casos y curso.
+- Pendientes: S1-02 contacto, S1-03 despliegue de la API de formularios propia (código listo en `api/`; falta `.env` con SMTP y ponerla en el servidor), S1-05 despliegue en servidor propio + DNS (repo privado en GitHub ya creado), S1-06 Lighthouse y revisión a 375 px (Chrome headless no abre en esta máquina), S1-07 textos reales de casos y curso.
 - Antes de publicar: en Plausible crear el sitio y los goals `whatsapp_click`, `formulario_enviado`, `suscripcion_curso`.
 
 Meta: sitio en `sdl.danielflorez.dev`, medible y con marca real.
 - S1-01 Reemplazar logos por los de `software-data-lab-logo/svg` y regenerar `og.png`.
 - S1-02 Llenar `site.json`: WhatsApp, correo, redes.
-- S1-03 Crear los 2 formularios en Formspree y probar envío real.
+- S1-03 Formularios en servidor propio (en lugar de Formspree): API FastAPI + SQLite + aviso SMTP en `api/`; probar envío real.
 - S1-04 Activar Plausible y declarar los 3 goals.
 - S1-05 Desplegar en el servidor propio (nginx sirviendo `dist/`, HTTPS con Let's Encrypt) + registro `A` del subdominio.
 - S1-06 Revisión a 375 px en dispositivo real, teclado y Lighthouse móvil ≥ 90 en las 4 categorías.

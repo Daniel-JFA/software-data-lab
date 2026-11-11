@@ -54,9 +54,9 @@
     "youtube": "https://www.youtube.com/@softwaredatalab"
   },
   "formularios": {
-    "_ayuda": "Crea dos formularios en formspree.io y pega aquí el ID (la parte final de https://formspree.io/f/XXXXXXXX). Si lo dejas vacío, el formulario avisa que aún no está activo.",
-    "contactoFormspreeId": "",
-    "cursoFormspreeId": ""
+    "_ayuda": "Los formularios se envían a la API propia (carpeta api/, FastAPI en tu servidor). nginx redirige /api/ al contenedor. Si dejas un endpoint vacío, el formulario avisa que aún no está activo.",
+    "contactoEndpoint": "/api/contacto",
+    "cursoEndpoint": "/api/curso"
   },
   "analitica": {
     "_ayuda": "El script está comentado en src/layouts/Base.astro. Cuando lo actives, los eventos ya están conectados. Ver README.",

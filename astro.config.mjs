@@ -11,5 +11,7 @@ export default defineConfig({
   integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()],
+    // Solo para `npm run dev`: reenvía /api al contenedor local (docker compose en api/, puerto 8010).
+    server: { proxy: { '/api': 'http://127.0.0.1:8010' } },
   },
 });

@@ -1,5 +1,5 @@
 /**
- * Interacciones de la landing: menú móvil, analítica de eventos y formularios (Formspree).
+ * Interacciones de la landing: menú móvil, analítica de eventos y formularios (API propia en /api).
  * Sin dependencias. Se empaqueta y minifica en el build.
  */
 
@@ -67,7 +67,7 @@ window.matchMedia('(min-width: 1024px)').addEventListener('change', (e) => {
 });
 
 /* ---------------------------------------------------------------- *
- * Formularios con Formspree (sin backend propio)
+ * Formularios: envían JSON a la API propia (api/)
  * ---------------------------------------------------------------- */
 type Tipo = 'info' | 'ok' | 'error';
 
@@ -83,15 +83,15 @@ function mostrarEstado(zona: HTMLElement | null, texto: string, tipo: Tipo): voi
   zona.textContent = texto;
 }
 
-document.querySelectorAll<HTMLFormElement>('form[data-formspree]').forEach((form) => {
+document.querySelectorAll<HTMLFormElement>('form[data-endpoint]').forEach((form) => {
   const zona = form.querySelector<HTMLElement>('[data-estado]');
   const boton = form.querySelector<HTMLButtonElement>('button[type="submit"]');
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const id = (form.dataset.formspree ?? '').trim();
-    if (!id) {
+    const endpoint = (form.dataset.endpoint ?? '').trim();
+    if (!endpoint) {
       mostrarEstado(zona, 'Este formulario aún no está activo. Escríbenos por WhatsApp.', 'error');
       return;
     }
@@ -106,10 +106,10 @@ document.querySelectorAll<HTMLFormElement>('form[data-formspree]').forEach((form
     mostrarEstado(zona, 'Enviando…', 'info');
 
     try {
-      const respuesta = await fetch(`https://formspree.io/f/${encodeURIComponent(id)}`, {
+      const respuesta = await fetch(endpoint, {
         method: 'POST',
-        body: datos,
-        headers: { Accept: 'application/json' },
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(Object.fromEntries(datos)),
       });
 
       if (respuesta.ok) {
@@ -119,8 +119,8 @@ document.querySelectorAll<HTMLFormElement>('form[data-formspree]').forEach((form
           formulario: form.dataset.nombre ?? '',
         });
       } else {
-        const cuerpo = (await respuesta.json().catch(() => null)) as { errors?: { message: string }[] } | null;
-        const detalle = cuerpo?.errors?.map((x) => x.message).join(' ');
+        const cuerpo = (await respuesta.json().catch(() => null)) as { detail?: unknown } | null;
+        const detalle = typeof cuerpo?.detail === 'string' ? cuerpo.detail : undefined;
         mostrarEstado(zona, detalle || 'No pudimos enviarlo. Intenta de nuevo o escríbenos por WhatsApp.', 'error');
       }
     } catch {
