@@ -21,7 +21,7 @@ from email.message import EmailMessage
 from fastapi import BackgroundTasks, FastAPI, HTTPException, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel, ConfigDict, EmailStr, Field
+from pydantic import BaseModel, ConfigDict, EmailStr, Field, computed_field, field_validator
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
 log = logging.getLogger("sdl.api")
@@ -127,19 +127,26 @@ def avisar(tipo: str, datos: dict) -> None:
             f"Qué necesita:\n{datos['necesidad']}\n"
         )
     elif tipo == "diagnostico":
-        msg["Subject"] = f"[SDL] Diagnóstico de brecha digital: {_una_linea(datos['empresa'], 60)}"
+        r = datos["resultado"]
+        msg["Subject"] = f"[SDL] Diagnóstico {r['total']}/100 ({r['nivel']}): {_una_linea(datos['empresa'], 50)}"
         if CORREO_SIMPLE.match(datos["contacto"]):
             msg["Reply-To"] = datos["contacto"]
+        lineas_dim = "\n".join(
+            f"  - {BRECHA[i][0]}: {p}/100 ({nivel_de(p)})" for i, p in r["dimensiones"].items()
+        )
+        lineas_equipo = "\n".join(f"  - {k}: {v}" for k, v in datos["equipo"].items()) or "  -"
+        servicios = ", ".join(SERVICIOS[s] for s in datos["servicios"]) or "-"
         cuerpo = (
             f"Nombre: {datos['nombre']}\n"
             f"Empresa: {datos['empresa']}\n"
             f"Contacto: {datos['contacto']}\n"
             f"Sector: {datos['sector'] or '-'}\n"
             f"Tamaño: {datos['tamano'] or '-'}\n\n"
-            f"Cómo gestiona hoy sus procesos: {datos['como_gestiona'] or '-'}\n"
-            f"Herramientas que usa: {datos['herramientas'] or '-'}\n"
-            f"Indicadores sin armarlos a mano: {datos['indicadores'] or '-'}\n\n"
-            f"Qué proceso le quita más tiempo:\n{datos['tiempo_perdido']}\n\n"
+            f"Brecha digital: {r['total']}/100 ({r['nivel']})\n{lineas_dim}\n\n"
+            f"Gestión del equipo:\n{lineas_equipo}\n\n"
+            f"Qué frena al equipo:\n{datos['friccion']}\n\n"
+            f"Servicios de interés: {servicios}\n"
+            f"Urgencia: {datos['urgencia'] or '-'}\n\n"
             f"Qué quiere lograr:\n{datos['objetivo'] or '-'}\n"
         )
     else:
@@ -184,17 +191,75 @@ class Curso(Base):
     email: EmailStr
 
 
+# Ids del diagnóstico de brecha digital: deben coincidir con src/data/diagnostico.json.
+BRECHA: dict[str, tuple[str, tuple[str, ...]]] = {
+    "procesos": ("Procesos", ("proc_definidos", "proc_manual")),
+    "herramientas": ("Herramientas y sistemas", ("herr_info", "herr_buscar")),
+    "datos": ("Datos e indicadores", ("dat_cifras", "dat_decisiones")),
+    "atencion": ("Atención y comunicación", ("ate_solicitudes", "ate_recordatorios")),
+    "seguridad": ("Seguridad y respaldo", ("seg_copias", "seg_accesos")),
+}
+IDS_BRECHA = {p for _, preguntas in BRECHA.values() for p in preguntas}
+SERVICIOS = {
+    "software": "Software a la medida",
+    "datos": "Tableros y analítica de datos",
+    "automatizacion": "Automatización con WhatsApp e IA",
+    "soporte": "Auditoría, mantenimiento y soporte",
+    "formacion": "Formación para equipos",
+}
+IDS_EQUIPO = ("asignacion", "seguimiento", "comunicacion")
+NIVELES = ((25, "Inicial"), (50, "En desarrollo"), (75, "Intermedio"), (100, "Avanzado"))
+
+
+def porcentaje(valores: list[int]) -> int:
+    return round(sum(valores) / (len(valores) * 3) * 100) if valores else 0
+
+
+def nivel_de(puntos: int) -> str:
+    return next(nombre for tope, nombre in NIVELES if puntos <= tope)
+
+
 class Diagnostico(Base):
     nombre: str = Field(min_length=1, max_length=120)
     empresa: str = Field(min_length=1, max_length=160)
     contacto: str = Field(min_length=3, max_length=160)
     sector: str = Field("", max_length=80)
     tamano: str = Field("", max_length=80)
-    como_gestiona: str = Field("", max_length=120)
-    herramientas: str = Field("", max_length=600)
-    tiempo_perdido: str = Field(min_length=3, max_length=2000)
-    indicadores: str = Field("", max_length=120)
+    brecha: dict[str, int]
+    equipo: dict[str, str] = Field(default_factory=dict)
+    friccion: str = Field(min_length=3, max_length=2000)
+    servicios: list[str] = Field(default_factory=list, max_length=len(SERVICIOS))
+    urgencia: str = Field("", max_length=80)
     objetivo: str = Field("", max_length=2000)
+
+    @field_validator("brecha")
+    @classmethod
+    def _brecha(cls, v: dict[str, int]) -> dict[str, int]:
+        if set(v) != IDS_BRECHA or any(not 0 <= n <= 3 for n in v.values()):
+            raise ValueError("brecha incompleta o fuera de rango")
+        return v
+
+    @field_validator("equipo")
+    @classmethod
+    def _equipo(cls, v: dict[str, str]) -> dict[str, str]:
+        return {k: _una_linea(t, 120) for k, t in v.items() if k in IDS_EQUIPO}
+
+    @field_validator("servicios")
+    @classmethod
+    def _servicios(cls, v: list[str]) -> list[str]:
+        if any(s not in SERVICIOS for s in v):
+            raise ValueError("servicio desconocido")
+        return list(dict.fromkeys(v))
+
+    @computed_field  # type: ignore[prop-decorator]
+    @property
+    def resultado(self) -> dict:
+        """Puntaje 0-100 por dimensión y total, calculado aquí (no se confía en el navegador)."""
+        dimensiones = {
+            id_: porcentaje([self.brecha[p] for p in preguntas]) for id_, (_, preguntas) in BRECHA.items()
+        }
+        total = porcentaje(list(self.brecha.values()))
+        return {"total": total, "nivel": nivel_de(total), "dimensiones": dimensiones}
 
 
 # --------------------------------------------------------------------------- app

@@ -2,30 +2,26 @@
 import Base from '../layouts/Base.astro';
 import Icono from '../components/Icono.astro';
 import { site, whatsappUrl } from '../lib/site';
+import d from '../data/diagnostico.json';
 
 const wa = whatsappUrl();
 const enlaceExterno = wa.startsWith('http');
 
-const sectores = ['Salud', 'Educación', 'Sector público', 'Comercio', 'Industria o manufactura', 'Servicios', 'Fundación u ONG', 'Otro'];
-const tamanos = ['Solo yo', '2 a 10 personas', '11 a 50 personas', 'Más de 50 personas'];
-const gestion = [
-  'Papel, Excel o WhatsApp',
-  'Varias herramientas sueltas que no se hablan entre sí',
-  'Un sistema que cubre parte del trabajo',
-  'Un sistema integrado que cubre casi todo',
-];
-const indicadores = [
-  'No, los armo a mano cuando los necesito',
-  'Algunos, con esfuerzo',
-  'Sí, los veo actualizados sin esfuerzo',
-];
-
 const etiqueta = 'mb-1.5 block text-xs font-mono uppercase tracking-wider text-turquesa';
+const opcion =
+  'flex cursor-pointer items-start gap-3 rounded-lg border border-borde bg-fondo/40 p-3 text-sm text-texto transition-colors hover:border-turquesa/60 has-[:checked]:border-turquesa has-[:checked]:bg-turquesa/10';
+const pasos = ['Tu empresa', 'Brecha digital', 'Tu equipo', 'Servicios'];
+
+// Datos mínimos para que el script calcule el puntaje en el navegador.
+const config = {
+  niveles: d.niveles,
+  dimensiones: d.dimensiones.map((x) => ({ id: x.id, titulo: x.titulo, preguntas: x.preguntas.map((p) => p.id) })),
+};
 ---
 
 <Base
   titulo="Diagnóstico de brecha digital | Software Data Lab"
-  descripcion="Cuéntanos cómo trabaja tu empresa hoy y revisamos su brecha digital: qué haces a mano, con qué herramientas y datos cuentas y qué conviene digitalizar primero."
+  descripcion="Mide la brecha digital de tu empresa en 5 minutos: procesos, herramientas, datos, atención y seguridad. Recibe tu nivel por dimensión al terminar."
 >
   <section class="seccion" aria-labelledby="diagnostico-titulo">
     <div class="contenedor max-w-3xl">
@@ -39,96 +35,177 @@ const etiqueta = 'mb-1.5 block text-xs font-mono uppercase tracking-wider text-t
         <span class="punto"></span>
         Diagnóstico gratis
       </div>
-      <h1 id="diagnostico-titulo" class="titulo-seccion mt-4">Diagnóstico de brecha digital</h1>
+      <h1 id="diagnostico-titulo" class="titulo-seccion mt-4">Mide la brecha digital de tu empresa</h1>
       <p class="mt-4 text-lg text-suave">
-        Responde estas preguntas (toma unos 5 minutos). Con ellas preparamos la conversación de 30 minutos: cómo trabajas hoy,
-        dónde se pierde el tiempo y qué conviene digitalizar primero.
+        Cuatro pasos y unos 5 minutos. Al terminar ves tu nivel en cada área y nosotros preparamos la conversación de 30 minutos.
       </p>
 
-      <div class="tarjeta mt-10">
-        <form
-          class="space-y-5"
-          data-endpoint={site.formularios.diagnosticoEndpoint}
-          data-nombre="diagnostico"
-          data-evento-exito="formulario_enviado"
-          data-exito="Recibimos tu diagnóstico. Te escribimos pronto para agendar la conversación."
-        >
-          <div class="grid gap-5 sm:grid-cols-2">
-            <div>
-              <label for="dg-nombre" class={etiqueta}>Nombre</label>
-              <input id="dg-nombre" name="nombre" type="text" class="campo" autocomplete="name" required maxlength="120" />
+      <script type="application/json" id="dg-config" set:html={JSON.stringify(config)} />
+
+      <div class="tarjeta mt-10" id="dg-tarjeta">
+        <ol class="mb-8 flex gap-2" aria-label="Progreso" id="dg-progreso">
+          {
+            pasos.map((p, i) => (
+              <li class="flex-1" data-progreso={i}>
+                <span class="block h-1.5 rounded-full bg-borde transition-colors" data-barra></span>
+                <span class="mt-2 hidden font-mono text-[0.7rem] uppercase tracking-wider text-suave sm:block">{p}</span>
+              </li>
+            ))
+          }
+        </ol>
+
+        <form id="dg-form" class="space-y-5" novalidate data-api={site.formularios.diagnosticoEndpoint}>
+          <!-- Paso 1 -->
+          <fieldset data-paso="0" class="space-y-5">
+            <legend class="mb-2 text-xl font-bold tracking-tight text-texto">Tu empresa</legend>
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label for="dg-nombre" class={etiqueta}>Nombre</label>
+                <input id="dg-nombre" name="nombre" type="text" class="campo" autocomplete="name" required maxlength="120" />
+              </div>
+              <div>
+                <label for="dg-empresa" class={etiqueta}>Empresa u organización</label>
+                <input id="dg-empresa" name="empresa" type="text" class="campo" autocomplete="organization" required maxlength="160" />
+              </div>
             </div>
             <div>
-              <label for="dg-empresa" class={etiqueta}>Empresa u organización</label>
-              <input id="dg-empresa" name="empresa" type="text" class="campo" autocomplete="organization" required maxlength="160" />
+              <label for="dg-contacto" class={etiqueta}>Correo o WhatsApp para responderte</label>
+              <input id="dg-contacto" name="contacto" type="text" class="campo" autocomplete="email" required maxlength="160" />
             </div>
-          </div>
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label for="dg-sector" class={etiqueta}>Sector</label>
+                <select id="dg-sector" name="sector" class="campo" required>
+                  <option value="">Elige uno</option>
+                  {d.sectores.map((s) => <option value={s}>{s}</option>)}
+                </select>
+              </div>
+              <div>
+                <label for="dg-tamano" class={etiqueta}>Tamaño del equipo</label>
+                <select id="dg-tamano" name="tamano" class="campo" required>
+                  <option value="">Elige uno</option>
+                  {d.tamanos.map((t) => <option value={t}>{t}</option>)}
+                </select>
+              </div>
+            </div>
+          </fieldset>
 
-          <div>
-            <label for="dg-contacto" class={etiqueta}>Correo o WhatsApp para responderte</label>
-            <input id="dg-contacto" name="contacto" type="text" class="campo" autocomplete="email" required maxlength="160" />
-          </div>
+          <!-- Paso 2 -->
+          <fieldset data-paso="1" class="space-y-8" hidden>
+            <legend class="mb-2 text-xl font-bold tracking-tight text-texto">Brecha digital</legend>
+            <p class="text-sm text-suave">Elige la opción que más se parezca a cómo trabajan hoy, no a cómo quisieras.</p>
+            {
+              d.dimensiones.map((dim) => (
+                <div class="space-y-5">
+                  <h3 class="font-mono text-sm uppercase tracking-widest text-turquesa-claro">{dim.titulo}</h3>
+                  {dim.preguntas.map((p) => (
+                    <div role="radiogroup" aria-labelledby={`q-${p.id}`} class="space-y-2">
+                      <p id={`q-${p.id}`} class="font-medium text-texto">{p.texto}</p>
+                      {p.opciones.map((o, i) => (
+                        <label class={opcion}>
+                          <input type="radio" name={`brecha.${p.id}`} value={String(i)} required class="mt-0.5 accent-turquesa" />
+                          <span>{o}</span>
+                        </label>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              ))
+            }
+          </fieldset>
 
-          <div class="grid gap-5 sm:grid-cols-2">
+          <!-- Paso 3 -->
+          <fieldset data-paso="2" class="space-y-6" hidden>
+            <legend class="mb-2 text-xl font-bold tracking-tight text-texto">Tu equipo</legend>
+            {
+              d.equipo.map((p) => (
+                <div role="radiogroup" aria-labelledby={`q-${p.id}`} class="space-y-2">
+                  <p id={`q-${p.id}`} class="font-medium text-texto">{p.texto}</p>
+                  {p.opciones.map((o) => (
+                    <label class={opcion}>
+                      <input type="radio" name={`equipo.${p.id}`} value={o} required class="mt-0.5 accent-turquesa" />
+                      <span>{o}</span>
+                    </label>
+                  ))}
+                </div>
+              ))
+            }
             <div>
-              <label for="dg-sector" class={etiqueta}>Sector</label>
-              <select id="dg-sector" name="sector" class="campo">
+              <label for="dg-friccion" class={etiqueta}>¿Qué es lo que más frena o genera errores en tu equipo hoy?</label>
+              <textarea id="dg-friccion" name="friccion" rows="4" class="campo resize-y" required maxlength="2000"></textarea>
+            </div>
+          </fieldset>
+
+          <!-- Paso 4 -->
+          <fieldset data-paso="3" class="space-y-6" hidden>
+            <legend class="mb-2 text-xl font-bold tracking-tight text-texto">Servicios de tu interés</legend>
+            <p class="text-sm text-suave">Marca los que te interesen (puedes dejar todos sin marcar).</p>
+            <div class="space-y-2">
+              {
+                d.servicios.map((s) => (
+                  <label class={opcion}>
+                    <input type="checkbox" name="servicios" value={s.id} class="mt-0.5 accent-turquesa" />
+                    <span>
+                      <span class="font-semibold">{s.titulo}</span>
+                      <span class="block text-suave">{s.descripcion}</span>
+                    </span>
+                  </label>
+                ))
+              }
+            </div>
+            <div>
+              <label for="dg-urgencia" class={etiqueta}>¿Para cuándo lo necesitas?</label>
+              <select id="dg-urgencia" name="urgencia" class="campo">
                 <option value="">Elige uno</option>
-                {sectores.map((s) => <option value={s}>{s}</option>)}
+                {d.urgencias.map((u) => <option value={u}>{u}</option>)}
               </select>
             </div>
             <div>
-              <label for="dg-tamano" class={etiqueta}>Tamaño del equipo</label>
-              <select id="dg-tamano" name="tamano" class="campo">
-                <option value="">Elige uno</option>
-                {tamanos.map((t) => <option value={t}>{t}</option>)}
-              </select>
+              <label for="dg-objetivo" class={etiqueta}>¿Qué te gustaría lograr? (opcional)</label>
+              <textarea id="dg-objetivo" name="objetivo" rows="3" class="campo resize-y" maxlength="2000"></textarea>
             </div>
-          </div>
-
-          <div>
-            <label for="dg-gestion" class={etiqueta}>¿Cómo llevas hoy tus procesos principales?</label>
-            <select id="dg-gestion" name="como_gestiona" class="campo">
-              <option value="">Elige uno</option>
-              {gestion.map((g) => <option value={g}>{g}</option>)}
-            </select>
-          </div>
-
-          <div>
-            <label for="dg-herramientas" class={etiqueta}>¿Qué herramientas usas? (Excel, WhatsApp, un software, etc.)</label>
-            <input id="dg-herramientas" name="herramientas" type="text" class="campo" maxlength="600" />
-          </div>
-
-          <div>
-            <label for="dg-indicadores" class={etiqueta}>¿Ves tus cifras e indicadores sin armarlos a mano?</label>
-            <select id="dg-indicadores" name="indicadores" class="campo">
-              <option value="">Elige uno</option>
-              {indicadores.map((i) => <option value={i}>{i}</option>)}
-            </select>
-          </div>
-
-          <div>
-            <label for="dg-tiempo" class={etiqueta}>¿Qué proceso te quita más tiempo o genera más errores?</label>
-            <textarea id="dg-tiempo" name="tiempo_perdido" rows="4" class="campo resize-y" required maxlength="2000"></textarea>
-          </div>
-
-          <div>
-            <label for="dg-objetivo" class={etiqueta}>¿Qué te gustaría lograr? (opcional)</label>
-            <textarea id="dg-objetivo" name="objetivo" rows="3" class="campo resize-y" maxlength="2000"></textarea>
-          </div>
+          </fieldset>
 
           <div class="absolute -left-[9999px]" aria-hidden="true">
             <label>No llenes este campo <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" /></label>
           </div>
 
-          <button
-            type="submit"
-            class="btn w-full bg-turquesa font-semibold text-fondo hover:bg-turquesa-claro shadow-[0_4px_16px_rgba(127,214,203,0.3)] hover:shadow-[0_6px_22px_rgba(127,214,203,0.45)] active:scale-[0.98] transition-all disabled:opacity-60"
-          >
-            Enviar diagnóstico
-          </button>
           <p data-estado role="status" aria-live="polite" class="min-h-6 text-sm"></p>
+
+          <div class="flex flex-col-reverse gap-3 sm:flex-row sm:justify-between">
+            <button type="button" id="dg-atras" class="btn btn-secundario" hidden>Atrás</button>
+            <button
+              type="button"
+              id="dg-siguiente"
+              class="btn bg-turquesa font-semibold text-fondo hover:bg-turquesa-claro sm:ml-auto"
+            >
+              Siguiente
+            </button>
+            <button
+              type="submit"
+              id="dg-enviar"
+              class="btn bg-turquesa font-semibold text-fondo hover:bg-turquesa-claro disabled:opacity-60 sm:ml-auto"
+              hidden
+            >
+              Enviar y ver mi resultado
+            </button>
+          </div>
         </form>
+
+        <div id="dg-resultado" hidden aria-live="polite">
+          <h2 class="text-2xl font-bold tracking-tight text-texto">Tu resultado</h2>
+          <p class="mt-2 text-suave">Recibimos tus respuestas. Este es tu nivel de madurez digital según lo que contestaste.</p>
+          <div class="mt-6 rounded-xl border border-turquesa/40 bg-turquesa/10 p-5">
+            <p class="font-mono text-xs uppercase tracking-wider text-turquesa">Nivel general</p>
+            <p class="mt-1 text-3xl font-bold text-texto"><span id="dg-total"></span> / 100 · <span id="dg-nivel"></span></p>
+            <p id="dg-nivel-texto" class="mt-2 text-suave"></p>
+          </div>
+          <ul id="dg-dimensiones" class="mt-6 space-y-4"></ul>
+          <p class="mt-8 text-sm text-suave">
+            Es una medición orientativa, basada en tus respuestas. En la conversación de 30 minutos la revisamos contigo y definimos qué
+            digitalizar primero. Te escribimos pronto.
+          </p>
+        </div>
       </div>
 
       <p class="mt-8 text-suave">
@@ -147,4 +224,8 @@ const etiqueta = 'mb-1.5 block text-xs font-mono uppercase tracking-wider text-t
       </p>
     </div>
   </section>
+
+  <script>
+    import '../scripts/diagnostico.ts';
+  </script>
 </Base>

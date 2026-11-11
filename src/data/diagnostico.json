@@ -1,0 +1,177 @@
+{
+  "_ayuda": [
+    "Preguntas del diagnóstico de brecha digital. Cada pregunta de 'dimensiones' tiene 4 opciones ordenadas de menor a mayor madurez (valen 0, 1, 2 y 3).",
+    "Los ids de dimensiones, preguntas y servicios también están en api/app/main.py (BRECHA, SERVICIOS). Si cambias un id aquí, cámbialo allá.",
+    "El puntaje es metodología propia de SDL: promedio de las respuestas de cada dimensión, expresado de 0 a 100."
+  ],
+  "sectores": ["Salud", "Educación", "Sector público", "Comercio", "Industria o manufactura", "Servicios", "Fundación u ONG", "Otro"],
+  "tamanos": ["Solo yo", "2 a 10 personas", "11 a 50 personas", "Más de 50 personas"],
+  "niveles": [
+    { "hasta": 25, "nombre": "Inicial", "texto": "Casi todo se hace a mano. Hay mucho por ganar con pocos cambios bien elegidos." },
+    { "hasta": 50, "nombre": "En desarrollo", "texto": "Ya usas herramientas, pero no se conectan entre sí. Integrar y ordenar es el siguiente paso." },
+    { "hasta": 75, "nombre": "Intermedio", "texto": "Tienes una base sólida. Conviene automatizar lo repetitivo y medir con datos." },
+    { "hasta": 100, "nombre": "Avanzado", "texto": "Tu operación está bien digitalizada. Se trata de afinar, medir y escalar." }
+  ],
+  "dimensiones": [
+    {
+      "id": "procesos",
+      "titulo": "Procesos",
+      "preguntas": [
+        {
+          "id": "proc_definidos",
+          "texto": "¿Cómo se ejecutan hoy tus procesos principales (ventas, pedidos, atención, producción)?",
+          "opciones": [
+            "Cada persona lo hace a su manera, sin pasos definidos",
+            "Hay pasos definidos, pero viven en papel o en la cabeza de alguien",
+            "Están documentados y se siguen casi siempre",
+            "Están documentados, automatizados y se mejoran con datos"
+          ]
+        },
+        {
+          "id": "proc_manual",
+          "texto": "¿Cuánto trabajo se repite a mano (copiar datos, pasar información entre archivos)?",
+          "opciones": ["Casi todo", "Mucho", "Poco", "Casi nada"]
+        }
+      ]
+    },
+    {
+      "id": "herramientas",
+      "titulo": "Herramientas y sistemas",
+      "preguntas": [
+        {
+          "id": "herr_info",
+          "texto": "¿Con qué llevas la información del negocio?",
+          "opciones": [
+            "Papel, WhatsApp o memoria",
+            "Excel o Google Sheets sueltos",
+            "Varias aplicaciones que no se conectan entre sí",
+            "Un sistema integrado que cubre casi todo"
+          ]
+        },
+        {
+          "id": "herr_buscar",
+          "texto": "¿Qué tan fácil es encontrar un dato (un cliente, un pedido, un pago) cuando lo necesitas?",
+          "opciones": [
+            "Toca buscar en varios lugares o preguntar a alguien",
+            "Lo encuentro en un archivo, pero me demoro",
+            "Lo encuentro rápido en una herramienta",
+            "Lo encuentro al instante y con su historial"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "datos",
+      "titulo": "Datos e indicadores",
+      "preguntas": [
+        {
+          "id": "dat_cifras",
+          "texto": "¿Cómo obtienes tus cifras e indicadores (ventas, costos, inventario)?",
+          "opciones": [
+            "No las tengo",
+            "Las armo a mano cuando las necesito",
+            "Reportes periódicos, con esfuerzo",
+            "Tableros que se actualizan solos"
+          ]
+        },
+        {
+          "id": "dat_decisiones",
+          "texto": "¿Con qué frecuencia decides apoyándote en datos y no en intuición?",
+          "opciones": ["Casi nunca", "A veces", "Con frecuencia", "Siempre, es parte de la rutina"]
+        }
+      ]
+    },
+    {
+      "id": "atencion",
+      "titulo": "Atención y comunicación",
+      "preguntas": [
+        {
+          "id": "ate_solicitudes",
+          "texto": "¿Cómo reciben y atienden las solicitudes de clientes o usuarios?",
+          "opciones": [
+            "Llamadas y WhatsApp personales, sin registro",
+            "Un número o correo compartido, sin seguimiento",
+            "Registro de solicitudes con un responsable",
+            "Canales conectados a un sistema, con seguimiento y alertas"
+          ]
+        },
+        {
+          "id": "ate_recordatorios",
+          "texto": "¿Cómo recuerdan citas, pagos o entregas?",
+          "opciones": [
+            "De memoria o con agenda personal",
+            "Manualmente, por llamada o mensaje",
+            "Con recordatorios semiautomáticos",
+            "Automáticos, por WhatsApp o correo"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "seguridad",
+      "titulo": "Seguridad y respaldo",
+      "preguntas": [
+        {
+          "id": "seg_copias",
+          "texto": "¿Qué pasa con las copias de seguridad de tu información?",
+          "opciones": [
+            "No hay copias",
+            "Se hacen a veces y de forma manual",
+            "Son periódicas, pero nunca se ha probado restaurarlas",
+            "Son automáticas y se verifican"
+          ]
+        },
+        {
+          "id": "seg_accesos",
+          "texto": "¿Cómo se controla quién accede a la información?",
+          "opciones": [
+            "Todos comparten las mismas claves o archivos",
+            "Hay controles informales",
+            "Usuarios y permisos según el cargo",
+            "Usuarios, permisos y registro de quién hizo qué"
+          ]
+        }
+      ]
+    }
+  ],
+  "equipo": [
+    {
+      "id": "asignacion",
+      "texto": "¿Cómo se asignan las tareas en tu equipo?",
+      "opciones": [
+        "De palabra o por chat",
+        "En una lista de Excel o en papel",
+        "En una herramienta de tareas (Trello, Asana u otra)",
+        "En un sistema propio ligado al proceso"
+      ]
+    },
+    {
+      "id": "seguimiento",
+      "texto": "¿Cómo sabes en qué va cada tarea o proyecto?",
+      "opciones": [
+        "Le pregunto a cada persona",
+        "En reuniones periódicas",
+        "Con un reporte manual",
+        "En un tablero que se actualiza solo"
+      ]
+    },
+    {
+      "id": "comunicacion",
+      "texto": "¿Cómo se comunica el equipo día a día?",
+      "opciones": [
+        "WhatsApp personal",
+        "Grupos de WhatsApp y correo",
+        "Una herramienta de equipo (Teams, Slack, Meet)",
+        "Una herramienta de equipo ligada a los procesos"
+      ]
+    }
+  ],
+  "servicios": [
+    { "id": "software", "titulo": "Software a la medida", "descripcion": "Sistemas, integraciones con pagos, tienda o contabilidad, y salir del Excel." },
+    { "id": "datos", "titulo": "Tableros y analítica de datos", "descripcion": "Indicadores, reportes y Power BI con datos confiables." },
+    { "id": "automatizacion", "titulo": "Automatización con WhatsApp e IA", "descripcion": "Recordatorios, campañas, bots y transcripción de voz." },
+    { "id": "soporte", "titulo": "Auditoría, mantenimiento y soporte", "descripcion": "Revisión técnica, seguridad, mejoras y bolsa de horas." },
+    { "id": "formacion", "titulo": "Formación para equipos", "descripcion": "Power BI, programación, analítica e IA aplicada." }
+  ],
+  "urgencias": ["Solo estoy explorando", "En los próximos 6 meses", "En los próximos 3 meses", "Lo antes posible"]
+}
