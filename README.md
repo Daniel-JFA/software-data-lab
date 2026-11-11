@@ -95,6 +95,20 @@ Los eventos ya están conectados:
 
 En Plausible, declara `whatsapp_click`, `formulario_enviado` y `suscripcion_curso` como *goals*.
 
+## Despliegue local completo (sitio + API)
+
+Réplica de producción en tu máquina: nginx sirve `dist/` y reenvía `/api/` a la API.
+
+```bash
+cp api/.env.example api/.env     # una vez; pon un IP_SALT (openssl rand -hex 32) y, si quieres correo, el SMTP
+npm run build
+docker compose -f deploy/docker-compose.local.yml up -d --build
+# -> http://localhost:8080
+docker compose -f deploy/docker-compose.local.yml down     # detener (los datos quedan en el volumen)
+```
+
+Si cambias `dist/` (otro `npm run build`) se ve al instante. Si cambias `deploy/nginx.local.conf`, recrea el contenedor: `docker compose -f deploy/docker-compose.local.yml up -d --force-recreate web`.
+
 ## Despliegue con el subdominio sdl.danielflorez.dev
 
 El sitio es estático: el resultado de `npm run build` es la carpeta `dist/`, que cualquier servidor web puede servir. Se publica en tu propio servidor.
@@ -111,6 +125,7 @@ server {
     root /var/www/sdl;
     index index.html;
     error_page 404 /404.html;
+    absolute_redirect off;
 
     add_header X-Content-Type-Options "nosniff" always;
     add_header X-Frame-Options "DENY" always;
