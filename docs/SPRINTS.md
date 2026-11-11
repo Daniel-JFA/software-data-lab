@@ -61,6 +61,12 @@ Meta: sitio en `sdl.danielflorez.dev`, medible y con marca real.
 - **Hecho cuando:** URL pública, formularios llegando, evento de WhatsApp visible en analítica.
 
 ### S2 — Registro de aplicativos (semana 3–4)
+**Estado: HECHO EN CÓDIGO, con datos por confirmar.**
+- Hechas: S2-01 esquema, S2-02 carga de 12 aplicativos, S2-03 `Casos.astro` lee del registro, S2-04 `npm run validar` (corre solo antes de cada build y bloquea si hay errores o secretos evidentes).
+- Pendiente del usuario: confirmar el `estado` de cada aplicativo (todos van con `revisar: true`), decidir cuáles pasan a públicos y con qué permiso, y completar tecnologías de RentMotor y GPS.
+- Pendiente: S2-05 corregir el `CLAUDE.md` de `~/Dev` (está fuera de este repositorio; no lo toqué).
+- Omitidos a propósito del registro: Web_Asdru, Invitaciones, df-portfolio (menores) y los personales o sensibles (`trading`, `deriv-mcp`, herramientas OSINT).
+
 - S2-01 Definir esquema `apps.json`: `slug, nombre, categoria, estado (producción | demo | prototipo | privado), visibilidad (pública | oculta), cliente (opcional), stack[], url, repo, resumen, problema, solución, healthUrl`.
 - S2-02 Cargar los ~12 aplicativos con estado real (decide cuáles son públicos).
 - S2-03 Que `Casos.astro` lea de `apps.json` (los destacados).

@@ -26,6 +26,7 @@ npm run og         # regenera public/og.png (1200x630)
 └── src/
     ├── data/               # ← AQUÍ EDITAS TODO EL CONTENIDO
     │   ├── site.json       # WhatsApp, correo, redes, Formspree, textos de Inicio/Contacto/pie, SEO
+    │   ├── apps.json       # registro único de aplicativos (alimenta los Casos); valida con `npm run validar`
     │   ├── servicios.json  clientes.json  casos.json
     │   ├── lab.json  curso.json  proceso.json
     ├── components/         # una sección por archivo (no necesitas tocarlos)

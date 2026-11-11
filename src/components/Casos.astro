@@ -1,7 +1,13 @@
 ---
 import Icono from './Icono.astro';
 import datos from '../data/casos.json';
+import registro from '../data/apps.json';
 import { mostrarPendientes, vacio } from '../lib/site';
+
+// Solo se muestran aplicativos destacados, públicos y con autorización.
+const destacados = registro.apps
+  .filter((a) => a.destacado && a.visibilidad === 'publica' && a.autorizado)
+  .sort((a, b) => (a.ordenDestacado ?? 99) - (b.ordenDestacado ?? 99));
 ---
 
 <section id="casos" class="seccion" aria-labelledby="casos-titulo">
@@ -12,7 +18,7 @@ import { mostrarPendientes, vacio } from '../lib/site';
 
     <ul class="mt-10 grid gap-5 lg:grid-cols-3">
       {
-        datos.items.map((c) => (
+        destacados.map((c) => (
           <li class="tarjeta flex flex-col gap-5">
             <div>
               <p class="etiqueta">{c.categoria}</p>
@@ -54,7 +60,7 @@ import { mostrarPendientes, vacio } from '../lib/site';
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {c.enlaceTexto}
+                  {datos.enlaceTexto}
                   <span class="sr-only"> de {c.nombre} (se abre en otra pestaña)</span>
                   <Icono nombre="externo" class="h-4 w-4" />
                 </a>

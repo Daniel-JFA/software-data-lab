@@ -6,6 +6,8 @@
   "description": "Landing de Software Data Lab (sdl.danielflorez.dev)",
   "scripts": {
     "dev": "astro dev",
+    "validar": "node scripts/validar-apps.mjs",
+    "prebuild": "node scripts/validar-apps.mjs",
     "build": "astro build",
     "preview": "astro preview",
     "og": "node scripts/generar-og.mjs"
