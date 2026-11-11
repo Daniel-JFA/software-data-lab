@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="rmBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+    <linearGradient id="rmLeg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+  </defs>
+  <!-- Squircle container -->
+  <rect width="64" height="64" rx="16" fill="url(#rmBg)"/>
+  <rect x="0.5" y="0.5" width="63" height="63" rx="15.5" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+  
+  <!-- Left Pillar -->
+  <rect x="14" y="14" width="9" height="36" rx="4.5" fill="#ffffff"/>
+  
+  <!-- Top Aero Curve (Loop of R) -->
+  <path d="M23 14 h12 c7.18 0 13 5.82 13 13 c0 7.18 -5.82 13 -13 13 h-12" 
+        fill="none" stroke="#ffffff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+        
+  <!-- Velocity Slash Leg -->
+  <path d="M27 33 l16 17" 
+        stroke="url(#rmLeg)" stroke-width="9" stroke-linecap="round"/>
+</svg>

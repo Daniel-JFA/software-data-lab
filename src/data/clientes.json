@@ -47,5 +47,12 @@
       "nota": ""
     }
   ],
-  "clientes": []
+  "clientes": [
+    { "nombre": "Alcaldía de Medellín", "logo": "/clientes/alcaldia.png" },
+    { "nombre": "Coopsana IPS", "logo": "/clientes/coopsana.png" },
+    { "nombre": "Fundación Infantil Santiago Corazón", "logo": "/clientes/santiagocorazon.png" },
+    { "nombre": "Institución Universitaria Pascual Bravo", "logo": "/clientes/pascualbravo.png" },
+    { "nombre": "Cámara de Comercio de Magangué", "logo": "/clientes/magangue.png", "fondo": "oscuro" },
+    { "nombre": "Arquidiócesis de Medellín", "logo": "/clientes/arquidiocesis.svg" }
+  ]
 }

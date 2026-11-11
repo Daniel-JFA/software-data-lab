@@ -1,0 +1,261 @@
+---
+import clientesDatos from '../data/clientes.json';
+import tecnologias from '../data/tecnologias.json';
+import registro from '../data/apps.json';
+
+type Cliente = { nombre: string; logo: string; url?: string; fondo?: string };
+type AppCarrusel = {
+  nombre: string;
+  visibilidad: string;
+  carrusel?: boolean;
+  logo?: string;
+  logoForma?: string;
+};
+
+const clientes = clientesDatos.clientes as Cliente[];
+
+// Aplicativos que aparecen en el carrusel (solo nombre y logo, sin descripción). Se activan con "carrusel": true en apps.json.
+const apps = (registro.apps as AppCarrusel[])
+  .filter((a) => a.carrusel === true)
+  .sort((a, b) => Number(b.visibilidad === 'publica') - Number(a.visibilidad === 'publica'));
+
+const iniciales = (nombre: string): string => {
+  const palabras = nombre.replace(/[()]/g, ' ').split(/\s+/).filter((p) => /^[\p{L}\p{N}]/u.test(p));
+  const par = palabras.length > 1 ? palabras[0][0] + palabras[1][0] : (palabras[0] ?? '?').slice(0, 2);
+  return par.toUpperCase();
+};
+
+// Cada lista se dibuja dos veces para que el carrusel dé la vuelta sin saltos; la copia va oculta para lectores de pantalla.
+const copias = [false, true];
+---
+
+<section id="confianza" class="seccion" aria-labelledby="confianza-titulo">
+  <div class="contenedor">
+    <div class="badge-seccion">
+      <span class="punto"></span>
+      Con qué y con quién
+    </div>
+    <h2 id="confianza-titulo" class="titulo-seccion mt-4 max-w-3xl">Con qué y con quién trabajamos</h2>
+
+    <!-- Tecnologías -->
+    <div class="mt-12">
+      <h3 class="etiqueta">{tecnologias.titulo}</h3>
+      <div class="mt-6 grid gap-8 sm:grid-cols-2">
+        {
+          tecnologias.grupos.map((g) => (
+            <div>
+              <p class="font-mono text-xs uppercase tracking-wider text-suave">{g.nombre}</p>
+              <ul class="mt-3 flex flex-wrap gap-2">
+                {g.items.map((t) => (
+                  <li class="tec">
+                    {t.icono ? (
+                      <i class="tec-ic" style={`--ic:url(/tec/${t.icono}.svg)`} aria-hidden="true" />
+                    ) : null}
+                    <span>{t.nombre}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- Empresas -->
+    {
+      clientes.length > 0 && (
+        <div class="mt-16">
+          <h3 class="etiqueta">Empresas con las que hemos trabajado</h3>
+          <div class="marq mt-6" role="group" aria-label="Empresas con las que hemos trabajado" tabindex="0">
+            <ul class="marq-pista">
+              {copias.map((oculta) =>
+                clientes.map((c) => (
+                  <li aria-hidden={oculta ? 'true' : undefined}>
+                    <span class:list={['logo-caja', c.fondo === 'oscuro' && 'logo-caja-osc']}>
+                      <img src={c.logo} alt={oculta ? '' : c.nombre} loading="lazy" />
+                    </span>
+                  </li>
+                )),
+              )}
+            </ul>
+          </div>
+        </div>
+      )
+    }
+
+    <!-- Aplicativos -->
+    {
+      apps.length > 0 && (
+        <div class="mt-14">
+          <h3 class="etiqueta">Aplicativos que hemos construido o mejorado</h3>
+          <div class="marq marq-inv mt-6" role="group" aria-label="Aplicativos que hemos construido o mejorado" tabindex="0">
+            <ul class="marq-pista marq-lenta">
+              {copias.map((oculta) =>
+                apps.map((a) => (
+                  <li aria-hidden={oculta ? 'true' : undefined}>
+                    <span class="ap">
+                      {a.logo ? (
+                        <img
+                          class:list={['ap-ic', a.logoForma === 'ancho' && 'ap-ancho', a.logoForma === 'ancho-oscuro' && 'ap-fin']}
+                          src={a.logo}
+                          alt=""
+                          loading="lazy"
+                        />
+                      ) : (
+                        <i class="ap-ic ap-mono" aria-hidden="true">{iniciales(a.nombre)}</i>
+                      )}
+                      {a.nombre}
+                    </span>
+                  </li>
+                )),
+              )}
+            </ul>
+          </div>
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .tec {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.5rem;
+    padding: 0.35rem 0.8rem;
+    border: 1px solid var(--color-borde);
+    border-radius: 9999px;
+    background: var(--color-superficie);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--color-texto);
+    transition: border-color 0.2s;
+  }
+  .tec:hover {
+    border-color: var(--color-turquesa);
+  }
+  .tec-ic {
+    flex: none;
+    width: 1.1rem;
+    height: 1.1rem;
+    background: var(--color-turquesa);
+    -webkit-mask: var(--ic) center / contain no-repeat;
+    mask: var(--ic) center / contain no-repeat;
+  }
+
+  .marq {
+    overflow: hidden;
+    max-width: 100%;
+    contain: paint;
+    -webkit-mask: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+    mask: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  }
+  .marq-pista {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    width: max-content;
+    margin: 0;
+    padding: 0.3rem 0;
+    list-style: none;
+    animation: marq 38s linear infinite;
+  }
+  .marq-lenta {
+    animation-duration: 46s;
+  }
+  .marq-inv .marq-pista {
+    animation-direction: reverse;
+  }
+  .marq:hover .marq-pista,
+  .marq:focus-within .marq-pista,
+  .marq:focus .marq-pista {
+    animation-play-state: paused;
+  }
+  .marq-pista li {
+    flex: none;
+  }
+  @keyframes marq {
+    to {
+      transform: translateX(calc(-50% - 0.6rem));
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marq {
+      overflow-x: auto;
+      -webkit-mask: none;
+      mask: none;
+    }
+    .marq-pista {
+      animation: none;
+    }
+    .marq-pista li[aria-hidden='true'] {
+      display: none;
+    }
+  }
+
+  .logo-caja {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 9.5rem;
+    min-height: 4rem;
+    padding: 0.7rem 1rem;
+    background: #fff;
+    border: 1px solid var(--color-borde);
+    border-radius: 0.6rem;
+  }
+  .logo-caja-osc {
+    background: #0b1f2a;
+  }
+  .logo-caja img {
+    display: block;
+    max-height: 2.75rem;
+    max-width: 12rem;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .ap {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    min-height: 3.5rem;
+    padding: 0.45rem 1rem 0.45rem 0.5rem;
+    border: 1px solid var(--color-borde);
+    border-radius: 0.65rem;
+    background: var(--color-superficie);
+    font-weight: 500;
+    color: var(--color-texto);
+    white-space: nowrap;
+  }
+  .ap-ic {
+    flex: none;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    object-fit: cover;
+    background: #fff;
+  }
+  .ap-ancho {
+    width: 5.5rem;
+    object-fit: contain;
+    padding: 2px;
+  }
+  .ap-fin {
+    width: 11.9rem;
+    background: #0a0b22;
+    object-fit: contain;
+    padding: 0;
+  }
+  .ap-mono {
+    display: inline-grid;
+    place-items: center;
+    background: var(--color-superficie-alta);
+    border: 1px solid var(--color-borde);
+    color: var(--color-turquesa);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-style: normal;
+  }
+</style>

@@ -1,0 +1,95 @@
+{
+  "_ayuda": [
+    "Tecnologías que SDL usa, sacadas de las dependencias de los proyectos en ~/Dev (package.json, requirements.txt y docker-compose) y de clientes.json (Power BI, IoT).",
+    "'icono' es el nombre del icono en Simple Icons (https://simpleicons.org). Vacío = se muestra solo el nombre.",
+    "Agregar o quitar tecnologías aquí no requiere tocar componentes."
+  ],
+  "titulo": "Tecnologías con las que trabajamos",
+  "grupos": [
+    {
+      "nombre": "Interfaces web",
+      "items": [
+        { "nombre": "Angular", "icono": "angular" },
+        { "nombre": "React", "icono": "react" },
+        { "nombre": "Next.js", "icono": "nextdotjs" },
+        { "nombre": "TypeScript", "icono": "typescript" },
+        { "nombre": "Tailwind CSS", "icono": "tailwindcss" },
+        { "nombre": "Astro", "icono": "astro" },
+        { "nombre": "Vite", "icono": "vite" },
+        { "nombre": "D3.js", "icono": "d3dotjs" },
+        { "nombre": "Chart.js", "icono": "chartdotjs" },
+        { "nombre": "Leaflet", "icono": "leaflet" }
+      ]
+    },
+    {
+      "nombre": "Servidor y APIs",
+      "items": [
+        { "nombre": "Node.js", "icono": "nodedotjs" },
+        { "nombre": "Express", "icono": "express" },
+        { "nombre": "NestJS", "icono": "nestjs" },
+        { "nombre": "Python", "icono": "python" },
+        { "nombre": "FastAPI", "icono": "fastapi" },
+        { "nombre": "Flask", "icono": "flask" },
+        { "nombre": "Prisma", "icono": "prisma" },
+        { "nombre": "SQLAlchemy", "icono": "sqlalchemy" }
+      ]
+    },
+    {
+      "nombre": "Datos y analítica",
+      "items": [
+        { "nombre": "PostgreSQL", "icono": "postgresql" },
+        { "nombre": "PostGIS", "icono": "" },
+        { "nombre": "MySQL", "icono": "mysql" },
+        { "nombre": "Redis", "icono": "redis" },
+        { "nombre": "Power BI", "icono": "powerbi" },
+        { "nombre": "Databricks", "icono": "databricks" },
+        { "nombre": "pandas", "icono": "pandas" },
+        { "nombre": "scikit-learn", "icono": "scikitlearn" },
+        { "nombre": "Streamlit", "icono": "streamlit" },
+        { "nombre": "Plotly", "icono": "plotly" }
+      ]
+    },
+    {
+      "nombre": "IA y agentes",
+      "items": [
+        { "nombre": "Claude (Anthropic)", "icono": "anthropic" },
+        { "nombre": "OpenAI", "icono": "openai" },
+        { "nombre": "Google Gemini", "icono": "googlegemini" },
+        { "nombre": "Whisper", "icono": "" },
+        { "nombre": "LangChain", "icono": "langchain" },
+        { "nombre": "LangGraph", "icono": "" },
+        { "nombre": "CrewAI", "icono": "crewai" },
+        { "nombre": "MCP", "icono": "" },
+        { "nombre": "Ollama", "icono": "ollama" },
+        { "nombre": "Hugging Face", "icono": "huggingface" },
+        { "nombre": "ChromaDB", "icono": "" },
+        { "nombre": "FAISS", "icono": "" },
+        { "nombre": "PyTorch", "icono": "pytorch" },
+        { "nombre": "OCR con Tesseract", "icono": "" }
+      ]
+    },
+    {
+      "nombre": "Automatización y tareas programadas",
+      "items": [
+        { "nombre": "n8n", "icono": "n8n" },
+        { "nombre": "WhatsApp", "icono": "whatsapp" },
+        { "nombre": "Playwright", "icono": "" },
+        { "nombre": "Puppeteer", "icono": "puppeteer" },
+        { "nombre": "Celery", "icono": "celery" },
+        { "nombre": "BullMQ", "icono": "" },
+        { "nombre": "APScheduler", "icono": "" }
+      ]
+    },
+    {
+      "nombre": "Infraestructura y hardware",
+      "items": [
+        { "nombre": "Docker", "icono": "docker" },
+        { "nombre": "nginx", "icono": "nginx" },
+        { "nombre": "Linux", "icono": "linux" },
+        { "nombre": "Raspberry Pi", "icono": "raspberrypi" },
+        { "nombre": "Arduino", "icono": "arduino" },
+        { "nombre": "ESP32", "icono": "espressif" }
+      ]
+    }
+  ]
+}

@@ -1,9 +1,5 @@
 ---
 import datos from '../data/clientes.json';
-import { mostrarPendientes } from '../lib/site';
-
-type Cliente = { nombre: string; logo: string; url?: string };
-const clientes = datos.clientes as Cliente[];
 
 // Años completos desde el inicio de la trayectoria (se recalcula en cada build).
 const [anioInicio, mesInicio] = datos.inicio.split('-').map(Number);
@@ -70,31 +66,6 @@ const anos = hoy.getFullYear() - anioInicio - (hoy.getMonth() + 1 < mesInicio ? 
       </ul>
     </div>
 
-    {
-      clientes.length > 0 ? (
-        <div class="mt-14">
-          <p class="font-mono text-xs uppercase tracking-widest text-turquesa mb-5">Organizaciones que confían en nosotros</p>
-          <ul class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4" aria-label="Clientes">
-            {clientes.map((c) => (
-              <li class="grid h-24 place-items-center rounded-2xl border border-white/[0.08] bg-white/[0.04] p-4 backdrop-blur-sm transition-all hover:border-turquesa/30 hover:bg-white/[0.08]">
-                {c.url ? (
-                  <a href={c.url} target="_blank" rel="noopener noreferrer" aria-label={`Sitio de ${c.nombre}`} class="transition-transform hover:scale-105">
-                    <img src={c.logo} alt={`Logo de ${c.nombre}`} height="56" loading="lazy" class="max-h-12 w-auto object-contain brightness-90 hover:brightness-100" />
-                  </a>
-                ) : (
-                  <img src={c.logo} alt={`Logo de ${c.nombre}`} height="56" loading="lazy" class="max-h-12 w-auto object-contain brightness-90" />
-                )}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ) : (
-        mostrarPendientes && (
-          <p class="pendiente mt-10">
-            [PENDIENTE] Logos de clientes autorizados: agrégalos en src/data/clientes.json
-          </p>
-        )
-      )
-    }
+    {/* Los logos de clientes y aplicativos van en el componente Confianza (carrusel). */}
   </div>
 </section>

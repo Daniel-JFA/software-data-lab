@@ -5,11 +5,15 @@
     "visibilidad: 'publica' solo si autorizado=true (permiso del cliente o aplicativo propio) y hay problema y solución. Lo demás: 'oculta'.",
     "destacado=true hace que aparezca en la sección Casos de la landing (ordenDestacado define el orden).",
     "revisar=true marca datos que yo estimé y debes confirmar. healthUrl se usará en el sprint 5 (chequeo de salud).",
+    "carrusel=true muestra el aplicativo en el carrusel 'Aplicativos que hemos construido o mejorado' (solo nombre y logo, sin descripción); es independiente de 'visibilidad'. Quita el campo o ponlo en false para ocultarlo ahí.",
+    "logo: ruta en /public (ej. /apps/vinks.png). logoForma: vacío = cuadrado, 'ancho' = logo horizontal sobre fondo blanco, 'ancho-oscuro' = logo horizontal sobre fondo oscuro. Sin logo se muestran las iniciales.",
     "Valida con: npm run validar (también corre solo antes de cada build)."
   ],
   "apps": [
     {
       "slug": "rentmotor",
+      "logo": "/apps/rentmotor.svg",
+      "carrusel": true,
       "nombre": "RentMotor",
       "categoria": "Gestión de alquiler de vehículos",
       "estado": "produccion",
@@ -27,6 +31,8 @@
     },
     {
       "slug": "vetpro",
+      "logo": "/apps/vetpro.png",
+      "carrusel": true,
       "nombre": "VetPro",
       "categoria": "Software de gestión veterinaria",
       "estado": "desarrollo",
@@ -44,6 +50,7 @@
     },
     {
       "slug": "gps-deportivo",
+      "carrusel": true,
       "nombre": "Plataforma GPS deportiva",
       "categoria": "Perfiles físicos de deportistas amateur",
       "estado": "por-confirmar",
@@ -61,6 +68,7 @@
     },
     {
       "slug": "dataheartsc",
+      "carrusel": true,
       "nombre": "DataHeartSC",
       "categoria": "ERP/CRM para fundación",
       "estado": "desarrollo",
@@ -77,6 +85,7 @@
     },
     {
       "slug": "medturn",
+      "carrusel": true,
       "nombre": "MedTurn (TURMED)",
       "categoria": "Turnos médicos multitenant",
       "estado": "desarrollo",
@@ -93,6 +102,7 @@
     },
     {
       "slug": "compasion-360",
+      "carrusel": true,
       "nombre": "Compasión 360",
       "categoria": "Gestión operativa, presupuestal y contable",
       "estado": "demo",
@@ -109,6 +119,7 @@
     },
     {
       "slug": "voluntariado-colombia",
+      "carrusel": true,
       "nombre": "Voluntariado Colombia",
       "categoria": "Coordinación de respuesta a emergencias",
       "estado": "desarrollo",
@@ -125,6 +136,7 @@
     },
     {
       "slug": "nexion",
+      "carrusel": true,
       "nombre": "NEXION",
       "categoria": "Mensajería WhatsApp y contactos",
       "estado": "desarrollo",
@@ -141,6 +153,7 @@
     },
     {
       "slug": "trama",
+      "carrusel": true,
       "nombre": "TRAMA",
       "categoria": "Análisis de redes sociales",
       "estado": "prototipo",
@@ -157,6 +170,7 @@
     },
     {
       "slug": "la-ventanita",
+      "carrusel": true,
       "nombre": "La Ventanita",
       "categoria": "POS y fiado por voz",
       "estado": "prototipo",
@@ -173,6 +187,7 @@
     },
     {
       "slug": "transcript-pro",
+      "carrusel": true,
       "nombre": "Transcript Pro",
       "categoria": "Transcripción de audio",
       "estado": "prototipo",
@@ -189,6 +204,7 @@
     },
     {
       "slug": "precision-ea",
+      "carrusel": true,
       "nombre": "Precision EA",
       "categoria": "Trading algorítmico para MetaTrader 5",
       "estado": "desarrollo",
@@ -205,7 +221,10 @@
     },
     {
       "slug": "web-parroquial",
-      "nombre": "Sitio web parroquial",
+      "logo": "/apps/sanignacio.jpeg",
+      "logoForma": "ancho",
+      "carrusel": true,
+      "nombre": "Parroquia San Ignacio",
       "categoria": "Sitio web con panel de administración",
       "estado": "produccion",
       "visibilidad": "publica",
@@ -221,6 +240,8 @@
     },
     {
       "slug": "vinks",
+      "logo": "/apps/vinks.png",
+      "carrusel": true,
       "nombre": "Vinks",
       "categoria": "Plataforma con tableros de Power BI",
       "estado": "por-confirmar",
@@ -231,6 +252,25 @@
       "problema": "",
       "solucion": "",
       "tecnologias": [],
+      "enlace": "",
+      "healthUrl": "",
+      "revisar": true
+    },
+    {
+      "slug": "finnova",
+      "logo": "/apps/finnova.png",
+      "logoForma": "ancho-oscuro",
+      "carrusel": true,
+      "nombre": "Finnova",
+      "categoria": "Sitio web profesional",
+      "estado": "desarrollo",
+      "visibilidad": "oculta",
+      "destacado": false,
+      "autorizado": false,
+      "resumen": "Sitio web de una revisora fiscal y contadora pública para presentar y vender sus servicios.",
+      "problema": "",
+      "solucion": "",
+      "tecnologias": ["Angular"],
       "enlace": "",
       "healthUrl": "",
       "revisar": true
