@@ -3,6 +3,7 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import WhatsAppFlotante from '../components/WhatsAppFlotante.astro';
+import TopoFondo from '../components/TopoFondo.astro';
 import { redesActivas, site, whatsappListo, correoListo } from '../lib/site';
 
 interface Props {
@@ -96,7 +97,19 @@ if (import.meta.env.PROD) {
       </script>
     -->
   </head>
-  <body>
+  <body class="relative min-h-screen bg-fondo text-texto antialiased overflow-x-hidden">
+    <!-- Lienzo topográfico continuo e inmersivo en todo el sitio -->
+    <div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden" aria-hidden="true">
+      <TopoFondo semilla={3} class="absolute -top-32 left-1/2 -translate-x-1/2 h-[1400px] w-[1800px] text-turquesa opacity-[0.14]" />
+      <TopoFondo semilla={7} class="absolute top-[35%] -left-64 h-[1200px] w-[1600px] text-verde opacity-[0.11]" />
+      <TopoFondo semilla={11} class="absolute top-[65%] -right-64 h-[1400px] w-[1800px] text-turquesa opacity-[0.12]" />
+      <!-- Luces ambientales de profundidad cinematográfica estilo Apple -->
+      <div class="absolute -top-40 left-1/2 -translate-x-1/2 h-[550px] w-[900px] rounded-full bg-verde/10 blur-[150px]"></div>
+      <div class="absolute top-[38%] left-10 h-[500px] w-[500px] rounded-full bg-turquesa/[0.07] blur-[160px]"></div>
+      <div class="absolute top-[68%] right-10 h-[600px] w-[600px] rounded-full bg-verde/[0.08] blur-[170px]"></div>
+      <div class="absolute bottom-0 left-1/3 h-[500px] w-[700px] rounded-full bg-turquesa/[0.06] blur-[150px]"></div>
+    </div>
+
     <a
       href="#contenido"
       class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-ambar focus:px-4 focus:py-3 focus:font-semibold focus:text-fondo"

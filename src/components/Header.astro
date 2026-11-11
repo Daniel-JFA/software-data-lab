@@ -6,22 +6,22 @@ const wa = whatsappUrl();
 const enlaceExterno = wa.startsWith('http');
 ---
 
-<header class="sticky top-0 z-50 border-b border-white/[0.08] bg-fondo/80 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.25)]">
-  <div class="contenedor flex h-16 items-center justify-between gap-4">
+<header class="fixed top-3 sm:top-5 inset-x-0 z-50 flex justify-center px-3 sm:px-6">
+  <div class="w-full max-w-5xl rounded-full border border-white/[0.12] bg-[#0b1f2a]/70 px-4 sm:px-6 py-2.5 backdrop-blur-2xl shadow-[0_12px_40px_rgba(0,0,0,0.55),inset_0_1px_0_0_rgba(255,255,255,0.15)] flex items-center justify-between gap-4">
     <a
       href="/#inicio"
-      class="flex shrink-0 items-center transition-opacity hover:opacity-90"
+      class="flex shrink-0 items-center transition-opacity hover:opacity-85 pl-1"
       aria-label={`${site.nombre}, ir al inicio`}
     >
-      <img src="/logo.svg" alt={site.nombre} width="737" height="274" class="h-9 w-auto" />
+      <img src="/logo.svg" alt={site.nombre} width="737" height="274" class="h-8 w-auto" />
     </a>
 
-    <nav aria-label="Principal" class="hidden items-center gap-1.5 lg:flex">
+    <nav aria-label="Principal" class="hidden items-center gap-1 lg:flex">
       {
         site.navegacion.map((n) => (
           <a
             href={`/${n.href}`}
-            class="rounded-lg px-3 py-1.5 text-sm font-medium text-suave transition-all hover:bg-white/[0.06] hover:text-texto"
+            class="rounded-full px-3.5 py-1.5 text-xs font-medium tracking-wide text-suave/90 transition-all hover:bg-white/[0.08] hover:text-white"
           >
             {n.etiqueta}
           </a>
@@ -29,37 +29,40 @@ const enlaceExterno = wa.startsWith('http');
       }
     </nav>
 
-    <a
-      href={wa}
-      class="btn btn-primario hidden !min-h-10 !px-4 !py-2 text-sm lg:inline-flex"
-      data-evento="whatsapp_click"
-      data-ubicacion="header"
-      target={enlaceExterno ? '_blank' : undefined}
-      rel={enlaceExterno ? 'noopener noreferrer' : undefined}
-    >
-      Diagnóstico gratis
-    </a>
+    <div class="flex items-center gap-2">
+      <a
+        href={wa}
+        class="btn btn-primario !min-h-9 !px-4 !py-1.5 text-xs font-semibold !rounded-full hidden sm:inline-flex"
+        data-evento="whatsapp_click"
+        data-ubicacion="header"
+        target={enlaceExterno ? '_blank' : undefined}
+        rel={enlaceExterno ? 'noopener noreferrer' : undefined}
+      >
+        Diagnóstico gratis
+      </a>
 
-    <button
-      type="button"
-      id="menu-boton"
-      class="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/[0.04] text-texto backdrop-blur transition-all hover:border-turquesa/30 hover:bg-white/[0.08] lg:hidden"
-      aria-expanded="false"
-      aria-controls="menu-movil"
-      aria-label="Abrir menú"
-    >
-      <span data-icono-abrir><Icono nombre="menu" /></span>
-      <span data-icono-cerrar hidden><Icono nombre="cerrar" /></span>
-    </button>
+      <button
+        type="button"
+        id="menu-boton"
+        class="grid h-9 w-9 place-items-center rounded-full border border-white/10 bg-white/[0.04] text-texto backdrop-blur transition-all hover:border-turquesa/30 hover:bg-white/[0.08] lg:hidden"
+        aria-expanded="false"
+        aria-controls="menu-movil"
+        aria-label="Abrir menú"
+      >
+        <span data-icono-abrir><Icono nombre="menu" class="h-5 w-5" /></span>
+        <span data-icono-cerrar hidden><Icono nombre="cerrar" class="h-5 w-5" /></span>
+      </button>
+    </div>
   </div>
 
-  <div id="menu-movil" hidden class="border-t border-white/[0.08] bg-fondo/95 backdrop-blur-2xl lg:hidden">
-    <nav aria-label="Principal (móvil)" class="contenedor flex flex-col py-4">
+  <!-- Menú móvil flotante estilo tarjeta Apple -->
+  <div id="menu-movil" hidden class="absolute top-16 inset-x-4 max-w-md mx-auto rounded-3xl border border-white/[0.12] bg-[#0b1f2a]/95 p-5 shadow-2xl backdrop-blur-2xl lg:hidden">
+    <nav aria-label="Principal (móvil)" class="flex flex-col gap-1">
       {
         site.navegacion.map((n) => (
           <a
             href={`/${n.href}`}
-            class="rounded-xl border-b border-white/[0.06] px-3 py-3 text-base font-medium text-texto transition-colors hover:bg-white/[0.05] last:border-0"
+            class="rounded-xl px-4 py-2.5 text-sm font-medium text-texto/90 transition-colors hover:bg-white/[0.06] hover:text-turquesa-claro"
             data-cerrar-menu
           >
             {n.etiqueta}
@@ -68,7 +71,7 @@ const enlaceExterno = wa.startsWith('http');
       }
       <a
         href={wa}
-        class="btn btn-primario mt-4"
+        class="btn btn-primario mt-3 !rounded-xl"
         data-evento="whatsapp_click"
         data-ubicacion="menu-movil"
         data-cerrar-menu

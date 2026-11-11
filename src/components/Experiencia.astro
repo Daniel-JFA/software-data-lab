@@ -13,7 +13,7 @@ const anos = hoy.getFullYear() - anioInicio - (hoy.getMonth() + 1 < mesInicio ? 
 
 <section
   id="experiencia"
-  class="seccion border-y border-white/[0.06] bg-superficie/30 backdrop-blur-sm"
+  class="seccion"
   aria-labelledby="experiencia-titulo"
 >
   <div class="contenedor">
@@ -23,10 +23,26 @@ const anos = hoy.getFullYear() - anioInicio - (hoy.getMonth() + 1 < mesInicio ? 
     </div>
     <h2 id="experiencia-titulo" class="titulo-seccion mt-4 max-w-3xl">{datos.frase}</h2>
 
+    <!-- Métricas clave estilo Apple Keynote -->
+    <div class="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3">
+      <div class="tarjeta !p-6 text-center">
+        <p class="text-3xl sm:text-4xl font-bold font-mono text-turquesa-claro tracking-tight">+{anos}</p>
+        <p class="mt-1.5 text-xs uppercase tracking-wider text-suave font-medium">Años construyendo software</p>
+      </div>
+      <div class="tarjeta !p-6 text-center">
+        <p class="text-3xl sm:text-4xl font-bold font-mono text-turquesa-claro tracking-tight">4</p>
+        <p class="mt-1.5 text-xs uppercase tracking-wider text-suave font-medium">Sectores clave</p>
+      </div>
+      <div class="tarjeta !p-6 text-center col-span-2 sm:col-span-1">
+        <p class="text-3xl sm:text-4xl font-bold font-mono text-turquesa-claro tracking-tight">100%</p>
+        <p class="mt-1.5 text-xs uppercase tracking-wider text-suave font-medium">Código a la medida</p>
+      </div>
+    </div>
+
     <ul class="mt-8 flex flex-wrap gap-2.5" aria-label="Sectores">
       {
         datos.sectores.map((s) => (
-          <li class="rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-1.5 font-mono text-xs text-turquesa-claro backdrop-blur-sm transition-colors hover:border-turquesa/30 hover:bg-white/[0.06]">
+          <li class="rounded-full border border-white/[0.1] bg-white/[0.04] px-4 py-1.5 font-mono text-xs text-turquesa-claro backdrop-blur-md transition-colors hover:border-turquesa/40 hover:bg-white/[0.08]">
             {s}
           </li>
         ))

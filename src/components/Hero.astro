@@ -1,5 +1,4 @@
 ---
-import TopoFondo from './TopoFondo.astro';
 import Icono from './Icono.astro';
 import { site, whatsappUrl } from '../lib/site';
 
@@ -8,76 +7,80 @@ const wa = whatsappUrl();
 const enlaceExterno = wa.startsWith('http');
 ---
 
-<section id="inicio" class="relative overflow-hidden" aria-labelledby="inicio-titulo">
-  <!-- Efectos de iluminación ambiental estilo Apple -->
-  <div
-    class="pointer-events-none absolute -top-40 left-1/2 h-[420px] w-[700px] -translate-x-1/2 rounded-full bg-verde/10 blur-[140px]"
-    aria-hidden="true"
-  >
-  </div>
-  <div
-    class="pointer-events-none absolute right-0 top-1/4 h-[350px] w-[350px] rounded-full bg-turquesa/[0.08] blur-[120px]"
-    aria-hidden="true"
-  >
-  </div>
-
-  <TopoFondo semilla={3} class="absolute inset-0 h-full w-full text-turquesa opacity-[0.14]" />
-  <div
-    class="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-fondo to-transparent"
-    aria-hidden="true"
-  >
-  </div>
-
-  <div class="contenedor relative grid items-center gap-12 pb-20 pt-16 md:pb-32 md:pt-28 lg:grid-cols-[1.3fr_1fr]">
-    <div>
-      <div class="badge-seccion">
-        <span class="punto"></span>
-        {inicio.etiqueta}
-      </div>
-
-      <h1
-        id="inicio-titulo"
-        class="mt-6 text-[2.5rem] font-bold leading-[1.05] tracking-[-0.035em] sm:text-5xl lg:text-6xl text-balance text-texto"
-      >
-        {inicio.titulo}
-      </h1>
-
-      <p class="mt-6 max-w-xl text-lg leading-relaxed text-suave">
-        {inicio.subtitulo}
-      </p>
-
-      <div class="mt-9 flex flex-col gap-3.5 sm:flex-row sm:items-center">
-        <a
-          href={wa}
-          class="btn btn-primario"
-          data-evento="whatsapp_click"
-          data-ubicacion="hero"
-          target={enlaceExterno ? '_blank' : undefined}
-          rel={enlaceExterno ? 'noopener noreferrer' : undefined}
-        >
-          <Icono nombre="whatsapp" class="h-5 w-5" />
-          {inicio.botonPrincipal}
-        </a>
-        <a href="#lab" class="btn btn-secundario">
-          {inicio.botonSecundario}
-          <Icono nombre="flecha" class="h-4 w-4" />
-        </a>
-      </div>
-
-      <p class="mt-4 font-mono text-xs tracking-wide text-suave/80">{inicio.nota}</p>
+<section id="inicio" class="relative pt-28 pb-20 sm:pt-36 sm:pb-28 overflow-hidden" aria-labelledby="inicio-titulo">
+  <div class="contenedor relative flex flex-col items-center text-center">
+    
+    <!-- Apple Pill Badge con indicador pulsante -->
+    <div class="badge-seccion mb-6 !px-4 !py-1.5 shadow-[0_0_20px_rgba(127,214,203,0.15)]">
+      <span class="punto"></span>
+      {inicio.etiqueta}
     </div>
 
-    <div class="relative hidden justify-self-center lg:flex items-center justify-center" aria-hidden="true">
-      <div class="pointer-events-none absolute h-64 w-64 rounded-full bg-turquesa/15 blur-[90px]"></div>
-      <div class="tarjeta relative p-6 backdrop-blur-2xl border-white/[0.1] shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+    <!-- Título principal imponente estilo Keynote Apple -->
+    <h1
+      id="inicio-titulo"
+      class="max-w-4xl text-4xl font-bold leading-[1.08] tracking-[-0.035em] sm:text-6xl lg:text-7xl text-balance text-texto"
+    >
+      {inicio.titulo}
+    </h1>
+
+    <!-- Subtítulo con respiración -->
+    <p class="mt-6 max-w-2xl text-lg sm:text-xl leading-relaxed text-suave text-balance">
+      {inicio.subtitulo}
+    </p>
+
+    <!-- Botones táctiles de acción -->
+    <div class="mt-9 flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+      <a
+        href={wa}
+        class="btn btn-primario w-full sm:w-auto !px-6 !py-3.5 !rounded-full text-base shadow-[0_4px_25px_rgba(242,169,59,0.4)]"
+        data-evento="whatsapp_click"
+        data-ubicacion="hero"
+        target={enlaceExterno ? '_blank' : undefined}
+        rel={enlaceExterno ? 'noopener noreferrer' : undefined}
+      >
+        <Icono nombre="whatsapp" class="h-5 w-5" />
+        {inicio.botonPrincipal}
+      </a>
+      <a href="#lab" class="btn btn-secundario w-full sm:w-auto !px-6 !py-3.5 !rounded-full text-base">
+        {inicio.botonSecundario}
+        <Icono nombre="flecha" class="h-4 w-4" />
+      </a>
+    </div>
+
+    <p class="mt-4 font-mono text-xs tracking-wider text-suave/80">{inicio.nota}</p>
+
+    <!-- Escaparate central del artefacto de marca -->
+    <div class="relative mt-14 sm:mt-20 w-full max-w-4xl" aria-hidden="true">
+      <!-- Resplandor de fondo -->
+      <div class="pointer-events-none absolute -inset-6 rounded-3xl bg-gradient-to-r from-turquesa/20 via-verde/20 to-turquesa/20 blur-3xl opacity-70"></div>
+      
+      <div class="tarjeta relative !p-6 sm:!p-10 backdrop-blur-2xl border-white/15 shadow-[0_30px_70px_rgba(0,0,0,0.65)] flex flex-col items-center justify-center">
         <img
           src="/simbolo.svg"
-          alt=""
+          alt="Software Data Lab"
           width="448"
           height="264"
-          class="h-auto w-full max-w-[30rem] rounded-lg transition-transform duration-500 ease-out hover:scale-[1.02]"
+          class="h-auto w-full max-w-[34rem] filter drop-shadow-[0_15px_35px_rgba(42,157,143,0.35)] transition-transform duration-700 ease-out hover:scale-[1.02]"
         />
+        
+        <!-- Barra HUD de especificaciones de ingeniería -->
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-4 sm:gap-8 border-t border-white/[0.08] pt-5 w-full">
+          <div class="flex items-center gap-2 font-mono text-xs text-suave">
+            <span class="h-1.5 w-1.5 rounded-full bg-turquesa"></span>
+            <span>SOFTWARE A LA MEDIDA</span>
+          </div>
+          <div class="flex items-center gap-2 font-mono text-xs text-suave">
+            <span class="h-1.5 w-1.5 rounded-full bg-verde"></span>
+            <span>ANALÍTICA Y DATOS</span>
+          </div>
+          <div class="flex items-center gap-2 font-mono text-xs text-suave">
+            <span class="h-1.5 w-1.5 rounded-full bg-turquesa-claro"></span>
+            <span>IA APLICADA & IOT</span>
+          </div>
+        </div>
       </div>
     </div>
+
   </div>
 </section>
