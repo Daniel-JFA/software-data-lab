@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diagnóstico de brecha digital | Software Data Lab</title>
+<meta name="description" content="Mide la brecha digital de tu empresa en 5 minutos: procesos, herramientas, datos, atención y seguridad.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=JetBrains+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --fondo:#0b1f2a; --sup:#102c3a; --sup2:#143646; --borde:#23495b;
+  --tq:#7fd6cb; --tq2:#9be5da; --verde:#2a9d8f; --ambar:#f2a93b;
+  --txt:#f4f7f6; --suave:#b4c4c7; --tenue:#8aa3a8;
+  --serif:'Fraunces',Georgia,'Times New Roman',serif;
+  --sans:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  --gut:clamp(16px,5vw,64px);
+  --max:1240px;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:84px;-webkit-text-size-adjust:100%;color-scheme:dark}
+body{background:var(--fondo);color:var(--txt);font:400 1rem/1.6 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--tq2);outline-offset:3px;border-radius:4px}
+::selection{background:color-mix(in srgb,var(--tq) 30%,transparent)}
+.wrap{max-width:var(--max);margin-inline:auto;padding-inline:var(--gut)}
+.mono{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--tq)}
+.pend{font-family:var(--mono);font-size:.78rem;letter-spacing:.06em;color:var(--tenue);border:1px dashed var(--borde);padding:.15rem .5rem;border-radius:4px;display:inline-block}
+
+/* Titulares */
+h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.02;letter-spacing:-.02em;font-variation-settings:"opsz" 144}
+h1{font-size:clamp(2.7rem,9.2vw,6.6rem);font-weight:350}
+h2{font-size:clamp(2.1rem,5.6vw,4rem);font-weight:350}
+h1 em,h2 em,h3 em{font-style:italic;color:var(--tq);font-weight:300}
+.lede{color:var(--suave);font-size:clamp(1.05rem,2vw,1.25rem);max-width:34ch}
+
+/* Botones */
+.btn{display:inline-flex;align-items:center;gap:.6rem;min-height:48px;padding:.75rem 1.4rem;border-radius:999px;font:600 .98rem var(--sans);text-decoration:none;border:1px solid transparent;cursor:pointer;transition:transform .2s ease,background .2s ease,border-color .2s ease}
+.btn .flecha{transition:transform .25s ease}
+.btn:hover .flecha{transform:translateX(4px)}
+.btn-pri{background:var(--ambar);color:#1b1306}
+.btn-pri:hover{background:color-mix(in srgb,var(--ambar) 85%,#fff)}
+.btn-sec{border-color:var(--borde);color:var(--txt)}
+.btn-sec:hover{border-color:var(--tq);color:var(--tq2)}
+
+/* Header */
+header.top{position:fixed;inset:12px 0 auto 0;z-index:50;pointer-events:none}
+.top-in{max-width:var(--max);margin-inline:auto;margin-inline:max(12px,calc((100vw - var(--max))/2 + 12px));display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.55rem .6rem .55rem 1rem;border:1px solid var(--borde);background:color-mix(in srgb,var(--fondo) 78%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-radius:999px;pointer-events:auto}
+.top-in img{height:26px;width:auto}
+nav.menu{display:none;gap:1.4rem;font-size:.88rem;color:var(--suave)}
+nav.menu a{text-decoration:none;position:relative;padding:.3rem 0}
+nav.menu a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;background:var(--tq);transform:scaleX(0);transform-origin:left;transition:transform .25s ease}
+nav.menu a:hover,nav.menu a.on{color:var(--txt)}
+nav.menu a:hover::after,nav.menu a.on::after{transform:scaleX(1)}
+.alt{font-family:var(--mono);font-size:.7rem;color:var(--tq);letter-spacing:.08em;display:none}
+.alt b{font-weight:500;color:var(--txt)}
+.top .btn{min-height:40px;padding:.4rem 1rem;font-size:.85rem}
+@media(min-width:1000px){nav.menu{display:flex}.alt{display:block}}
+@media(max-width:420px){.top .btn .largo{display:none}}
+
+/* Fondo topográfico continuo */
+.topo{background:url(topo.svg) center/cover no-repeat;filter:var(--topo-filter,none)}
+section{position:relative;padding-block:clamp(72px,11vw,150px)}
+.sec-topo{position:absolute;inset:0;z-index:0;opacity:.13;pointer-events:none;-webkit-mask-image:linear-gradient(to bottom,transparent,#000 22%,#000 78%,transparent);mask-image:linear-gradient(to bottom,transparent,#000 22%,#000 78%,transparent)}
+section>.wrap{position:relative;z-index:1}
+
+/* Cabecera de sección: cota */
+.cota{display:flex;align-items:center;gap:.9rem;margin-bottom:1.6rem}
+.cota::before{content:"";width:34px;height:1px;background:var(--tq)}
+.cota span:last-child{color:var(--tenue)}
+
+/* HERO */
+.hero{min-height:100svh;padding-top:clamp(110px,16vw,150px);padding-bottom:clamp(48px,7vw,90px);display:flex;align-items:flex-end;overflow:hidden;isolation:isolate}
+.hero .map{position:absolute;z-index:0;right:-18%;top:-4%;width:min(980px,150vw);aspect-ratio:1000/1125}
+.hero .map img{width:100%;height:100%;opacity:.55;object-fit:contain}
+.hero::after{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(90deg,var(--fondo) 0%,color-mix(in srgb,var(--fondo) 82%,transparent) 38%,color-mix(in srgb,var(--fondo) 0%,transparent) 75%),linear-gradient(0deg,var(--fondo),color-mix(in srgb,var(--fondo) 0%,transparent) 30%);pointer-events:none}
+.lm-lab{position:absolute;font:500 .62rem var(--mono);letter-spacing:.1em;color:var(--tq2);white-space:nowrap;transform:translate(10px,-6px);opacity:.9}
+.lm-lab::before{content:"";position:absolute;left:-10px;top:5px;width:6px;height:6px;border-radius:50%;background:var(--tq)}
+.hero .wrap{width:100%;z-index:2}
+.hero-meta{display:flex;flex-wrap:wrap;gap:.4rem 1.5rem;margin-bottom:clamp(1.5rem,4vw,2.8rem)}
+.hero-meta span{color:var(--suave)}
+.hero h1{max-width:11.5ch;margin-bottom:1.8rem}
+.hero h1 .s{display:inline-block;position:relative}
+.hero h1 .s::after{content:"";position:absolute;left:100%;top:.12em;width:.16em;height:.16em;margin-left:.08em;border-radius:50%;background:var(--ambar)}
+.hero-foot{display:grid;gap:2rem;align-items:end}
+.hero .acciones{display:flex;flex-wrap:wrap;gap:.8rem;align-items:center;margin-top:1.8rem}
+.nota{font-family:var(--mono);font-size:.74rem;color:var(--suave);letter-spacing:.06em;margin-top:1rem}
+.coords{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;color:var(--tenue);line-height:1.9}
+.coords b{color:var(--tq);font-weight:500}
+@media(min-width:900px){.hero-foot{grid-template-columns:1fr auto}.coords{text-align:right}}
+
+/* SERVICIOS: índice editorial */
+.sv-head{display:grid;gap:1.2rem;margin-bottom:clamp(2.5rem,6vw,5rem)}
+@media(min-width:900px){.sv-head{grid-template-columns:1.2fr 1fr;align-items:end}}
+.sv-head p{color:var(--suave);max-width:38ch}
+.sv{list-style:none;padding:0;border-top:1px solid var(--borde)}
+.sv li{border-bottom:1px solid var(--borde);position:relative}
+.sv li::before{content:"";position:absolute;left:0;top:0;bottom:0;width:100%;background:linear-gradient(90deg,color-mix(in srgb,var(--tq) 7%,transparent),transparent 70%);opacity:0;transition:opacity .3s}
+.sv li:hover::before{opacity:1}
+.sv .row{display:grid;gap:.8rem 2rem;padding:clamp(1.4rem,3vw,2.4rem) 0;position:relative}
+.sv .n{font:300 clamp(2.6rem,6vw,4.4rem)/1 var(--serif);color:var(--borde);transition:color .3s;font-variation-settings:"opsz" 144}
+.sv li:hover .n{color:var(--tq)}
+.sv h3{font-size:clamp(1.6rem,3.2vw,2.5rem);transition:transform .3s}
+.sv li:hover h3{transform:translateX(8px)}
+.sv p{color:var(--suave);max-width:44ch}
+.sv .ej{border-left:1px solid var(--tq);padding-left:1rem;color:var(--txt);font-size:.95rem;max-width:34ch}
+.sv .ej .mono{display:block;margin-bottom:.3rem}
+@media(min-width:900px){.sv .row{grid-template-columns:110px 1.1fr 1.2fr 1fr;align-items:center}}
+
+/* EXPERIENCIA: perfil de elevación */
+.ex{background:var(--sup);border-block:1px solid var(--borde);overflow:hidden}
+.ex-top{display:grid;gap:2rem;margin-bottom:clamp(2.5rem,6vw,4.5rem)}
+@media(min-width:900px){.ex-top{grid-template-columns:auto 1fr;gap:5rem;align-items:end}}
+.big{font:300 clamp(5rem,16vw,11rem)/.82 var(--serif);color:var(--tq);letter-spacing:-.04em;font-variation-settings:"opsz" 144}
+.big small{display:block;font:500 .72rem/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--suave);margin-top:1rem}
+.sectores{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.4rem}
+.chip{font:500 .72rem var(--mono);letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--borde);border-radius:999px;padding:.35rem .8rem;color:var(--suave)}
+.tray{position:relative;padding-left:28px;margin-top:1rem}
+.tray::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:1px;background:repeating-linear-gradient(var(--tq) 0 6px,transparent 6px 11px)}
+.hito{position:relative;padding:0 0 clamp(1.6rem,3vw,2.4rem)}
+.hito::before{content:"";position:absolute;left:-28px;top:.45rem;width:15px;height:15px;border-radius:50%;background:var(--sup);border:1.5px solid var(--tq);transition:background .25s,transform .25s}
+.hito:hover::before{background:var(--tq);transform:scale(1.15)}
+.hito .org{font:400 clamp(1.25rem,2.4vw,1.75rem)/1.2 var(--serif);margin:.2rem 0 .3rem}
+.hito .rol{color:var(--suave);max-width:62ch}
+.hito .nt{font:400 .8rem var(--mono);color:var(--tenue);margin-top:.35rem}
+.hito .per{float:right;margin-left:1rem}
+.logos{margin-top:2.2rem;padding-top:1.6rem;border-top:1px solid var(--borde);display:flex;flex-wrap:wrap;gap:1rem;align-items:center}
+
+/* CASOS: asimétrico */
+.cs-head{display:flex;justify-content:space-between;align-items:end;gap:2rem;flex-wrap:wrap;margin-bottom:clamp(2.5rem,6vw,4.5rem)}
+.cs-head p{color:var(--suave)}
+.caso{position:relative;border:1px solid var(--borde);border-radius:6px;background:color-mix(in srgb,var(--sup) 72%,transparent);padding:clamp(1.4rem,3.5vw,2.8rem);transition:border-color .3s,transform .3s}
+.caso:hover{border-color:var(--tq);transform:translateY(-3px)}
+.caso h3{font-size:clamp(1.8rem,4vw,3rem);margin:.5rem 0 1rem}
+.caso .cat{color:var(--suave);font-size:.95rem}
+.est{display:inline-flex;align-items:center;gap:.5rem}
+.est::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--tq)}
+.pc{display:grid;gap:1.2rem;margin-top:1.4rem}
+.pc div{border-top:1px solid var(--borde);padding-top:.8rem}
+.pc p{color:var(--suave);margin-top:.3rem}
+.pc .sol p{color:var(--txt)}
+.tec{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1.4rem}
+.tec span{font:400 .72rem var(--mono);color:var(--suave);border:1px solid var(--borde);padding:.2rem .55rem;border-radius:4px}
+.casos-g{display:grid;gap:1.2rem}
+@media(min-width:900px){
+  .casos-g{grid-template-columns:repeat(12,1fr);gap:1.5rem;align-items:start}
+  .c1{grid-column:1/9}
+  .c1 .pc{grid-template-columns:1fr 1fr}
+  .c2{grid-column:9/13;margin-top:5rem}
+  .c3{grid-column:3/10;margin-top:-1rem}
+}
+.c3 .big-n{font:300 4.5rem/1 var(--serif);color:var(--borde);position:absolute;right:1.4rem;top:.8rem}
+.nota-c{margin-top:2rem;color:var(--tenue);font:400 .78rem var(--mono)}
+
+/* LAB: tira de series */
+.lab{background:linear-gradient(180deg,var(--fondo),color-mix(in srgb,var(--fondo) 85%,#000))}
+.lab-top{display:grid;gap:1.5rem;margin-bottom:clamp(2rem,5vw,3.5rem)}
+@media(min-width:900px){.lab-top{grid-template-columns:1fr 1fr;align-items:end}}
+.lab-top p{color:var(--suave);font-size:1.15rem;max-width:36ch}
+.ser{display:grid;gap:0;border-top:1px solid var(--borde)}
+.ser a{display:grid;grid-template-columns:auto 1fr;gap:.2rem 1.2rem;padding:1.1rem 0;border-bottom:1px solid var(--borde);text-decoration:none;align-items:baseline;transition:padding-left .3s,background .3s}
+.ser a:hover{padding-left:.8rem;background:linear-gradient(90deg,color-mix(in srgb,var(--tq) 8%,transparent),transparent)}
+.ser .f{grid-row:1/3;color:var(--tq);width:11ch}
+.ser h3{font-size:clamp(1.3rem,2.6vw,1.9rem)}
+.ser p{color:var(--suave);font-size:.95rem}
+@media(min-width:900px){.ser a{grid-template-columns:14ch 1fr 1.2fr;padding:1.3rem 0}.ser .f{grid-row:auto;width:auto}}
+.redes{display:flex;flex-wrap:wrap;gap:1.4rem;margin-top:1.8rem}
+.redes a{font:500 .76rem var(--mono);letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--suave);border-bottom:1px solid var(--borde);padding-bottom:.2rem;transition:color .2s,border-color .2s}
+.redes a:hover{color:var(--tq2);border-color:var(--tq)}
+
+/* CURSO */
+.curso-g{display:grid;gap:clamp(2rem,5vw,4rem)}
+@media(min-width:960px){.curso-g{grid-template-columns:1fr 1.15fr;align-items:start}.curso-l{position:sticky;top:110px}}
+.curso h2{margin:.4rem 0 1.2rem}
+.curso .desc{color:var(--suave);font-size:1.1rem;max-width:36ch}
+.lecc{list-style:none;padding:0;position:relative}
+.lecc li{display:grid;grid-template-columns:52px 1fr;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--borde)}
+.lecc .k{font:400 .8rem var(--mono);color:var(--tq);padding-top:.35rem}
+.lecc strong{font:400 1.25rem/1.2 var(--serif);display:block;margin-bottom:.2rem}
+.lecc span{color:var(--suave);font-size:.95rem}
+.lecc li{transition:padding-left .3s}
+.lecc li:hover{padding-left:.6rem}
+.form{margin-top:2rem;border:1px solid var(--borde);background:var(--sup);border-radius:6px;padding:1.4rem}
+.form h3{font-size:1.5rem;margin-bottom:.4rem}
+.form p.s{color:var(--suave);font-size:.95rem;margin-bottom:1rem}
+label{display:block;font:500 .72rem var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--suave);margin:.9rem 0 .35rem}
+input,textarea{width:100%;font:400 1rem var(--sans);color:var(--txt);background:var(--fondo);border:1px solid var(--borde);border-radius:4px;padding:.8rem .9rem;min-height:48px;transition:border-color .2s}
+input:focus,textarea:focus{outline:none;border-color:var(--tq);box-shadow:0 0 0 3px color-mix(in srgb,var(--tq) 15%,transparent)}
+textarea{min-height:120px;resize:vertical}
+.leg{font-size:.78rem;color:var(--tenue);margin-top:.8rem}
+.form .btn{margin-top:1.1rem}
+
+/* PROCESO: ruta */
+.pr-head{margin-bottom:clamp(2.5rem,6vw,4.5rem);display:flex;justify-content:space-between;gap:2rem;flex-wrap:wrap;align-items:end}
+.pr-head p{color:var(--suave);font-size:1.15rem}
+.ruta{list-style:none;padding:0;position:relative;display:grid;gap:2rem}
+.ruta li{position:relative;padding-left:56px}
+.ruta li::before{content:"";position:absolute;left:19px;top:2.6rem;bottom:-2rem;width:1px;background:repeating-linear-gradient(var(--tq) 0 5px,transparent 5px 10px);opacity:.6}
+.ruta li:last-child::before{display:none}
+.ruta .nd{position:absolute;left:0;top:0;width:40px;height:40px;border-radius:50%;border:1.5px solid var(--tq);background:var(--fondo);display:grid;place-items:center;font:500 .75rem var(--mono);color:var(--tq);transition:background .25s,color .25s}
+.ruta li:hover .nd{background:var(--tq);color:var(--fondo)}
+.ruta h3{font-size:1.6rem;margin-bottom:.5rem;padding-top:.3rem}
+.ruta p{color:var(--suave);max-width:40ch;font-size:.97rem}
+@media(min-width:900px){
+  .ruta{grid-template-columns:repeat(4,1fr);gap:1.5rem}
+  .ruta li{padding:64px 0 0}
+  .ruta li:nth-child(2){margin-top:44px}
+  .ruta li:nth-child(3){margin-top:12px}
+  .ruta li:nth-child(4){margin-top:64px}
+  .ruta li::before{left:40px;right:-1.5rem;top:19px;bottom:auto;width:auto;height:1px;background:repeating-linear-gradient(90deg,var(--tq) 0 5px,transparent 5px 10px)}
+  .ruta .nd{top:0}
+}
+
+/* CONTACTO */
+.ct{background:var(--sup);border-top:1px solid var(--borde);overflow:hidden}
+.ct-g{display:grid;gap:clamp(2rem,5vw,4rem)}
+@media(min-width:960px){.ct-g{grid-template-columns:1fr 1fr;align-items:start}}
+.ct h2{font-size:clamp(3rem,9vw,6.6rem);margin-bottom:1.2rem}
+.ct .lede{margin-bottom:2rem}
+.ct .dato{margin-top:2rem;display:grid;gap:.9rem}
+.ct .dato a{text-decoration:none;font:400 1.05rem var(--mono);color:var(--txt);border-bottom:1px solid var(--borde);padding-bottom:.5rem;display:flex;justify-content:space-between;gap:1rem;transition:border-color .2s,color .2s;overflow-wrap:anywhere}
+.ct .dato a:hover{border-color:var(--tq);color:var(--tq2)}
+.ct .dato a span{color:var(--tenue);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;flex:none}
+.ct .form{background:var(--fondo);margin-top:0}
+.ct-mark{position:absolute;right:-40px;bottom:-30px;width:min(560px,90vw);opacity:.07;pointer-events:none}
+
+/* FOOTER */
+footer{border-top:1px solid var(--borde);padding:2.4rem 0 3rem;background:var(--fondo)}
+.ft{display:flex;flex-wrap:wrap;gap:1.5rem 3rem;align-items:center;justify-content:space-between}
+.ft img{height:30px;width:auto}
+.ft nav{display:flex;flex-wrap:wrap;gap:.6rem 1.4rem;font-size:.85rem;color:var(--suave)}
+.ft nav a{text-decoration:none}.ft nav a:hover{color:var(--tq2)}
+.ft small{font:400 .74rem var(--mono);color:var(--tenue);letter-spacing:.06em}
+
+
+.enlace{font:500 .95rem var(--sans);color:var(--txt);text-decoration:none;border-bottom:1px solid var(--tq);padding:.5rem 0;min-height:44px;display:inline-flex;align-items:center;transition:color .2s,border-color .2s}
+.enlace:hover{color:var(--tq2);border-color:var(--tq2)}
+.skip{position:absolute;left:12px;top:-60px;z-index:99;background:var(--txt);color:var(--fondo);padding:.6rem 1rem;border-radius:6px;text-decoration:none;font-weight:600}
+.skip:focus{top:12px}
+/* Metodología */
+.metodo{display:inline-block;font:500 .72rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--fondo);background:var(--tq);padding:.3rem .7rem;border-radius:3px;margin-bottom:1.4rem}
+.ruta .qr{display:block;margin-top:1rem;padding-top:.7rem;border-top:1px solid var(--borde);font:400 .74rem/1.5 var(--mono);letter-spacing:.06em;color:var(--tq);text-transform:uppercase}
+.ruta h3{font-size:clamp(1.7rem,2.6vw,2.1rem)}
+.ruta .nd{width:46px;height:46px;font-size:.85rem}
+.pr-foot{margin-top:clamp(2.5rem,5vw,4rem);display:flex;gap:1.2rem 2rem;flex-wrap:wrap;align-items:center}
+/* Confianza */
+.cf{border-top:1px solid var(--borde)}
+.nivel{display:grid;gap:1.2rem;padding-block:clamp(1.8rem,4vw,3rem);border-bottom:1px solid var(--borde)}
+.nivel:first-of-type{padding-top:0}
+@media(min-width:900px){.nivel{grid-template-columns:minmax(0,.8fr) 2fr;gap:3rem}}
+.nivel h3{font:500 .78rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--tq)}
+.nivel h3+p{color:var(--suave);font-size:.95rem;margin-top:.5rem;max-width:34ch}
+.sect{display:grid;gap:1.4rem}
+@media(min-width:640px){.sect{grid-template-columns:1fr 1fr}}
+.sect>div{border-top:1px solid var(--borde);padding-top:.8rem}
+.sect .mono{color:var(--suave)}
+.logo-slot{margin-top:.8rem;min-height:56px;display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
+.logo-slot img{max-height:40px;width:auto;filter:grayscale(1) brightness(1.7) contrast(.8);opacity:.7;transition:filter .3s,opacity .3s}
+.logo-slot a:hover img,.logo-slot img:hover{filter:none;opacity:1}
+.sect small{display:block;font:400 .74rem/1.5 var(--mono);color:var(--tenue);margin-top:.6rem}
+.tecs{display:flex;flex-wrap:wrap;gap:.4rem 1.6rem;list-style:none;padding:0;align-items:baseline}
+.tecs li{font:500 clamp(1.05rem,2vw,1.35rem) var(--sans);letter-spacing:-.01em;color:var(--suave);transition:color .2s}
+.tecs li:nth-child(3n+2){font-family:var(--serif);font-style:italic;font-weight:400}
+.tecs li:nth-child(5n){font-family:var(--mono);font-size:.95rem;letter-spacing:.02em}
+.tecs li:hover{color:var(--tq2)}
+
+
+.emp{display:inline-flex;align-items:center;gap:.7rem;font:500 .98rem/1.3 var(--sans);color:var(--txt)}
+.emp i{flex:none;display:inline-grid;place-items:center;width:44px;height:44px;border:1px solid var(--borde);border-radius:8px;background:var(--sup);color:var(--tq);font:500 .85rem var(--mono);font-style:normal;letter-spacing:.04em}
+.lg{display:inline-flex;align-items:center;justify-content:center;min-width:150px;min-height:64px;padding:.7rem 1rem;background:#fff;border-radius:8px;border:1px solid var(--borde)}
+.lg-osc{background:#0b1f2a;border-color:#23495b}
+.logo-slot .lg img{filter:none;opacity:1}
+.lg img{display:block;max-height:44px;width:auto;max-width:190px;object-fit:contain}
+.nivel>*{min-width:0}
+.marq{max-width:100%;min-width:0;contain:paint}
+.tgs,.tg,.tec2{min-width:0}
+.marq{overflow:hidden;-webkit-mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.marq-pista{display:flex;align-items:center;gap:1.2rem;width:max-content;margin:0;padding:.3rem 0;list-style:none;animation:marq 38s linear infinite}
+.marq:hover .marq-pista,.marq:focus-within .marq-pista,.marq:focus .marq-pista{animation-play-state:paused}
+.marq-pista li{flex:none}
+.marq-nota{margin-top:1rem;font:400 .8rem/1.6 var(--mono);color:var(--tenue);max-width:70ch}
+@keyframes marq{to{transform:translateX(calc(-50% - .6rem))}}
+@media(prefers-reduced-motion:reduce){.marq{-webkit-mask:none;mask:none;overflow-x:auto}.marq-pista{animation:none}.marq-pista li[aria-hidden=true]{display:none}}
+.marq-inv .marq-pista{animation-direction:reverse;animation-duration:46s}
+.ap{display:inline-flex;align-items:center;gap:.7rem;min-height:56px;padding:.45rem 1rem .45rem .5rem;border:1px solid var(--borde);border-radius:10px;background:var(--sup);font:500 1rem var(--sans);color:var(--txt);white-space:nowrap}
+.ap-ic{flex:none;width:40px;height:40px;border-radius:8px;object-fit:cover;background:#fff}
+.ap-wide{width:88px;object-fit:contain;padding:2px}
+.ap-fin{width:190px;background:#0a0b22;padding:0}
+.ap-mono{display:inline-grid;place-items:center;background:var(--sup2);border:1px solid var(--borde);color:var(--tq);font:500 .8rem var(--mono);font-style:normal}
+.tgs{display:grid;gap:1.8rem}
+@media(min-width:640px){.tgs{grid-template-columns:1fr 1fr}}
+.tg .mono{color:var(--suave)}
+.tec2{list-style:none;padding:0;margin:.8rem 0 0;display:flex;flex-wrap:wrap;gap:.5rem}
+.tec2 li{display:inline-flex;align-items:center;gap:.5rem;min-height:40px;padding:.35rem .8rem;border:1px solid var(--borde);border-radius:999px;background:var(--sup);font:500 .95rem var(--sans);color:var(--txt);transition:border-color .2s}
+.tec2 li:hover{border-color:var(--tq)}
+.ti{flex:none;width:18px;height:18px;background:var(--tq);-webkit-mask:var(--ic) center/contain no-repeat;mask:var(--ic) center/contain no-repeat}
+.ti-no{display:none}
+/* Reveal */
+.rv{opacity:1;transform:none}
+.js .rv{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+.js .rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition-duration:.01ms!important;animation-duration:.01ms!important}.js .rv{opacity:1;transform:none}}
+
+/* ---- selector de tema ---- */
+.tema{position:fixed;left:16px;bottom:16px;z-index:60}
+.tema-btn{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;color:var(--txt);background:var(--sup);border:1px solid var(--borde);border-radius:999px;cursor:pointer}
+.tema-btn:hover{border-color:var(--tq)}
+.tema-btn svg{width:22px;height:22px}
+.tema-lista{position:absolute;left:0;bottom:58px;min-width:200px;margin:0;padding:.4rem;list-style:none;background:var(--sup);border:1px solid var(--borde);border-radius:10px;box-shadow:0 12px 40px rgba(0,0,0,.35)}
+.tema-lista[hidden]{display:none}
+.tema-lista button{display:flex;align-items:center;gap:.7rem;width:100%;min-height:44px;font:500 .95rem var(--sans);color:var(--txt);background:transparent;border:1px solid transparent;border-radius:6px;padding:.5rem .6rem;cursor:pointer;text-align:left}
+.tema-lista button:hover{background:var(--sup2)}
+.tema-lista button[aria-checked=true]{border-color:var(--tq)}
+.tema-lista i{display:inline-flex;flex:none;width:30px;height:18px;border-radius:3px;overflow:hidden;border:1px solid rgba(128,128,128,.45)}
+.tema-lista i b{flex:1}
+
+/* ---- diagnóstico ---- */
+.dg{padding-block:clamp(7rem,12vw,9rem) clamp(3rem,6vw,5rem)}
+.dg-w{max-width:820px}
+.dg .crumb{font:500 .85rem var(--mono);color:var(--suave)}
+.dg .crumb a{color:var(--suave)}
+.dg h1{font-size:clamp(2rem,5vw,3.4rem);margin:1rem 0 .8rem}
+.dg .lead{color:var(--suave);font-size:1.1rem;max-width:60ch}
+.dg-card{margin-top:2rem;border:1px solid var(--borde);background:var(--sup);border-radius:8px;padding:clamp(1.2rem,3vw,2rem)}
+.dg-prog{list-style:none;padding:0;margin:0 0 1.6rem;display:flex;gap:.5rem}
+.dg-prog li{flex:1}
+.dg-prog .b{display:block;height:6px;border-radius:99px;background:var(--borde);transition:background .2s}
+.dg-prog .on{background:var(--tq)}
+.dg-prog .t{display:none;margin-top:.5rem;font:500 .72rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--suave)}
+@media(min-width:640px){.dg-prog .t{display:block}}
+.dg fieldset{border:0;padding:0;margin:0;min-width:0}
+.dg legend{font:600 1.4rem var(--sans);margin-bottom:1rem;padding:0}
+.dg .g2{display:grid;gap:0 1rem}
+@media(min-width:640px){.dg .g2{grid-template-columns:1fr 1fr}}
+.dg select{width:100%;font:400 1rem var(--sans);color:var(--txt);background:var(--fondo);border:1px solid var(--borde);border-radius:4px;padding:.8rem .9rem;min-height:48px}
+.dg select:focus{outline:none;border-color:var(--tq);box-shadow:0 0 0 3px color-mix(in srgb,var(--tq) 15%,transparent)}
+.dg .dim{font:500 .85rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--tq);margin:1.8rem 0 .2rem}
+.dg .q{font-weight:500;margin:1.2rem 0 .5rem}
+.dg .opc{display:flex;align-items:flex-start;gap:.7rem;margin:.4rem 0 0;padding:.7rem .85rem;font:400 .98rem/1.45 var(--sans);letter-spacing:0;text-transform:none;color:var(--txt);border:1px solid var(--borde);border-radius:6px;background:var(--fondo);cursor:pointer;transition:border-color .2s}
+.dg .opc:hover{border-color:var(--tq)}
+.dg .opc:has(:checked){border-color:var(--tq);background:color-mix(in srgb,var(--tq) 10%,var(--fondo))}
+.dg .opc input{width:auto;min-height:0;margin-top:.25rem;accent-color:var(--tq)}
+.dg .opc small{display:block;color:var(--suave);font-size:.9rem}
+.dg .nota{font-size:.95rem;color:var(--suave)}
+.dg-est{min-height:1.6rem;margin-top:1rem;font-size:.95rem;color:var(--suave)}
+.dg-est.err{color:#ff9d8f}
+.dg-nav{display:flex;gap:.8rem;justify-content:space-between;margin-top:1.4rem;flex-wrap:wrap}
+.dg-nav .btn[hidden]{display:none}
+.dg-nav #dg-siguiente,.dg-nav #dg-enviar{margin-left:auto}
+.dg .btn-tq{background:var(--tq);color:var(--fondo)}
+.dg-res .tot{border:1px solid var(--tq);background:color-mix(in srgb,var(--tq) 10%,var(--sup));border-radius:8px;padding:1.2rem;margin-top:1.2rem}
+.dg-res .tot b{font:600 2rem var(--sans);display:block;margin-top:.3rem}
+.dg-res ul{list-style:none;padding:0;margin:1.5rem 0 0;display:grid;gap:1rem}
+.dg-res li>div:first-child{display:flex;justify-content:space-between;gap:1rem;font-size:.95rem}
+.dg-res li .v{font-family:var(--mono);color:var(--suave)}
+.dg-res .bar{margin-top:.4rem;height:8px;border-radius:99px;background:var(--borde);overflow:hidden}
+.dg-res .bar i{display:block;height:100%;background:var(--tq)}
+.hp{position:absolute;left:-9999px}
+</style>
+</head>
+<body>
+<a class="skip" href="index.html#contenido">Saltar al contenido</a>
+
+<header class="top">
+  <div class="top-in">
+    <a href="index.html" aria-label="Software Data Lab, inicio"><img src="logo.svg" alt="Software Data Lab"></a>
+    <nav class="menu" aria-label="Principal">
+      <a href="index.html#servicios">Servicios</a><a href="index.html#experiencia">Experiencia</a><a href="index.html#casos">Casos</a><a href="index.html#lab">El Lab</a><a href="index.html#curso">Curso</a><a href="index.html#proceso">Cómo trabajamos</a><a href="index.html#contacto">Contacto</a>
+    </nav>
+    <span class="alt" aria-hidden="true">COTA <b id="cota">1.480</b> M</span>
+    <a class="btn btn-pri" href="https://wa.me/573122115299?text=Hola%20Daniel%2C%20vi%20Software%20Data%20Lab%20y%20quiero%20agendar%20el%20diagn%C3%B3stico%20gratis%20de%2030%20minutos." rel="noopener">Hablemos</a>
+  </div>
+</header>
+
+<main id="contenido">
+<section class="dg" aria-labelledby="dg-t"><div class="wrap dg-w">
+  <nav class="crumb" aria-label="Ruta de navegación"><a href="index.html">Inicio</a> / <span aria-current="page">Diagnóstico</span></nav>
+  <span class="mono" style="display:block;margin-top:1.5rem">Diagnóstico gratis</span>
+  <h1 id="dg-t">Mide la brecha digital de tu empresa</h1>
+  <p class="lead">Cuatro pasos y unos 5 minutos. Al terminar ves tu nivel en cada área y nosotros preparamos la conversación de 30 minutos.</p>
+  <script type="application/json" id="dg-config">{"niveles": [{"hasta": 25, "nombre": "Inicial", "texto": "Casi todo se hace a mano. Hay mucho por ganar con pocos cambios bien elegidos."}, {"hasta": 50, "nombre": "En desarrollo", "texto": "Ya usas herramientas, pero no se conectan entre sí. Integrar y ordenar es el siguiente paso."}, {"hasta": 75, "nombre": "Intermedio", "texto": "Tienes una base sólida. Conviene automatizar lo repetitivo y medir con datos."}, {"hasta": 100, "nombre": "Avanzado", "texto": "Tu operación está bien digitalizada. Se trata de afinar, medir y escalar."}], "dimensiones": [{"id": "procesos", "titulo": "Procesos", "preguntas": ["proc_definidos", "proc_manual"]}, {"id": "herramientas", "titulo": "Herramientas y sistemas", "preguntas": ["herr_info", "herr_buscar"]}, {"id": "datos", "titulo": "Datos e indicadores", "preguntas": ["dat_cifras", "dat_decisiones"]}, {"id": "atencion", "titulo": "Atención y comunicación", "preguntas": ["ate_solicitudes", "ate_recordatorios"]}, {"id": "seguridad", "titulo": "Seguridad y respaldo", "preguntas": ["seg_copias", "seg_accesos"]}]}</script>
+  <div class="dg-card" id="dg-tarjeta">
+    <ol class="dg-prog" id="dg-progreso" aria-label="Progreso"><li><span class="b"></span><span class="t">Tu empresa</span></li><li><span class="b"></span><span class="t">Brecha digital</span></li><li><span class="b"></span><span class="t">Tu equipo</span></li><li><span class="b"></span><span class="t">Servicios</span></li></ol>
+    <form id="dg-form" novalidate data-api="/api/diagnostico">
+      <fieldset data-paso="0"><legend>Tu empresa</legend>
+        <div class="g2"><div><label for="dg-nombre">Nombre</label><input id="dg-nombre" name="nombre" type="text" autocomplete="name" required maxlength="120"></div>
+        <div><label for="dg-empresa">Empresa u organización</label><input id="dg-empresa" name="empresa" type="text" autocomplete="organization" required maxlength="160"></div></div>
+        <label for="dg-contacto">Correo o WhatsApp para responderte</label><input id="dg-contacto" name="contacto" type="text" autocomplete="email" required maxlength="160">
+        <div class="g2"><div><label for="dg-sector">Sector</label><select id="dg-sector" name="sector" required><option value="">Elige uno</option><option value="Salud">Salud</option><option value="Educación">Educación</option><option value="Sector público">Sector público</option><option value="Comercio">Comercio</option><option value="Industria o manufactura">Industria o manufactura</option><option value="Servicios">Servicios</option><option value="Fundación u ONG">Fundación u ONG</option><option value="Otro">Otro</option></select></div>
+        <div><label for="dg-tamano">Tamaño del equipo</label><select id="dg-tamano" name="tamano" required><option value="">Elige uno</option><option value="Solo yo">Solo yo</option><option value="2 a 10 personas">2 a 10 personas</option><option value="11 a 50 personas">11 a 50 personas</option><option value="Más de 50 personas">Más de 50 personas</option></select></div></div>
+      </fieldset>
+      <fieldset data-paso="1" hidden><legend>Brecha digital</legend><p class="nota">Elige la opción que más se parezca a cómo trabajan hoy, no a cómo quisieras.</p><h3 class="dim">Procesos</h3><div role="radiogroup" aria-labelledby="q-proc_definidos"><p class="q" id="q-proc_definidos">¿Cómo se ejecutan hoy tus procesos principales (ventas, pedidos, atención, producción)?</p><label class="opc"><input type="radio" name="brecha.proc_definidos" value="0" required><span>Cada persona lo hace a su manera, sin pasos definidos</span></label><label class="opc"><input type="radio" name="brecha.proc_definidos" value="1" required><span>Hay pasos definidos, pero viven en papel o en la cabeza de alguien</span></label><label class="opc"><input type="radio" name="brecha.proc_definidos" value="2" required><span>Están documentados y se siguen casi siempre</span></label><label class="opc"><input type="radio" name="brecha.proc_definidos" value="3" required><span>Están documentados, automatizados y se mejoran con datos</span></label></div><div role="radiogroup" aria-labelledby="q-proc_manual"><p class="q" id="q-proc_manual">¿Cuánto trabajo se repite a mano (copiar datos, pasar información entre archivos)?</p><label class="opc"><input type="radio" name="brecha.proc_manual" value="0" required><span>Casi todo</span></label><label class="opc"><input type="radio" name="brecha.proc_manual" value="1" required><span>Mucho</span></label><label class="opc"><input type="radio" name="brecha.proc_manual" value="2" required><span>Poco</span></label><label class="opc"><input type="radio" name="brecha.proc_manual" value="3" required><span>Casi nada</span></label></div><h3 class="dim">Herramientas y sistemas</h3><div role="radiogroup" aria-labelledby="q-herr_info"><p class="q" id="q-herr_info">¿Con qué llevas la información del negocio?</p><label class="opc"><input type="radio" name="brecha.herr_info" value="0" required><span>Papel, WhatsApp o memoria</span></label><label class="opc"><input type="radio" name="brecha.herr_info" value="1" required><span>Excel o Google Sheets sueltos</span></label><label class="opc"><input type="radio" name="brecha.herr_info" value="2" required><span>Varias aplicaciones que no se conectan entre sí</span></label><label class="opc"><input type="radio" name="brecha.herr_info" value="3" required><span>Un sistema integrado que cubre casi todo</span></label></div><div role="radiogroup" aria-labelledby="q-herr_buscar"><p class="q" id="q-herr_buscar">¿Qué tan fácil es encontrar un dato (un cliente, un pedido, un pago) cuando lo necesitas?</p><label class="opc"><input type="radio" name="brecha.herr_buscar" value="0" required><span>Toca buscar en varios lugares o preguntar a alguien</span></label><label class="opc"><input type="radio" name="brecha.herr_buscar" value="1" required><span>Lo encuentro en un archivo, pero me demoro</span></label><label class="opc"><input type="radio" name="brecha.herr_buscar" value="2" required><span>Lo encuentro rápido en una herramienta</span></label><label class="opc"><input type="radio" name="brecha.herr_buscar" value="3" required><span>Lo encuentro al instante y con su historial</span></label></div><h3 class="dim">Datos e indicadores</h3><div role="radiogroup" aria-labelledby="q-dat_cifras"><p class="q" id="q-dat_cifras">¿Cómo obtienes tus cifras e indicadores (ventas, costos, inventario)?</p><label class="opc"><input type="radio" name="brecha.dat_cifras" value="0" required><span>No las tengo</span></label><label class="opc"><input type="radio" name="brecha.dat_cifras" value="1" required><span>Las armo a mano cuando las necesito</span></label><label class="opc"><input type="radio" name="brecha.dat_cifras" value="2" required><span>Reportes periódicos, con esfuerzo</span></label><label class="opc"><input type="radio" name="brecha.dat_cifras" value="3" required><span>Tableros que se actualizan solos</span></label></div><div role="radiogroup" aria-labelledby="q-dat_decisiones"><p class="q" id="q-dat_decisiones">¿Con qué frecuencia decides apoyándote en datos y no en intuición?</p><label class="opc"><input type="radio" name="brecha.dat_decisiones" value="0" required><span>Casi nunca</span></label><label class="opc"><input type="radio" name="brecha.dat_decisiones" value="1" required><span>A veces</span></label><label class="opc"><input type="radio" name="brecha.dat_decisiones" value="2" required><span>Con frecuencia</span></label><label class="opc"><input type="radio" name="brecha.dat_decisiones" value="3" required><span>Siempre, es parte de la rutina</span></label></div><h3 class="dim">Atención y comunicación</h3><div role="radiogroup" aria-labelledby="q-ate_solicitudes"><p class="q" id="q-ate_solicitudes">¿Cómo reciben y atienden las solicitudes de clientes o usuarios?</p><label class="opc"><input type="radio" name="brecha.ate_solicitudes" value="0" required><span>Llamadas y WhatsApp personales, sin registro</span></label><label class="opc"><input type="radio" name="brecha.ate_solicitudes" value="1" required><span>Un número o correo compartido, sin seguimiento</span></label><label class="opc"><input type="radio" name="brecha.ate_solicitudes" value="2" required><span>Registro de solicitudes con un responsable</span></label><label class="opc"><input type="radio" name="brecha.ate_solicitudes" value="3" required><span>Canales conectados a un sistema, con seguimiento y alertas</span></label></div><div role="radiogroup" aria-labelledby="q-ate_recordatorios"><p class="q" id="q-ate_recordatorios">¿Cómo recuerdan citas, pagos o entregas?</p><label class="opc"><input type="radio" name="brecha.ate_recordatorios" value="0" required><span>De memoria o con agenda personal</span></label><label class="opc"><input type="radio" name="brecha.ate_recordatorios" value="1" required><span>Manualmente, por llamada o mensaje</span></label><label class="opc"><input type="radio" name="brecha.ate_recordatorios" value="2" required><span>Con recordatorios semiautomáticos</span></label><label class="opc"><input type="radio" name="brecha.ate_recordatorios" value="3" required><span>Automáticos, por WhatsApp o correo</span></label></div><h3 class="dim">Seguridad y respaldo</h3><div role="radiogroup" aria-labelledby="q-seg_copias"><p class="q" id="q-seg_copias">¿Qué pasa con las copias de seguridad de tu información?</p><label class="opc"><input type="radio" name="brecha.seg_copias" value="0" required><span>No hay copias</span></label><label class="opc"><input type="radio" name="brecha.seg_copias" value="1" required><span>Se hacen a veces y de forma manual</span></label><label class="opc"><input type="radio" name="brecha.seg_copias" value="2" required><span>Son periódicas, pero nunca se ha probado restaurarlas</span></label><label class="opc"><input type="radio" name="brecha.seg_copias" value="3" required><span>Son automáticas y se verifican</span></label></div><div role="radiogroup" aria-labelledby="q-seg_accesos"><p class="q" id="q-seg_accesos">¿Cómo se controla quién accede a la información?</p><label class="opc"><input type="radio" name="brecha.seg_accesos" value="0" required><span>Todos comparten las mismas claves o archivos</span></label><label class="opc"><input type="radio" name="brecha.seg_accesos" value="1" required><span>Hay controles informales</span></label><label class="opc"><input type="radio" name="brecha.seg_accesos" value="2" required><span>Usuarios y permisos según el cargo</span></label><label class="opc"><input type="radio" name="brecha.seg_accesos" value="3" required><span>Usuarios, permisos y registro de quién hizo qué</span></label></div></fieldset>
+      <fieldset data-paso="2" hidden><legend>Tu equipo</legend><div role="radiogroup" aria-labelledby="q-asignacion"><p class="q" id="q-asignacion">¿Cómo se asignan las tareas en tu equipo?</p><label class="opc"><input type="radio" name="equipo.asignacion" value="De palabra o por chat" required><span>De palabra o por chat</span></label><label class="opc"><input type="radio" name="equipo.asignacion" value="En una lista de Excel o en papel" required><span>En una lista de Excel o en papel</span></label><label class="opc"><input type="radio" name="equipo.asignacion" value="En una herramienta de tareas (Trello, Asana u otra)" required><span>En una herramienta de tareas (Trello, Asana u otra)</span></label><label class="opc"><input type="radio" name="equipo.asignacion" value="En un sistema propio ligado al proceso" required><span>En un sistema propio ligado al proceso</span></label></div><div role="radiogroup" aria-labelledby="q-seguimiento"><p class="q" id="q-seguimiento">¿Cómo sabes en qué va cada tarea o proyecto?</p><label class="opc"><input type="radio" name="equipo.seguimiento" value="Le pregunto a cada persona" required><span>Le pregunto a cada persona</span></label><label class="opc"><input type="radio" name="equipo.seguimiento" value="En reuniones periódicas" required><span>En reuniones periódicas</span></label><label class="opc"><input type="radio" name="equipo.seguimiento" value="Con un reporte manual" required><span>Con un reporte manual</span></label><label class="opc"><input type="radio" name="equipo.seguimiento" value="En un tablero que se actualiza solo" required><span>En un tablero que se actualiza solo</span></label></div><div role="radiogroup" aria-labelledby="q-comunicacion"><p class="q" id="q-comunicacion">¿Cómo se comunica el equipo día a día?</p><label class="opc"><input type="radio" name="equipo.comunicacion" value="WhatsApp personal" required><span>WhatsApp personal</span></label><label class="opc"><input type="radio" name="equipo.comunicacion" value="Grupos de WhatsApp y correo" required><span>Grupos de WhatsApp y correo</span></label><label class="opc"><input type="radio" name="equipo.comunicacion" value="Una herramienta de equipo (Teams, Slack, Meet)" required><span>Una herramienta de equipo (Teams, Slack, Meet)</span></label><label class="opc"><input type="radio" name="equipo.comunicacion" value="Una herramienta de equipo ligada a los procesos" required><span>Una herramienta de equipo ligada a los procesos</span></label></div>
+        <label for="dg-friccion">¿Qué es lo que más frena o genera errores en tu equipo hoy?</label><textarea id="dg-friccion" name="friccion" rows="4" required maxlength="2000"></textarea></fieldset>
+      <fieldset data-paso="3" hidden><legend>Servicios de tu interés</legend><p class="nota">Marca los que te interesen (puedes dejar todos sin marcar).</p><label class="opc"><input type="checkbox" name="servicios" value="software"><span><b>Software a la medida</b><small>Sistemas, integraciones con pagos, tienda o contabilidad, y salir del Excel.</small></span></label><label class="opc"><input type="checkbox" name="servicios" value="datos"><span><b>Tableros y analítica de datos</b><small>Indicadores, reportes y Power BI con datos confiables.</small></span></label><label class="opc"><input type="checkbox" name="servicios" value="automatizacion"><span><b>Automatización con WhatsApp e IA</b><small>Recordatorios, campañas, bots y transcripción de voz.</small></span></label><label class="opc"><input type="checkbox" name="servicios" value="soporte"><span><b>Auditoría, mantenimiento y soporte</b><small>Revisión técnica, seguridad, mejoras y bolsa de horas.</small></span></label><label class="opc"><input type="checkbox" name="servicios" value="formacion"><span><b>Formación para equipos</b><small>Power BI, programación, analítica e IA aplicada.</small></span></label>
+        <label for="dg-urgencia">¿Para cuándo lo necesitas?</label><select id="dg-urgencia" name="urgencia"><option value="">Elige uno</option><option value="Solo estoy explorando">Solo estoy explorando</option><option value="En los próximos 6 meses">En los próximos 6 meses</option><option value="En los próximos 3 meses">En los próximos 3 meses</option><option value="Lo antes posible">Lo antes posible</option></select>
+        <label for="dg-objetivo">¿Qué te gustaría lograr? (opcional)</label><textarea id="dg-objetivo" name="objetivo" rows="3" maxlength="2000"></textarea></fieldset>
+      <div class="hp" aria-hidden="true"><label>No llenes este campo <input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
+      <p class="dg-est" data-estado role="status" aria-live="polite"></p>
+      <div class="dg-nav">
+        <button type="button" id="dg-atras" class="btn btn-sec" hidden>Atrás</button>
+        <button type="button" id="dg-siguiente" class="btn btn-tq">Siguiente</button>
+        <button type="submit" id="dg-enviar" class="btn btn-tq" hidden>Enviar y ver mi resultado</button>
+      </div>
+    </form>
+    <div id="dg-resultado" class="dg-res" hidden aria-live="polite">
+      <h2 style="font-size:1.8rem">Tu resultado</h2>
+      <p class="nota" style="margin-top:.5rem">Recibimos tus respuestas. Este es tu nivel de madurez digital según lo que contestaste.</p>
+      <div class="tot"><span class="mono">Nivel general</span><b><span id="dg-total"></span> / 100 · <span id="dg-nivel"></span></b><p id="dg-nivel-texto" class="nota" style="margin-top:.4rem"></p></div>
+      <ul id="dg-dimensiones"></ul>
+      <p class="nota" style="margin-top:1.5rem">Es una medición orientativa, basada en tus respuestas. En la conversación de 30 minutos la revisamos contigo y definimos qué digitalizar primero. Te escribimos pronto.</p>
+    </div>
+  </div>
+  <p style="margin-top:1.8rem;color:var(--suave)">¿Prefieres hablarlo directamente? <a class="enlace" href="https://wa.me/573122115299?text=Hola%20Daniel%2C%20vi%20Software%20Data%20Lab%20y%20quiero%20agendar%20el%20diagn%C3%B3stico%20gratis%20de%2030%20minutos." rel="noopener">Escríbenos por WhatsApp</a></p>
+</div></section>
+</main>
+
+<footer>
+  <div class="wrap ft">
+    <img src="logo.svg" alt="Software Data Lab">
+    <nav aria-label="Pie"><a href="index.html#servicios">Servicios</a><a href="index.html#experiencia">Experiencia</a><a href="index.html#casos">Casos</a><a href="index.html#lab">El Lab</a><a href="index.html#curso">Curso</a><a href="index.html#proceso">Cómo trabajamos</a><a href="index.html#contacto">Contacto</a></nav>
+    <small>© Software Data Lab · Medellín, Colombia · <a href="https://danielflorez.dev" rel="noopener">danielflorez.dev</a></small>
+  </div>
+</footer>
+<div class="tema" id="tema">
+  <button class="tema-btn" type="button" id="tema-btn" aria-haspopup="true" aria-expanded="false" aria-controls="tema-lista" aria-label="Cambiar el tema de color">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+  </button>
+  <ul class="tema-lista" id="tema-lista" role="menu" aria-label="Tema de color" hidden></ul>
+</div>
+<script>
+(function(){
+  var R=document.documentElement,KEY='sdl-a-tema';
+  var T=[
+    {id:'claro',n:'Claro',c:{fondo:'#f4f1ea',txt:'#14232b',tq:'#16756b',ambar:'#f2a93b'}},
+    {id:'marca',n:'Marca',c:{fondo:'#0b1f2a',txt:'#f4f7f6',tq:'#7fd6cb',ambar:'#f2a93b'}},
+    {id:'azul',n:'Azul corporativo',c:{fondo:'#0a2342',txt:'#f2f6fb',tq:'#6fb1ff',ambar:'#f2a93b'}}
+  ];
+  function hex(h){h=h.replace('#','');return [0,2,4].map(function(i){return parseInt(h.substr(i,2),16)})}
+  function toHex(a){return '#'+a.map(function(v){return ('0'+Math.round(v).toString(16)).slice(-2)}).join('')}
+  function mix(a,b,t){var x=hex(a),y=hex(b);return toHex(x.map(function(v,i){return v+(y[i]-v)*t}))}
+  function hue(h){var c=hex(h).map(function(v){return v/255}),M=Math.max.apply(0,c),m=Math.min.apply(0,c),d=M-m,r;
+    if(!d)return 0;if(M===c[0])r=((c[1]-c[2])/d)%6;else if(M===c[1])r=(c[2]-c[0])/d+2;else r=(c[0]-c[1])/d+4;return (r*60+360)%360}
+  function apply(c){
+    var f=c.fondo,t=c.txt,a=c.tq;
+    var v={'--fondo':f,'--txt':t,'--tq':a,'--ambar':c.ambar,
+      '--sup':mix(f,t,.06),'--sup2':mix(f,t,.11),'--borde':mix(f,t,.2),
+      '--tq2':mix(a,t,.3),'--verde':mix(a,f,.35),
+      '--suave':mix(t,f,.28),'--tenue':mix(t,f,.42)};
+    for(var k in v)R.style.setProperty(k,v[k]);
+    var claro=hex(f).reduce(function(s,x){return s+x},0)>384;
+    R.style.colorScheme=claro?'light':'dark';
+    R.style.setProperty('--topo-filter','hue-rotate('+Math.round(hue(a)-hue('#7fd6cb'))+'deg)'+(claro?' brightness(.55)':''));
+  }
+  function load(){try{var id=localStorage.getItem(KEY);for(var i=0;i<T.length;i++)if(T[i].id===id)return T[i].id}catch(e){}return 'marca'}
+  function save(id){try{localStorage.setItem(KEY,id)}catch(e){}}
+  var cur=load(),lista=document.getElementById('tema-lista'),btn=document.getElementById('tema-btn');
+  function marcar(){Array.prototype.forEach.call(lista.querySelectorAll('button'),function(b){b.setAttribute('aria-checked',b.dataset.id===cur)})}
+  function cerrar(foco){lista.hidden=true;btn.setAttribute('aria-expanded','false');if(foco)btn.focus()}
+  T.forEach(function(t){
+    var li=document.createElement('li'),b=document.createElement('button');
+    li.setAttribute('role','none');b.type='button';b.setAttribute('role','menuitemradio');b.dataset.id=t.id;
+    b.innerHTML='<i><b style="background:'+t.c.fondo+'"></b><b style="background:'+t.c.tq+'"></b><b style="background:'+t.c.ambar+'"></b></i>'+t.n;
+    b.onclick=function(){cur=t.id;apply(t.c);save(cur);marcar();cerrar(true)};
+    li.appendChild(b);lista.appendChild(li)});
+  btn.onclick=function(){var abrir=lista.hidden;lista.hidden=!abrir;btn.setAttribute('aria-expanded',abrir)};
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!lista.hidden)cerrar(true)});
+  document.addEventListener('click',function(e){if(!lista.hidden&&!document.getElementById('tema').contains(e.target))cerrar(false)});
+  apply(T.filter(function(t){return t.id===cur})[0].c);marcar();
+})();
+</script>
+<script>
+(function(){
+  var form=document.getElementById('dg-form'),cfg=JSON.parse(document.getElementById('dg-config').textContent);
+  var pasos=[].slice.call(form.querySelectorAll('fieldset[data-paso]')),bars=[].slice.call(document.querySelectorAll('#dg-progreso .b'));
+  var atras=document.getElementById('dg-atras'),sig=document.getElementById('dg-siguiente'),env=document.getElementById('dg-enviar'),est=form.querySelector('[data-estado]'),cur=0;
+  function msg(t,err){est.textContent=t;est.className='dg-est'+(err?' err':'')}
+  function ir(n){cur=n;pasos.forEach(function(p,i){p.hidden=i!==n});bars.forEach(function(b,i){b.classList.toggle('on',i<=n)});
+    atras.hidden=n===0;sig.hidden=n===pasos.length-1;env.hidden=n!==pasos.length-1;msg('');
+    document.getElementById('dg-tarjeta').scrollIntoView({behavior:'smooth',block:'start'})}
+  function valido(){var c=[].slice.call(pasos[cur].querySelectorAll('input,select,textarea'));
+    for(var i=0;i<c.length;i++){if(!c[i].checkValidity()){c[i].reportValidity();msg('Completa los campos obligatorios para continuar.',true);return false}}return true}
+  sig.addEventListener('click',function(){if(valido())ir(Math.min(cur+1,pasos.length-1))});
+  atras.addEventListener('click',function(){ir(Math.max(cur-1,0))});
+  function pct(v){return v.length?Math.round(v.reduce(function(a,b){return a+b},0)/(v.length*3)*100):0}
+  function nivel(p){for(var i=0;i<cfg.niveles.length;i++)if(p<=cfg.niveles[i].hasta)return cfg.niveles[i];return cfg.niveles[cfg.niveles.length-1]}
+  function resultado(b){
+    var total=pct(Object.keys(b).map(function(k){return b[k]})),nv=nivel(total);
+    document.getElementById('dg-total').textContent=total;document.getElementById('dg-nivel').textContent=nv.nombre;document.getElementById('dg-nivel-texto').textContent=nv.texto;
+    var ul=document.getElementById('dg-dimensiones');ul.textContent='';
+    cfg.dimensiones.forEach(function(d){var p=pct(d.preguntas.map(function(q){return b[q]||0}));
+      var li=document.createElement('li'),a=document.createElement('div'),n=document.createElement('span'),v=document.createElement('span'),bar=document.createElement('div'),i=document.createElement('i');
+      n.textContent=d.titulo;v.className='v';v.textContent=p+' / 100 · '+nivel(p).nombre;a.appendChild(n);a.appendChild(v);
+      bar.className='bar';i.style.width=p+'%';bar.appendChild(i);li.appendChild(a);li.appendChild(bar);ul.appendChild(li)});
+    form.hidden=true;document.getElementById('dg-progreso').hidden=true;document.getElementById('dg-resultado').hidden=false;
+    document.getElementById('dg-tarjeta').scrollIntoView({behavior:'smooth',block:'start'})}
+  form.addEventListener('submit',function(e){
+    e.preventDefault();if(!valido())return;
+    var fd=new FormData(form);if(fd.get('_gotcha'))return;
+    var t=function(n){return String(fd.get(n)||'').trim()},brecha={},equipo={};
+    fd.forEach(function(val,k){if(k.indexOf('brecha.')===0)brecha[k.slice(7)]=Number(val);else if(k.indexOf('equipo.')===0)equipo[k.slice(7)]=String(val)});
+    var body={nombre:t('nombre'),empresa:t('empresa'),contacto:t('contacto'),sector:t('sector'),tamano:t('tamano'),brecha:brecha,equipo:equipo,friccion:t('friccion'),servicios:fd.getAll('servicios').map(String),urgencia:t('urgencia'),objetivo:t('objetivo'),_gotcha:t('_gotcha')};
+    env.disabled=true;msg('Enviando…');
+    fetch(form.dataset.api,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(body)})
+      .then(function(r){if(r.ok){resultado(brecha);return}return r.json().catch(function(){return null}).then(function(j){
+        msg(j&&typeof j.detail==='string'?j.detail:(r.status===404?'No hay API en este servidor. Abre esta página desde http://localhost:8080/propuestas/a-evolucion/diagnostico.html':'No pudimos enviarlo. Intenta de nuevo o escríbenos por WhatsApp.'),true)})})
+      .catch(function(){msg('Sin conexión. Intenta de nuevo o escríbenos por WhatsApp.',true)})
+      .then(function(){env.disabled=false});
+  });
+  ir(0);
+})();
+</script>
+</body>
+</html>

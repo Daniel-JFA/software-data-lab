@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="es-CO" data-theme="1">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Software Data Lab | Propuesta A, Evolución</title>
+<meta name="description" content="Mockup estático, propuesta A (evolución) para la landing de Software Data Lab.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===== Temas (cada uno cumple contraste AA; ver verificación en el reporte) ===== */
+:root,[data-theme="1"]{ /* Petróleo y turquesa sobre claro */
+  --bg:#ffffff; --bg2:#f1f6f6; --fg:#0b1f2a; --fg2:#3d525c; --ln:#cfdde0; --ac:#156a62;
+  --d-bg:#0b1f2a; --d-bg2:#102c3a; --d-fg:#f4f7f6; --d-fg2:#b9c9cc; --d-ln:#2c5266; --d-ac:#7fd6cb; --topo:#7fd6cb;
+}
+[data-theme="2"]{ /* Azul corporativo + gris azulado + teal */
+  --bg:#ffffff; --bg2:#eef2f7; --fg:#0f1e33; --fg2:#415368; --ln:#d3dbe6; --ac:#0b6b78;
+  --d-bg:#0a2a5e; --d-bg2:#0e336f; --d-fg:#ffffff; --d-fg2:#c9d6ee; --d-ln:#2f5391; --d-ac:#6fdbe0; --topo:#6fdbe0;
+}
+[data-theme="3"]{ /* Verde bosque + arena/hueso */
+  --bg:#fbf8f1; --bg2:#efe9da; --fg:#1b2a21; --fg2:#4a5a4f; --ln:#dcd3bd; --ac:#2b6a4d;
+  --d-bg:#17392b; --d-bg2:#1d4635; --d-fg:#f7f3e9; --d-fg2:#c8d7cc; --d-ln:#33604b; --d-ac:#aedcbc; --topo:#aedcbc;
+}
+:root{
+  --sans:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  --ambar:#f2a93b;
+  --gut:clamp(20px,5vw,48px); --max:1160px;
+  --pad:clamp(64px,9vw,112px);
+}
+/* Contexto de color: claro por defecto, .dk invierte al bloque oscuro */
+body,.lt{--b:var(--bg);--t:var(--fg);--t2:var(--fg2);--l:var(--ln);--a:var(--ac)}
+.alt{--b:var(--bg2)}
+.dk{--b:var(--d-bg);--t:var(--d-fg);--t2:var(--d-fg2);--l:var(--d-ln);--a:var(--d-ac)}
+
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:84px;-webkit-text-size-adjust:100%}
+body{font:400 1.0625rem/1.6 var(--sans);background:var(--bg);color:var(--fg);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+section,header,footer{background:var(--b);color:var(--t)}
+:focus-visible{outline:3px solid var(--a,var(--ac));outline-offset:3px;border-radius:4px}
+.wrap{max-width:var(--max);margin-inline:auto;padding-inline:var(--gut)}
+section{padding-block:var(--pad)}
+.pend{font:500 .875rem var(--mono);color:var(--t2);border:1px dashed var(--l);padding:.2rem .6rem;border-radius:4px;display:inline-block}
+.dato-m{font:500 .875rem var(--mono)}
+
+/* Tipografía: una sola familia */
+h1,h2,h3{font-family:var(--sans);font-weight:700;letter-spacing:-.015em;color:var(--t)}
+h1{font-size:clamp(2.4rem,6vw,4.1rem);line-height:1.08}
+h2{font-size:clamp(1.9rem,3.6vw,2.75rem);line-height:1.12}
+h3{font-size:1.3rem;line-height:1.3;font-weight:600;letter-spacing:-.005em}
+.kicker{font:600 .9375rem var(--sans);color:var(--a);margin-bottom:.75rem;display:block}
+.intro{color:var(--t2);font-size:1.1875rem;max-width:44ch;margin-top:1rem}
+.cab{margin-bottom:clamp(2.2rem,5vw,3.5rem);max-width:62ch}
+p{color:var(--t2)}
+
+/* Botones y enlaces */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:48px;padding:.7rem 1.5rem;border-radius:6px;font:600 1rem var(--sans);text-decoration:none;border:2px solid transparent;cursor:pointer;transition:background .2s,border-color .2s,color .2s}
+.btn-pri{background:var(--ambar);color:#1b1306}
+.btn-pri:hover{background:#f6bb5c}
+.btn-sec{background:transparent;border-color:var(--t);color:var(--t)}
+.btn-sec:hover{background:var(--t);color:var(--b)}
+.enlace{font:600 1rem var(--sans);color:var(--t);text-decoration:underline;text-decoration-color:var(--a);text-decoration-thickness:2px;text-underline-offset:5px;min-height:44px;display:inline-flex;align-items:center;transition:color .2s}
+.enlace:hover{color:var(--a)}
+.acciones{display:flex;flex-wrap:wrap;gap:.75rem 1.75rem;align-items:center}
+
+/* Header */
+header.top{position:sticky;top:0;z-index:50;border-bottom:1px solid var(--l)}
+.top-in{display:flex;align-items:center;gap:1rem;min-height:68px}
+.top-in .logo img{height:30px;width:auto}
+nav.menu{display:none;gap:1.6rem;margin-left:auto;font-size:.9375rem;font-weight:500}
+nav.menu a{text-decoration:none;color:var(--t2);padding:.5rem 0;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+nav.menu a:hover{color:var(--t);border-color:var(--a)}
+.tema{display:flex;gap:.35rem;margin-left:auto}
+nav.menu+.tema{margin-left:0}
+.tema button{width:40px;height:40px;border-radius:6px;border:1px solid var(--l);background:transparent;color:var(--t);font:600 .9375rem var(--sans);cursor:pointer;transition:background .2s,color .2s}
+.tema button:hover{border-color:var(--a)}
+.tema button[aria-pressed="true"]{background:var(--a);color:var(--d-bg);border-color:var(--a)}
+.top .btn{min-height:44px;padding:.5rem 1.1rem;font-size:.9375rem}
+details.mm{position:relative}
+details.mm summary{list-style:none;cursor:pointer;min-height:44px;display:inline-flex;align-items:center;padding:0 .9rem;border:1px solid var(--l);border-radius:6px;font-weight:600;font-size:.9375rem}
+details.mm summary::-webkit-details-marker{display:none}
+details.mm .lista{position:absolute;right:0;top:52px;min-width:220px;background:var(--d-bg2);border:1px solid var(--l);border-radius:8px;padding:.5rem;display:grid}
+details.mm .lista a{padding:.7rem .8rem;text-decoration:none;border-radius:4px;color:var(--t)}
+details.mm .lista a:hover{background:var(--d-bg)}
+@media(min-width:1100px){nav.menu{display:flex}details.mm{display:none}}
+@media(max-width:520px){.top .btn{display:none}.top-in{gap:.6rem}}
+
+/* Hero */
+.hero{position:relative;overflow:hidden;padding-block:clamp(72px,11vw,140px)}
+.hero .map{position:absolute;right:-12%;top:50%;width:min(760px,110vw);transform:translateY(-50%);opacity:.22;pointer-events:none;color:var(--topo)}
+.hero .wrap{position:relative}
+.hero .eti{font-weight:500;color:var(--t2);margin-bottom:1.25rem}
+.hero h1{max-width:15ch;margin-bottom:1.5rem}
+.hero .lede{font-size:clamp(1.15rem,2vw,1.35rem);color:var(--t2);max-width:36ch;margin-bottom:2.25rem}
+.hero .nota{margin-top:1.25rem;font-size:.9375rem}
+
+/* Servicios */
+.sv{display:grid;gap:1.25rem}
+@media(min-width:760px){.sv{grid-template-columns:1fr 1fr}}
+.sv article{border:1px solid var(--l);border-top:3px solid var(--a);border-radius:6px;padding:1.75rem;background:var(--b);display:flex;flex-direction:column;gap:.75rem;transition:box-shadow .2s,transform .2s}
+.sv article:hover{box-shadow:0 8px 22px rgba(11,31,42,.1);transform:translateY(-2px)}
+.sv .ej{margin-top:auto;padding-top:1rem;border-top:1px solid var(--l);color:var(--t);font-size:.9375rem}
+.sv .ej b{display:block;font-weight:600;color:var(--a);margin-bottom:.15rem}
+
+/* Experiencia */
+.stat{display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap;margin-bottom:2rem}
+.stat strong{font-size:clamp(2.2rem,5vw,3.2rem);font-weight:700;line-height:1;color:var(--t)}
+.stat span{color:var(--t2)}
+.sectores{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.25rem}
+.chip{font:500 .9375rem var(--sans);border:1px solid var(--l);background:var(--bg);border-radius:999px;padding:.3rem .95rem;color:var(--t)}
+.tl{list-style:none;padding:0;border-top:1px solid var(--l)}
+.tl li{display:grid;gap:.35rem 2rem;padding:1.4rem 0;border-bottom:1px solid var(--l)}
+@media(min-width:800px){.tl li{grid-template-columns:190px 1fr 1.2fr}}
+.tl .per{font:500 .9375rem var(--mono);color:var(--t2)}
+.tl .org{font-weight:600;font-size:1.15rem;color:var(--t);line-height:1.35}
+.tl .sec{font-size:.9375rem;font-weight:600;color:var(--a);display:block}
+.tl .nt{display:block;font-size:.9375rem;color:var(--t2);margin-top:.3rem}
+.tl li:hover .org{color:var(--a)}
+
+/* Casos */
+.casos{display:grid;gap:1.25rem}
+@media(min-width:900px){.casos{grid-template-columns:repeat(3,1fr)}}
+.caso{border:1px solid var(--l);border-radius:6px;padding:1.75rem;display:flex;flex-direction:column;gap:1rem;background:var(--b);transition:border-color .2s,box-shadow .2s}
+.caso:hover{border-color:var(--a);box-shadow:0 8px 22px rgba(11,31,42,.08)}
+.est{font-weight:600;font-size:.9375rem;color:var(--a)}
+.caso .cat{font-size:.9375rem}
+.caso dl{display:grid;gap:.9rem}
+.caso dt{font-weight:600;font-size:.9375rem;color:var(--t)}
+.caso dd{color:var(--t2);font-size:1rem}
+.caso .sol dd{color:var(--t)}
+.tec{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:auto;padding-top:.5rem}
+.tec span{font:400 .8125rem var(--mono);color:var(--t2);border:1px solid var(--l);padding:.2rem .55rem;border-radius:4px}
+.nota-c{margin-top:1.75rem;font-size:.9375rem}
+
+/* Lab */
+.ser{list-style:none;padding:0;border-top:1px solid var(--l)}
+.ser a{display:grid;gap:.2rem 2rem;padding:1.3rem 0;border-bottom:1px solid var(--l);text-decoration:none;transition:background .2s,padding-left .2s}
+.ser a:hover{background:var(--d-bg2);padding-left:1rem}
+@media(min-width:800px){.ser a{grid-template-columns:170px 1fr 1.2fr;align-items:baseline}}
+.ser .f{font-weight:600;font-size:.9375rem;color:var(--a)}
+.ser p{color:var(--t2)}
+.redes{display:flex;flex-wrap:wrap;gap:.5rem 1.75rem;margin-top:1.75rem}
+
+/* Curso */
+.curso-g{display:grid;gap:3rem}
+@media(min-width:960px){.curso-g{grid-template-columns:1fr 1.1fr;gap:4.5rem;align-items:start}}
+.lecc{list-style:none;padding:0;border-top:1px solid var(--l);counter-reset:l}
+.lecc li{display:grid;grid-template-columns:48px 1fr;gap:.5rem 1rem;padding:1.1rem 0;border-bottom:1px solid var(--l);counter-increment:l}
+.lecc li::before{content:counter(l);font:600 1.15rem var(--sans);color:var(--a)}
+.lecc strong{display:block;font-weight:600;color:var(--t)}
+.lecc span{color:var(--t2);font-size:1rem}
+.form{border:1px solid var(--l);background:var(--bg);border-radius:6px;padding:1.75rem;margin-top:1.75rem;--t:var(--fg);--t2:var(--fg2);--l:var(--ln);--a:var(--ac)}
+.form h3{margin-bottom:.4rem}
+.form .s{margin-bottom:.5rem}
+label{display:block;font:600 .9375rem var(--sans);color:var(--t);margin:1rem 0 .35rem}
+input,textarea{width:100%;font:400 1rem var(--sans);color:var(--fg);background:#fff;border:1px solid #6b7f86;border-radius:4px;padding:.75rem .9rem;min-height:48px}
+input:focus,textarea:focus{outline:3px solid var(--ac);outline-offset:1px;border-color:var(--ac)}
+textarea{min-height:130px;resize:vertical}
+.leg{font-size:.9375rem;margin-top:.9rem}
+.form .btn{margin-top:1.25rem}
+
+/* Ruta SDL */
+.ruta{list-style:none;padding:0;display:grid;gap:1.25rem;counter-reset:p}
+@media(min-width:900px){.ruta{grid-template-columns:repeat(4,1fr)}}
+.ruta li{background:var(--bg2);border-radius:6px;padding:1.75rem;border-top:4px solid var(--a);counter-increment:p;display:flex;flex-direction:column;gap:.75rem}
+.ruta li::before{content:"Paso " counter(p);font-weight:600;font-size:.9375rem;color:var(--a)}
+.ruta .qr{margin-top:auto;padding-top:1rem;border-top:1px solid var(--l);font-size:.9375rem;color:var(--t)}
+.ruta .qr b{font-weight:600;color:var(--a)}
+.pr-foot{margin-top:2.5rem}
+
+/* Contacto */
+.ct-g{display:grid;gap:3rem}
+@media(min-width:960px){.ct-g{grid-template-columns:1fr 1fr;align-items:start;gap:5rem}}
+.ct h2{margin-bottom:1rem}
+.ct .acciones{margin-top:1.75rem}
+.dato{margin-top:2rem;display:grid;gap:0;border-top:1px solid var(--l)}
+.dato a{text-decoration:none;padding:1rem 0;border-bottom:1px solid var(--l);display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:var(--t);overflow-wrap:anywhere;transition:color .2s}
+.dato a:hover{color:var(--a)}
+.dato a span{color:var(--t2);font-size:.9375rem}
+
+/* Confianza */
+.nivel{display:grid;gap:1.25rem;padding-block:2.25rem;border-top:1px solid var(--l)}
+@media(min-width:900px){.nivel{grid-template-columns:minmax(0,.8fr) 2fr;gap:3rem}}
+.nivel h3{font:600 1.0625rem var(--sans);color:var(--t)}
+.nivel h3+p{margin-top:.4rem;font-size:.9375rem;max-width:34ch}
+.sect{display:grid;gap:1.5rem}
+@media(min-width:640px){.sect{grid-template-columns:1fr 1fr}}
+.sect b{font-weight:600;color:var(--a);font-size:.9375rem}
+.logo-slot{margin-top:.6rem;min-height:56px;display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
+.logo-slot img{max-height:40px;width:auto;filter:grayscale(1);opacity:.7;transition:filter .3s,opacity .3s}
+.logo-slot a:hover img,.logo-slot img:hover{filter:none;opacity:1}
+.sect small{display:block;font-size:.9375rem;color:var(--t2);margin-top:.4rem}
+.tecs{display:flex;flex-wrap:wrap;gap:.5rem;list-style:none;padding:0}
+.tecs li{font-weight:600;font-size:1rem;color:var(--t);border:1px solid var(--l);border-radius:6px;padding:.45rem .9rem;transition:border-color .2s,color .2s}
+.tecs li:hover{border-color:var(--a);color:var(--a)}
+
+/* Pie */
+footer{position:relative;overflow:hidden;padding-block:3rem}
+footer .map{position:absolute;right:-8%;bottom:-40%;width:min(620px,100vw);opacity:.14;pointer-events:none}
+.ft{position:relative;display:flex;flex-wrap:wrap;gap:1.5rem 3rem;align-items:center;justify-content:space-between}
+.ft img{height:32px;width:auto}
+.ft nav{display:flex;flex-wrap:wrap;gap:.25rem 1.5rem}
+.ft nav a{text-decoration:none;color:var(--t2);padding:.5rem 0;min-height:44px;display:inline-flex;align-items:center}
+.ft nav a:hover{color:var(--t);text-decoration:underline}
+.ft small{font-size:.9375rem;color:var(--t2);width:100%}
+.skip{position:absolute;left:12px;top:-70px;z-index:99;background:#fff;color:#0b1f2a;padding:.7rem 1rem;border-radius:6px;font-weight:600}
+.skip:focus{top:12px}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition-duration:.01ms!important;animation-duration:.01ms!important}.sv article:hover{transform:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
+
+<header class="top dk">
+  <div class="wrap top-in">
+    <a class="logo" href="#inicio" aria-label="Software Data Lab, inicio"><img src="logo.svg" alt="Software Data Lab"></a>
+    <nav class="menu" aria-label="Principal">
+      <a href="#servicios">Servicios</a><a href="#experiencia">Experiencia</a><a href="#casos">Casos</a><a href="#lab">El Lab</a><a href="#curso">Curso</a><a href="#proceso">Cómo trabajamos</a><a href="#contacto">Contacto</a>
+    </nav>
+    <div class="tema" role="group" aria-label="Tema de color (solo para la propuesta)">
+      <button type="button" data-t="1" aria-label="Tema 1: petróleo y turquesa" title="Petróleo y turquesa">1</button>
+      <button type="button" data-t="2" aria-label="Tema 2: azul corporativo" title="Azul corporativo">2</button>
+      <button type="button" data-t="3" aria-label="Tema 3: verde bosque y arena" title="Verde bosque y arena">3</button>
+    </div>
+    <a class="btn btn-pri" href="https://wa.me/573122115299?text=Hola%20Daniel%2C%20vi%20Software%20Data%20Lab%20y%20quiero%20agendar%20el%20diagn%C3%B3stico%20gratis%20de%2030%20minutos." rel="noopener">Hablemos</a>
+    <details class="mm"><summary>Menú</summary>
+      <div class="lista"><a href="#servicios">Servicios</a><a href="#experiencia">Experiencia</a><a href="#casos">Casos</a><a href="#lab">El Lab</a><a href="#curso">Curso</a><a href="#proceso">Cómo trabajamos</a><a href="#contacto">Contacto</a></div>
+    </details>
+  </div>
+</header>
+
+<main id="contenido">
+<!-- HERO (oscuro) -->
+<section class="hero dk" id="inicio" aria-labelledby="t-h">
+  <img class="map" src="topo.svg" alt="" aria-hidden="true">
+  <div class="wrap">
+    <p class="eti">Medellín, Colombia · Software y datos</p>
+    <h1 id="t-h">Software a la medida para cualquier sector</h1>
+    <p class="lede">Convertimos tus datos y procesos en sistemas que funcionan. Software, analítica, IA e IoT desde Medellín.</p>
+    <div class="acciones">
+      <a class="btn btn-pri" href="https://wa.me/573122115299?text=Hola%20Daniel%2C%20vi%20Software%20Data%20Lab%20y%20quiero%20agendar%20el%20diagn%C3%B3stico%20gratis%20de%2030%20minutos." rel="noopener">Hablemos</a>
+      <a class="enlace" href="/diagnostico">Agenda tu diagnóstico gratis</a>
+    </div>
+    <p class="nota">30 minutos. Sin costo. Por WhatsApp.</p>
+  </div>
+</section>
+
+<!-- SERVICIOS (claro) -->
+<section id="servicios" aria-labelledby="t-sv">
+  <div class="wrap">
+    <div class="cab"><span class="kicker">Servicios</span><h2 id="t-sv">Lo que hacemos</h2><p class="intro">Cuatro frentes. Un mismo equipo que entiende tus datos y tus procesos.</p></div>
+    <div class="sv">
+      <article><h3>Software a la medida</h3><p>Construimos sistemas web y móviles que se ajustan a tu operación. No te obligamos a cambiar tu forma de trabajar.</p><p class="ej"><b>Ejemplo</b>Un sistema para gestionar reservas, contratos y pagos en un solo lugar.</p></article>
+      <article><h3>Analítica y tableros de datos</h3><p>Unimos tus fuentes de datos y las convertimos en tableros claros. Decides con información al día.</p><p class="ej"><b>Ejemplo</b>Un tablero que cruza ventas e inventario y marca lo que se sale de lo normal.</p></article>
+      <article><h3>IA aplicada y agentes</h3><p>Usamos modelos de lenguaje y automatización donde ahorran tiempo real. Agentes que clasifican, responden y ejecutan tareas repetitivas.</p><p class="ej"><b>Ejemplo</b>Un asistente que transcribe audios y deja el resumen listo para revisar.</p></article>
+      <article><h3>IoT y sensores</h3><p>Conectamos sensores y dispositivos a tu sistema. Mides en campo y ves los datos en tiempo real.</p><p class="ej"><b>Ejemplo</b>Sensores de temperatura que avisan al celular cuando algo sale del rango.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCIA (gris claro) -->
+<section class="alt" id="experiencia" aria-labelledby="t-ex">
+  <div class="wrap">
+    <div class="cab"><span class="kicker">Experiencia</span><h2 id="t-ex">Hemos trabajado con el sector público, salud, fundaciones y educación.</h2>
+      <div class="sectores"><span class="chip">Sector público</span><span class="chip">Salud</span><span class="chip">Fundaciones</span><span class="chip">Educación</span></div></div>
+    <div class="stat"><strong>Más de 7 años</strong><span>de trayectoria, desde 2019</span></div>
+    <h3 style="margin-bottom:1rem">Trayectoria de Daniel Flórez</h3>
+    <ul class="tl">
+      <li><span class="per">2024 – hoy</span><div><span class="sec">Sector público</span><span class="org">Alcaldía de Medellín · Secretaría de Participación Ciudadana</span></div><div>Desarrollador/Arquitecto de software y Data Engineer<span class="nt">Servicios prestados por Daniel como persona natural</span></div></li>
+      <li><span class="per"></span><div><span class="sec">Fundaciones</span><span class="org">Fundación Infantil Santiago Corazón</span></div><div>Software a la medida: plataforma ERP/CRM para donaciones, inventario, ventas y beneficiarios</div></li>
+      <li><span class="per">2023 – hoy</span><div><span class="sec">Educación</span><span class="org">Institución Universitaria Pascual Bravo</span></div><div>Desarrollador de software y docente de Power BI<span class="nt">Servicios prestados por Daniel como persona natural</span></div></li>
+      <li><span class="per">2019 – 2023</span><div><span class="sec">Salud</span><span class="org">Coopsana IPS</span></div><div>Desarrollador de software: proyectos del área administrativa, servidores Linux e IoT con Raspberry Pi, Arduino y ESP32</div></li>
+      <li><span class="per">2024 – hoy</span><div><span class="sec">Educación</span><span class="org">Docencia universitaria</span></div><div>Universidad de Antioquia, Universidad San Buenaventura y EAFIT: programación, machine learning, IA y analítica de datos</div></li>
+    </ul>
+  </div>
+</section>
+
+<!-- CASOS (claro) -->
+<section id="casos" aria-labelledby="t-cs">
+  <div class="wrap">
+    <div class="cab"><span class="kicker">Casos</span><h2 id="t-cs">Sistemas que ya están en marcha.</h2></div>
+    <div class="casos">
+      <article class="caso"><span class="est">En producción</span><h3>RentMotor</h3><p class="cat">Gestión de alquiler de vehículos. API y sistema para gestionar usuarios, motos, conductores, alquileres, pagos y gastos.</p>
+        <dl><div><dt>Problema</dt><dd>Llevar vehículos, reservas y pagos por separado genera errores y reprocesos.</dd></div><div class="sol"><dt>Solución</dt><dd>Un sistema que centraliza la flota, las reservas y el cobro en un solo lugar.</dd></div></dl>
+        <div class="tec"><span>Angular</span><span>Node.js</span><span>Express</span><span>TypeScript</span><span>PostgreSQL</span><span>Prisma</span></div></article>
+      <article class="caso"><span class="est">En desarrollo</span><h3>VetPro</h3><p class="cat">Software de gestión veterinaria. Sistema SaaS para la gestión operativa, clínica y comercial de clínicas veterinarias y centros de cuidado de mascotas.</p>
+        <dl><div><dt>Problema</dt><dd>Las clínicas y guarderías de mascotas manejan citas, fichas clínicas, estancias y pagos en herramientas sueltas.</dd></div><div class="sol"><dt>Solución</dt><dd>Un sistema multiclínica que reúne la operación diaria, las fichas clínicas y un portal para los tutores, con transcripción de audio por IA.</dd></div></dl>
+        <div class="tec"><span>Angular</span><span>Node.js</span><span>Express</span><span>Prisma</span><span>PostgreSQL</span><span>Whisper</span></div></article>
+      <article class="caso"><span class="est">Por confirmar</span><h3>Plataforma GPS deportiva</h3><p class="cat">Perfiles físicos de deportistas amateur. Plataforma que arma perfiles físicos de deportistas amateur a partir de datos de GPS.</p>
+        <dl><div><dt>Problema</dt><dd>Los deportistas amateur casi nunca cuentan con datos propios sobre su rendimiento.</dd></div><div class="sol"><dt>Solución</dt><dd>Una plataforma que procesa datos de GPS y arma el perfil físico de cada deportista.</dd></div></dl></article>
+    </div>
+    <p class="nota-c">Enlaces a cada caso: <span class="pend">[PENDIENTE]</span></p>
+  </div>
+</section>
+
+<!-- LAB (oscuro) -->
+<section class="dk" id="lab" aria-labelledby="t-lab">
+  <div class="wrap">
+    <div class="cab"><span class="kicker">El Lab</span><h2 id="t-lab">Un laboratorio abierto.</h2><p class="intro">Un laboratorio abierto: tutoriales, noticias y experimentos de datos e IA.</p></div>
+    <h3 style="margin-bottom:1rem">Series del Lab</h3>
+    <ul class="ser">
+      <li><a href="#lab"><span class="f">Video corto</span><strong>Lab en 60 segundos</strong><p>Una idea de datos, software o IA en un minuto.</p></a></li>
+      <li><a href="#lab"><span class="f">Tutorial</span><strong>Tutorial del Lab</strong><p>Paso a paso para construir algo desde cero.</p></a></li>
+      <li><a href="#lab"><span class="f">Noticias</span><strong>Noticias del Lab</strong><p>Lo que pasa en datos e IA, explicado sin humo.</p></a></li>
+      <li><a href="#lab"><span class="f">Experimento</span><strong>Experimento del Lab</strong><p>Probamos una idea y te contamos qué funcionó.</p></a></li>
+      <li><a href="#lab"><span class="f">Abierto</span><strong>Lab abierto</strong><p>Avances y proyectos del Lab a la vista de todos.</p></a></li>
+    </ul>
+    <div class="redes"><a class="enlace" href="https://www.youtube.com/@softwaredatalab" rel="noopener">YouTube</a><a class="enlace" href="https://www.instagram.com/softwaredatalab/" rel="noopener">Instagram</a><a class="enlace" href="https://www.facebook.com/softwaredatalab" rel="noopener">Facebook</a></div>
+  </div>
+</section>
+
+<!-- CURSO (gris claro) -->
+<section class="alt" id="curso" aria-labelledby="t-cu">
+  <div class="wrap curso-g">
+    <div>
+      <span class="kicker">Curso gratis · 6 lecciones gratis</span>
+      <h2 id="t-cu">Análisis de fútbol con datos</h2>
+      <p class="intro">Aprende a leer un partido con datos. Sin fórmulas raras y con ejemplos reales.</p>
+      <form class="form" action="#" onsubmit="return false">
+        <h3>Entra a la lista de espera</h3>
+        <p class="s">Te escribimos cuando abramos las lecciones. Sin spam.</p>
+        <label for="c-mail">Correo</label>
+        <input id="c-mail" type="email" placeholder="tu@correo.com" autocomplete="email">
+        <button class="btn btn-sec" type="submit">Quiero entrar</button>
+        <p class="leg">Al suscribirte aceptas recibir correos del Lab. Puedes salirte cuando quieras.</p>
+      </form>
+    </div>
+    <ol class="lecc">
+      <li><div><strong>Qué datos tiene un partido</strong><span>Eventos, posiciones y tiempos: de dónde sale cada dato.</span></div></li>
+      <li><div><strong>Cómo leer una tabla</strong><span>Qué dice una tabla de posiciones y qué se le escapa.</span></div></li>
+      <li><div><strong>Goles esperados (xG)</strong><span>Una forma simple de medir la calidad de un remate.</span></div></li>
+      <li><div><strong>Pases y posesión</strong><span>Cuándo la posesión importa y cuándo no.</span></div></li>
+      <li><div><strong>Mapas de tiros y de calor</strong><span>Visualiza dónde pasa el juego.</span></div></li>
+      <li><div><strong>Tu primer análisis</strong><span>Juntas todo y analizas un partido completo.</span></div></li>
+    </ol>
+  </div>
+</section>
+
+<!-- RUTA SDL (claro) -->
+<section id="proceso" aria-labelledby="t-pr">
+  <div class="wrap">
+    <div class="cab"><span class="kicker">Ruta SDL · Cómo trabajamos</span><h2 id="t-pr">Cuatro pasos. Sin sorpresas.</h2></div>
+    <ol class="ruta">
+      <li><h3>Diagnóstico gratis</h3><p>30 minutos por WhatsApp. Revisamos tu proceso, dónde se pierde el tiempo y cuál es la brecha digital de tu empresa: qué haces hoy a mano, con qué herramientas y datos cuentas, y qué te conviene digitalizar primero.</p><span class="qr"><b>Recibes:</b> lectura de tu brecha digital</span></li>
+      <li><h3>Propuesta</h3><p>Te enviamos alcance, tiempos y costo por escrito. Claro y sin letra pequeña.</p><span class="qr"><b>Recibes:</b> alcance, tiempos y costo por escrito</span></li>
+      <li><h3>Desarrollo por entregas</h3><p>Construimos en ciclos cortos. Ves avances reales y ajustas sobre la marcha.</p><span class="qr"><b>Recibes:</b> avances reales en cada ciclo</span></li>
+      <li><h3>Soporte</h3><p>Seguimos contigo después de entregar: ajustes, mejoras y respuesta a tus dudas.</p><span class="qr"><b>Recibes:</b> ajustes, mejoras y respuesta a dudas</span></li>
+    </ol>
+    <div class="acciones pr-foot"><a class="btn btn-pri" href="https://wa.me/573122115299?text=Hola%20Daniel%2C%20vi%20Software%20Data%20Lab%20y%20quiero%20agendar%20el%20diagn%C3%B3stico%20gratis%20de%2030%20minutos." rel="noopener">Hablemos</a><a class="enlace" href="/diagnostico">Agenda tu diagnóstico gratis</a></div>
+  </div>
+</section>
+
+<!-- CONTACTO (oscuro) -->
+<section class="ct dk" id="contacto" aria-labelledby="t-ct">
+  <div class="wrap ct-g">
+    <div>
+      <span class="kicker">Contacto</span>
+      <h2 id="t-ct">Hablemos</h2>
+      <p class="intro">Cuéntanos qué necesitas. Te respondemos pronto.</p>
+      <div class="acciones"><a class="btn btn-pri" href="https://wa.me/573122115299?text=Hola%20Daniel%2C%20vi%20Software%20Data%20Lab%20y%20quiero%20agendar%20el%20diagn%C3%B3stico%20gratis%20de%2030%20minutos." rel="noopener">Hablemos por WhatsApp</a><a class="enlace" href="/diagnostico">Agenda tu diagnóstico gratis</a></div>
+      <div class="dato">
+        <a href="https://wa.me/573122115299"><span>WhatsApp</span>+57 312 211 5299</a>
+        <a href="mailto:florezaguirredaniel@gmail.com"><span>Correo</span>florezaguirredaniel@gmail.com</a>
+      </div>
+    </div>
+    <form class="form" action="#" onsubmit="return false" style="margin-top:0">
+      <h3>O déjanos un mensaje</h3>
+      <label for="f-n">Nombre</label><input id="f-n" type="text" autocomplete="name">
+      <label for="f-c">Correo</label><input id="f-c" type="email" autocomplete="email">
+      <label for="f-m">Mensaje</label><textarea id="f-m"></textarea>
+      <button class="btn btn-sec" type="submit">Enviar mensaje</button>
+    </form>
+  </div>
+</section>
+
+<!-- CONFIANZA (claro) -->
+<section id="confianza" aria-labelledby="t-cf">
+  <div class="wrap">
+    <div class="cab"><span class="kicker">Confianza</span><h2 id="t-cf">Con quién y con qué trabajamos</h2></div>
+
+    <div class="nivel">
+      <div><h3>Empresas con las que hemos trabajado</h3><p>Organizadas por sector. Cada logo aparece solo con autorización del cliente.</p></div>
+      <div class="sect">
+        <div><b>Sector público</b><div class="logo-slot"><span class="pend">[PENDIENTE] logo autorizado</span></div><small>Alcaldía de Medellín: servicios prestados por Daniel como persona natural.</small></div>
+        <div><b>Salud</b><div class="logo-slot"><span class="pend">[PENDIENTE] logo autorizado</span></div><small>Coopsana IPS.</small></div>
+        <div><b>Fundaciones</b><div class="logo-slot"><span class="pend">[PENDIENTE] sin autorización aún</span></div><small>Fundación Infantil Santiago Corazón: sin permiso de uso de logo por ahora.</small></div>
+        <div><b>Educación</b><div class="logo-slot"><span class="pend">[PENDIENTE] logo autorizado</span></div><small>Institución Universitaria Pascual Bravo: servicios prestados por Daniel como persona natural.</small></div>
+      </div>
+      <!-- Cuando haya logos autorizados: <a href="#"><img src="clientes/nombre.svg" alt="Nombre del cliente"></a> dentro de .logo-slot (una sola tinta, color al hover). -->
+    </div>
+
+    <div class="nivel">
+      <div><h3>Aliados y tecnologías</h3><p>Herramientas que usamos en nuestros proyectos.</p></div>
+      <ul class="tecs"><li>Astro</li><li>Angular</li><li>Node.js</li><li>FastAPI</li><li>TypeScript</li><li>PostgreSQL</li><li>Prisma</li><li>Power BI</li><li>Whisper</li><li>Raspberry Pi</li><li>Arduino</li><li>ESP32</li></ul>
+    </div>
+
+    <!-- Patrocinadores: bloque oculto mientras no existan.
+    <div class="nivel"><div><h3>Patrocinadores</h3><p>Descripción.</p></div><div class="logo-slot"></div></div>
+    -->
+  </div>
+</section>
+</main>
+
+<footer class="dk">
+  <img class="map" src="topo.svg" alt="" aria-hidden="true">
+  <div class="wrap ft">
+    <img src="logo.svg" alt="Software Data Lab">
+    <nav aria-label="Pie"><a href="#servicios">Servicios</a><a href="#experiencia">Experiencia</a><a href="#casos">Casos</a><a href="#lab">El Lab</a><a href="#curso">Curso</a><a href="#proceso">Cómo trabajamos</a><a href="#contacto">Contacto</a></nav>
+    <small>© Software Data Lab · Medellín, Colombia · <a href="https://danielflorez.dev" rel="noopener" style="color:var(--t)">danielflorez.dev</a></small>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var h=document.documentElement,bs=document.querySelectorAll('.tema button');
+  function set(t){
+    if(['1','2','3'].indexOf(t)<0)t='1';
+    h.setAttribute('data-theme',t);
+    bs.forEach(function(b){b.setAttribute('aria-pressed',b.dataset.t===t?'true':'false')});
+    try{localStorage.setItem('sdl-tema',t)}catch(e){}
+  }
+  var q=new URLSearchParams(location.search).get('tema'),g=null;
+  try{g=localStorage.getItem('sdl-tema')}catch(e){}
+  set(q||g||'1');
+  bs.forEach(function(b){b.addEventListener('click',function(){set(b.dataset.t)})});
+  document.querySelectorAll('details.mm .lista a').forEach(function(a){a.addEventListener('click',function(){a.closest('details').removeAttribute('open')})});
+})();
+</script>
+</body>
+</html>
