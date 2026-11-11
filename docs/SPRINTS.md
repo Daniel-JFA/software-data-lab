@@ -44,8 +44,9 @@ Fuera del registro público (personales o sensibles): `trading`, `deriv-mcp`, `g
 ## 3. Sprints
 
 ### S1 — Publicar la landing (semana 1–2)
-**Estado: PARCIAL (cerrado por el usuario sin completar).**
-- Hechas: S1-01 logos reales (`124ee2a`), S1-04 Plausible activo (`61ebf4d`).
+**Estado: CERRADO CON PENDIENTES (el usuario decidió cerrar el sprint con lo disponible; los pendientes pasan al backlog).**
+- Hechas: S1-01 logos reales (`124ee2a`), S1-04 Plausible activo (`61ebf4d`), S1-05 en código: repo privado en GitHub (`Daniel-JFA/software-data-lab`) y guía de despliegue en servidor propio (`ff62292`).
+- **Backlog que se arrastra** (sin estos datos el sitio NO está listo para publicarse: los botones de WhatsApp apuntan a `#contacto` y los formularios están inactivos): S1-02, S1-03, S1-06, S1-07 y el despliegue real de S1-05, detallados abajo.
 - Pendientes: S1-02 contacto, S1-03 IDs de Formspree, S1-05 despliegue en servidor propio + DNS (repo privado en GitHub ya creado), S1-06 Lighthouse y revisión a 375 px (Chrome headless no abre en esta máquina), S1-07 textos reales de casos y curso.
 - Antes de publicar: en Plausible crear el sitio y los goals `whatsapp_click`, `formulario_enviado`, `suscripcion_curso`.
 
