@@ -16,17 +16,17 @@ import datos from '../data/proceso.json';
     <p class="mt-4 max-w-2xl text-lg text-suave">{datos.intro}</p>
 
     <ol
-      class="relative mt-16 grid gap-8 before:absolute before:bottom-4 before:left-[1.25rem] before:top-4 before:w-px before:bg-gradient-to-b before:from-turquesa/50 before:via-turquesa/20 before:to-ambar/60 md:grid-cols-4 md:gap-6 md:before:bottom-auto md:before:left-6 md:before:right-6 md:before:top-[1.25rem] md:before:h-px md:before:w-auto md:before:bg-gradient-to-r"
+      class="relative mt-16 grid gap-8 before:absolute before:bottom-4 before:left-[1.25rem] before:top-4 before:w-px before:bg-borde md:grid-cols-4 md:gap-6 md:before:bottom-auto md:before:left-6 md:before:right-6 md:before:top-[1.25rem] md:before:h-px md:before:w-auto"
     >
       {
         datos.pasos.map((p, i) => (
           <li class="tarjeta relative !p-6 pl-16 md:pl-6 md:pt-14">
             <span
               class:list={[
-                'absolute left-4 top-4 z-10 grid h-10 w-10 place-items-center rounded-xl border bg-fondo font-mono text-xs font-bold shadow-lg md:left-6 md:top-[-1.25rem]',
+                'absolute left-4 top-4 z-10 grid h-10 w-10 place-items-center rounded-xl border bg-superficie font-mono text-xs font-bold md:left-6 md:top-[-1.25rem]',
                 i === datos.pasos.length - 1
-                  ? 'border-ambar/60 bg-gradient-to-br from-ambar/20 to-fondo text-ambar shadow-ambar/20'
-                  : 'border-turquesa/50 bg-gradient-to-br from-turquesa/20 to-fondo text-turquesa-claro shadow-turquesa/10',
+                  ? 'border-ambar text-ambar'
+                  : 'border-borde text-turquesa-claro',
               ]}
             >
               {p.paso}

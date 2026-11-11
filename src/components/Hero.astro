@@ -7,33 +7,33 @@ const wa = whatsappUrl();
 const enlaceExterno = wa.startsWith('http');
 ---
 
-<section id="inicio" class="relative pt-28 pb-20 sm:pt-36 sm:pb-28 overflow-hidden" aria-labelledby="inicio-titulo">
+<section id="inicio" class="relative pt-16 pb-20 sm:pt-24 sm:pb-28" aria-labelledby="inicio-titulo">
   <div class="contenedor relative flex flex-col items-center text-center">
     
-    <!-- Apple Pill Badge con indicador pulsante -->
-    <div class="badge-seccion mb-6 !px-4 !py-1.5 shadow-[0_0_20px_rgba(127,214,203,0.15)]">
+    <!-- Etiqueta de contexto y ubicación -->
+    <div class="badge-seccion mb-6">
       <span class="punto"></span>
       {inicio.etiqueta}
     </div>
 
-    <!-- Título principal imponente estilo Keynote Apple -->
+    <!-- Título principal -->
     <h1
       id="inicio-titulo"
-      class="max-w-4xl text-4xl font-bold leading-[1.08] tracking-[-0.035em] sm:text-6xl lg:text-7xl text-balance text-texto"
+      class="max-w-4xl text-4xl font-bold leading-[1.12] tracking-tight sm:text-6xl lg:text-7xl text-balance text-texto"
     >
       {inicio.titulo}
     </h1>
 
-    <!-- Subtítulo con respiración -->
+    <!-- Subtítulo -->
     <p class="mt-6 max-w-2xl text-lg sm:text-xl leading-relaxed text-suave text-balance">
       {inicio.subtitulo}
     </p>
 
-    <!-- Botones táctiles de acción -->
-    <div class="mt-9 flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+    <!-- Botones de acción principales -->
+    <div class="mt-8 flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto justify-center">
       <a
         href={wa}
-        class="btn btn-primario w-full sm:w-auto !px-6 !py-3.5 !rounded-full text-base shadow-[0_4px_25px_rgba(242,169,59,0.4)]"
+        class="btn btn-primario w-full sm:w-auto !px-6 !py-3.5"
         data-evento="whatsapp_click"
         data-ubicacion="hero"
         target={enlaceExterno ? '_blank' : undefined}
@@ -42,43 +42,38 @@ const enlaceExterno = wa.startsWith('http');
         <Icono nombre="whatsapp" class="h-5 w-5" />
         {inicio.botonPrincipal}
       </a>
-      <a href="#lab" class="btn btn-secundario w-full sm:w-auto !px-6 !py-3.5 !rounded-full text-base">
-        {inicio.botonSecundario}
+      <a href="#casos" class="btn btn-secundario w-full sm:w-auto !px-6 !py-3.5">
+        Ver casos de estudio
         <Icono nombre="flecha" class="h-4 w-4" />
       </a>
     </div>
 
     <p class="mt-4 font-mono text-xs tracking-wider text-suave/80">{inicio.nota}</p>
 
-    <!-- Escaparate central del artefacto de marca -->
-    <div class="relative mt-14 sm:mt-20 w-full max-w-4xl" aria-hidden="true">
-      <!-- Resplandor de fondo -->
-      <div class="pointer-events-none absolute -inset-6 rounded-3xl bg-gradient-to-r from-turquesa/20 via-verde/20 to-turquesa/20 blur-3xl opacity-70"></div>
-      
-      <div class="tarjeta relative !p-6 sm:!p-10 backdrop-blur-2xl border-white/15 shadow-[0_30px_70px_rgba(0,0,0,0.65)] flex flex-col items-center justify-center">
-        <img
-          src="/simbolo.svg"
-          alt="Software Data Lab"
-          width="448"
-          height="264"
-          class="h-auto w-full max-w-[34rem] filter drop-shadow-[0_15px_35px_rgba(42,157,143,0.35)] transition-transform duration-700 ease-out hover:scale-[1.02]"
-        />
-        
-        <!-- Barra HUD de especificaciones de ingeniería -->
-        <div class="mt-8 flex flex-wrap items-center justify-center gap-4 sm:gap-8 border-t border-white/[0.08] pt-5 w-full">
-          <div class="flex items-center gap-2 font-mono text-xs text-suave">
-            <span class="h-1.5 w-1.5 rounded-full bg-turquesa"></span>
-            <span>SOFTWARE A LA MEDIDA</span>
-          </div>
-          <div class="flex items-center gap-2 font-mono text-xs text-suave">
-            <span class="h-1.5 w-1.5 rounded-full bg-verde"></span>
-            <span>ANALÍTICA Y DATOS</span>
-          </div>
-          <div class="flex items-center gap-2 font-mono text-xs text-suave">
-            <span class="h-1.5 w-1.5 rounded-full bg-turquesa-claro"></span>
-            <span>IA APLICADA & IOT</span>
-          </div>
-        </div>
+    <!-- Pilares de capacidades reales de ingeniería (reemplaza artefacto ficticio de IA) -->
+    <div class="mt-16 sm:mt-24 grid w-full max-w-4xl grid-cols-1 sm:grid-cols-3 gap-4 text-left">
+      <div class="tarjeta">
+        <span class="font-mono text-xs font-semibold text-turquesa tracking-wider uppercase">01 · Software a la medida</span>
+        <h3 class="mt-2 text-base font-bold text-texto">Sistemas que calzan en tu negocio</h3>
+        <p class="mt-1.5 text-xs text-suave leading-relaxed">
+          Plataformas web, paneles internos y APIs diseñadas exactamente para tu flujo operativo, con código propio y sin pagar licencias innecesarias.
+        </p>
+      </div>
+
+      <div class="tarjeta">
+        <span class="font-mono text-xs font-semibold text-turquesa tracking-wider uppercase">02 · Datos y analítica</span>
+        <h3 class="mt-2 text-base font-bold text-texto">Métricas y tableros en vivo</h3>
+        <p class="mt-1.5 text-xs text-suave leading-relaxed">
+          Extracción, pipelines automatizados y bases de datos estructuradas para que tomes decisiones con números reales y al instante.
+        </p>
+      </div>
+
+      <div class="tarjeta">
+        <span class="font-mono text-xs font-semibold text-turquesa tracking-wider uppercase">03 · IA e IoT aplicado</span>
+        <h3 class="mt-2 text-base font-bold text-texto">Tecnología en producción</h3>
+        <p class="mt-1.5 text-xs text-suave leading-relaxed">
+          Transcripción con Whisper, modelos aplicados a datos de tu sector y telemetría de sensores físicos integrados directamente a la nube.
+        </p>
       </div>
     </div>
 
