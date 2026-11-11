@@ -81,9 +81,11 @@ if (import.meta.env.PROD) {
       Los eventos (whatsapp_click, formulario_enviado, suscripcion_curso, correo_click)
       ya se envían solos desde src/scripts/interacciones.ts: no hay que tocar nada más.
 
-      Opción A · Plausible (ligera, sin cookies):
-      <script is:inline defer data-domain="sdl.danielflorez.dev" src="https://plausible.io/js/script.js"></script>
-
+      Opción A · Plausible (ligera, sin cookies): ACTIVA, ver el script de abajo.
+      Para cambiar a GA4, comenta el script de Plausible y descomenta la opción B.
+    -->
+    <script is:inline defer data-domain="sdl.danielflorez.dev" src="https://plausible.io/js/script.js"></script>
+    <!--
       Opción B · Google Analytics 4 (cambia G-XXXXXXXXXX):
       <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
       <script is:inline>
