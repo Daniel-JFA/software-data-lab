@@ -1,51 +1,103 @@
 ---
-// Textura de líneas topográficas generada en el build (curvas de nivel determinísticas).
-// Es decorativa: aria-hidden y sin interacción.
+// Fondo topográfico cartográfico real de Medellín y el Valle de Aburrá.
+// Curvas de nivel extraídas de datos de elevación reales (DEM SRTM) y perímetro oficial de la ciudad.
+// 100% SVG vectorial estático, cero JavaScript en cliente, optimizado para alto rendimiento.
+import datos from '../data/medellin-topo.json';
+
 interface Props {
-  semilla?: number;
   class?: string;
-}
-const { semilla = 1, class: clase = '' } = Astro.props;
-
-const ANCHO = 800;
-const ALTO = 600;
-const PUNTOS = 56;
-
-function anillo(cx: number, cy: number, radio: number, fase: number, amplitud: number): string {
-  const pts: string[] = [];
-  for (let i = 0; i < PUNTOS; i++) {
-    const a = (i / PUNTOS) * Math.PI * 2;
-    const ruido =
-      Math.sin(3 * a + fase) * 0.5 + Math.sin(5 * a + fase * 1.7) * 0.3 + Math.sin(2 * a + fase * 0.6) * 0.4;
-    const r = radio * (1 + amplitud * ruido);
-    pts.push(`${(cx + r * Math.cos(a) * 1.35).toFixed(1)} ${(cy + r * Math.sin(a)).toFixed(1)}`);
-  }
-  return `M${pts.join('L')}Z`;
+  mostrarEtiquetas?: boolean;
 }
 
-// Dos "cumbres" con anillos concéntricos que se deforman hacia afuera.
-const centros = [
-  { x: ANCHO * 0.72, y: ALTO * 0.38, anillos: 13, paso: 26 },
-  { x: ANCHO * 0.18, y: ALTO * 0.82, anillos: 9, paso: 24 },
-];
-
-const trazos: string[] = [];
-centros.forEach((c, k) => {
-  for (let i = 1; i <= c.anillos; i++) {
-    trazos.push(anillo(c.x, c.y, i * c.paso, semilla * 1.3 + i * 0.22 + k * 2, 0.05 + i * 0.012));
-  }
-});
+const { class: clase = '', mostrarEtiquetas = true } = Astro.props;
 ---
 
 <svg
   class={clase}
-  viewBox={`0 0 ${ANCHO} ${ALTO}`}
+  viewBox="0 0 1000 1125"
   preserveAspectRatio="xMidYMid slice"
   fill="none"
-  stroke="currentColor"
-  stroke-width="1"
   aria-hidden="true"
   focusable="false"
 >
-  {trazos.map((d) => <path d={d} vector-effect="non-scaling-stroke" />)}
+  <!-- Curvas de nivel topográficas del Valle de Aburrá -->
+  <g class="curvas" stroke="currentColor" vector-effect="non-scaling-stroke">
+    {
+      datos.paths.map((p) => (
+        <path
+          d={p.d}
+          stroke-width={p.is_major ? '1.2' : '0.75'}
+          opacity={p.is_major ? '0.75' : '0.42'}
+        />
+      ))
+    }
+  </g>
+
+  <!-- Perímetro urbano oficial de Medellín -->
+  <path
+    d={datos.urb_d}
+    stroke="#2A9D8F"
+    stroke-width="1.35"
+    stroke-dasharray="4 3"
+    opacity="0.8"
+    vector-effect="non-scaling-stroke"
+  />
+
+  <!-- Eje hidrográfico del Río Medellín -->
+  <path
+    d={datos.rio_d}
+    stroke="#7FD6CB"
+    stroke-width="1.8"
+    opacity="0.85"
+    vector-effect="non-scaling-stroke"
+  />
+
+  <!-- Hitos geográficos, cerros tutelares y coordenadas cartográficas -->
+  {
+    mostrarEtiquetas && (
+      <g class="hitos font-mono select-none pointer-events-none">
+        {datos.landmarks.map((l) => (
+          <g transform={`translate(${l.x}, ${l.y})`}>
+            <circle r="2.5" fill="#7FD6CB" opacity="0.9" />
+            <circle r="5.5" stroke="#7FD6CB" stroke-width="0.75" opacity="0.4" />
+            <text
+              x="9"
+              y="3"
+              fill="#9BE5DA"
+              opacity="0.8"
+              font-size="8.5"
+              font-family="'JetBrains Mono', monospace"
+              letter-spacing="0.06em"
+            >
+              {l.name} · {l.elev}
+            </text>
+          </g>
+        ))}
+
+        <!-- Coordenadas cartográficas de referencia -->
+        <text
+          x="32"
+          y="42"
+          fill="#7FD6CB"
+          opacity="0.8"
+          font-size="10"
+          font-family="'JetBrains Mono', monospace"
+          letter-spacing="0.08em"
+        >
+          6° 14' 58" N · 75° 34' 05" W
+        </text>
+        <text
+          x="32"
+          y="58"
+          fill="#B4C4C7"
+          opacity="0.55"
+          font-size="8"
+          font-family="'JetBrains Mono', monospace"
+          letter-spacing="0.05em"
+        >
+          VALLE DE ABURRÁ // RELIEVE TOPOGRÁFICO MEDELLÍN
+        </text>
+      </g>
+    )
+  }
 </svg>
