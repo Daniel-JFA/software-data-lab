@@ -39,7 +39,7 @@ npm run og         # regenera public/og.png (1200x630)
 
 ## Formularios (API propia en `api/`)
 
-Los formularios de contacto y de la lista de espera del curso se envían a `/api/contacto` y `/api/curso`. Los recibe un servicio **FastAPI** que guarda cada envío en **SQLite** y te avisa por **correo (SMTP)**. Corre en Docker en tu servidor, detrás de nginx.
+Los formularios de contacto, de la lista de espera del curso y del diagnóstico de brecha digital se envían a `/api/contacto`, `/api/curso` y `/api/diagnostico`. Los recibe un servicio **FastAPI** que guarda cada envío en **SQLite** y te avisa por **correo (SMTP)**. Corre en Docker en tu servidor, detrás de nginx.
 
 **Puesta en marcha en el servidor**
 
@@ -68,6 +68,8 @@ Con Gmail necesitas una *contraseña de aplicación* (verificación en dos pasos
 - La IP se guarda solo como hash. La lista de espera no admite correos duplicados.
 - Si el correo falla, el envío igual queda guardado en la base.
 - `GET /api/health` sirve para el chequeo de salud del sprint 5.
+
+**Diagnóstico de brecha digital** (`/diagnostico`): formulario de 4 pasos. Las preguntas, opciones y servicios se editan en `src/data/diagnostico.json`; sus ids también están en `api/app/main.py` (`BRECHA`, `SERVICIOS`) y deben coincidir. La API valida los ids y rangos, recalcula el puntaje de 0 a 100 por área y lo guarda con el envío (`datos.resultado`); el correo de aviso trae el desglose.
 
 **Ver lo recibido**
 
