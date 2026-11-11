@@ -41,7 +41,8 @@ const anos = hoy.getFullYear() - anioInicio - (hoy.getMonth() + 1 < mesInicio ? 
               <p class="etiqueta">{t.sector}</p>
               <h4 class="mt-2 text-lg font-semibold">{t.organizacion}</h4>
               <p class="mt-1 text-suave">{t.rol}</p>
-              <p class="mt-2 font-mono text-xs text-suave">{t.periodo}</p>
+              {t.periodo && <p class="mt-2 font-mono text-xs text-suave">{t.periodo}</p>}
+              {t.nota && <p class="mt-2 text-sm italic text-suave">{t.nota}</p>}
             </li>
           ))
         }

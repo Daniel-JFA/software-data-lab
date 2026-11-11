@@ -1,6 +1,7 @@
 {
   "_ayuda": [
-    "'trayectoria' es la experiencia personal de Daniel (tomada de danielflorez.dev). NO son clientes de SDL: confirma cuáles quieres mostrar y con qué descripción.",
+    "'trayectoria' es la experiencia de Daniel (clientes y trabajos tomados de danielflorez.dev y confirmados por él). 'nota' aclara cuando el servicio fue como persona natural y no de SDL.",
+    "'periodo' y 'nota' pueden ir vacíos: no se muestran.",
     "'inicio' (año-mes) calcula 'Más de N años' en cada build.",
     "'clientes' es para logos de clientes autorizados (cada logo en /public/clientes/). Vacío = en producción ese bloque se oculta. No uses logos institucionales sin autorización."
   ],
@@ -14,25 +15,36 @@
       "sector": "Sector público",
       "organizacion": "Alcaldía de Medellín · Secretaría de Participación Ciudadana",
       "rol": "Desarrollador/Arquitecto de software y Data Engineer",
-      "periodo": "2024 – hoy"
+      "periodo": "2024 – hoy",
+      "nota": "Servicios prestados por Daniel como persona natural"
     },
     {
-      "sector": "Salud",
-      "organizacion": "Coopsana IPS",
-      "rol": "Desarrollador de software: proyectos del área administrativa, servidores Linux e IoT con Raspberry Pi, Arduino y ESP32",
-      "periodo": "2019 – 2023"
+      "sector": "Fundaciones",
+      "organizacion": "Fundación Infantil Santiago Corazón",
+      "rol": "Software a la medida: plataforma ERP/CRM para donaciones, inventario, ventas y beneficiarios",
+      "periodo": "",
+      "nota": ""
     },
     {
       "sector": "Educación",
       "organizacion": "Institución Universitaria Pascual Bravo",
       "rol": "Desarrollador de software y docente de Power BI",
-      "periodo": "2023 – hoy"
+      "periodo": "2023 – hoy",
+      "nota": "Servicios prestados por Daniel como persona natural"
+    },
+    {
+      "sector": "Salud",
+      "organizacion": "Coopsana IPS",
+      "rol": "Desarrollador de software: proyectos del área administrativa, servidores Linux e IoT con Raspberry Pi, Arduino y ESP32",
+      "periodo": "2019 – 2023",
+      "nota": ""
     },
     {
       "sector": "Educación",
       "organizacion": "Docencia universitaria",
       "rol": "Universidad de Antioquia, Universidad San Buenaventura y EAFIT: programación, machine learning, IA y analítica de datos",
-      "periodo": "2024 – hoy"
+      "periodo": "2024 – hoy",
+      "nota": ""
     }
   ],
   "clientes": []
