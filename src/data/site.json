@@ -56,7 +56,8 @@
   "formularios": {
     "_ayuda": "Los formularios se envían a la API propia (carpeta api/, FastAPI en tu servidor). nginx redirige /api/ al contenedor. Si dejas un endpoint vacío, el formulario avisa que aún no está activo.",
     "contactoEndpoint": "/api/contacto",
-    "cursoEndpoint": "/api/curso"
+    "cursoEndpoint": "/api/curso",
+    "diagnosticoEndpoint": "/api/diagnostico"
   },
   "analitica": {
     "_ayuda": "El script está comentado en src/layouts/Base.astro. Cuando lo actives, los eventos ya están conectados. Ver README.",

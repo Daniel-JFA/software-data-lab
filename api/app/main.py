@@ -126,6 +126,22 @@ def avisar(tipo: str, datos: dict) -> None:
             f"Contacto: {datos['contacto']}\n\n"
             f"Qué necesita:\n{datos['necesidad']}\n"
         )
+    elif tipo == "diagnostico":
+        msg["Subject"] = f"[SDL] Diagnóstico de brecha digital: {_una_linea(datos['empresa'], 60)}"
+        if CORREO_SIMPLE.match(datos["contacto"]):
+            msg["Reply-To"] = datos["contacto"]
+        cuerpo = (
+            f"Nombre: {datos['nombre']}\n"
+            f"Empresa: {datos['empresa']}\n"
+            f"Contacto: {datos['contacto']}\n"
+            f"Sector: {datos['sector'] or '-'}\n"
+            f"Tamaño: {datos['tamano'] or '-'}\n\n"
+            f"Cómo gestiona hoy sus procesos: {datos['como_gestiona'] or '-'}\n"
+            f"Herramientas que usa: {datos['herramientas'] or '-'}\n"
+            f"Indicadores sin armarlos a mano: {datos['indicadores'] or '-'}\n\n"
+            f"Qué proceso le quita más tiempo:\n{datos['tiempo_perdido']}\n\n"
+            f"Qué quiere lograr:\n{datos['objetivo'] or '-'}\n"
+        )
     else:
         msg["Subject"] = "[SDL] Nueva suscripción al curso de fútbol"
         msg["Reply-To"] = datos["email"]
@@ -168,6 +184,19 @@ class Curso(Base):
     email: EmailStr
 
 
+class Diagnostico(Base):
+    nombre: str = Field(min_length=1, max_length=120)
+    empresa: str = Field(min_length=1, max_length=160)
+    contacto: str = Field(min_length=3, max_length=160)
+    sector: str = Field("", max_length=80)
+    tamano: str = Field("", max_length=80)
+    como_gestiona: str = Field("", max_length=120)
+    herramientas: str = Field("", max_length=600)
+    tiempo_perdido: str = Field(min_length=3, max_length=2000)
+    indicadores: str = Field("", max_length=120)
+    objetivo: str = Field("", max_length=2000)
+
+
 # --------------------------------------------------------------------------- app
 @asynccontextmanager
 async def ciclo(_: FastAPI):
@@ -202,6 +231,11 @@ def health() -> dict:
 @app.post("/api/contacto")
 def contacto(datos: Contacto, request: Request, tareas: BackgroundTasks) -> dict:
     return recibir("contacto", datos, request, tareas, clave=None)
+
+
+@app.post("/api/diagnostico")
+def diagnostico(datos: Diagnostico, request: Request, tareas: BackgroundTasks) -> dict:
+    return recibir("diagnostico", datos, request, tareas, clave=None)
 
 
 @app.post("/api/curso")

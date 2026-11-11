@@ -1,0 +1,150 @@
+---
+import Base from '../layouts/Base.astro';
+import Icono from '../components/Icono.astro';
+import { site, whatsappUrl } from '../lib/site';
+
+const wa = whatsappUrl();
+const enlaceExterno = wa.startsWith('http');
+
+const sectores = ['Salud', 'Educación', 'Sector público', 'Comercio', 'Industria o manufactura', 'Servicios', 'Fundación u ONG', 'Otro'];
+const tamanos = ['Solo yo', '2 a 10 personas', '11 a 50 personas', 'Más de 50 personas'];
+const gestion = [
+  'Papel, Excel o WhatsApp',
+  'Varias herramientas sueltas que no se hablan entre sí',
+  'Un sistema que cubre parte del trabajo',
+  'Un sistema integrado que cubre casi todo',
+];
+const indicadores = [
+  'No, los armo a mano cuando los necesito',
+  'Algunos, con esfuerzo',
+  'Sí, los veo actualizados sin esfuerzo',
+];
+
+const etiqueta = 'mb-1.5 block text-xs font-mono uppercase tracking-wider text-turquesa';
+---
+
+<Base
+  titulo="Diagnóstico de brecha digital | Software Data Lab"
+  descripcion="Cuéntanos cómo trabaja tu empresa hoy y revisamos su brecha digital: qué haces a mano, con qué herramientas y datos cuentas y qué conviene digitalizar primero."
+>
+  <section class="seccion" aria-labelledby="diagnostico-titulo">
+    <div class="contenedor max-w-3xl">
+      <nav aria-label="Ruta de navegación" class="text-sm text-suave">
+        <a href="/" class="hover:text-turquesa-claro hover:underline">Inicio</a>
+        <span aria-hidden="true"> / </span>
+        <span aria-current="page" class="text-texto">Diagnóstico</span>
+      </nav>
+
+      <div class="badge-seccion mt-8">
+        <span class="punto"></span>
+        Diagnóstico gratis
+      </div>
+      <h1 id="diagnostico-titulo" class="titulo-seccion mt-4">Diagnóstico de brecha digital</h1>
+      <p class="mt-4 text-lg text-suave">
+        Responde estas preguntas (toma unos 5 minutos). Con ellas preparamos la conversación de 30 minutos: cómo trabajas hoy,
+        dónde se pierde el tiempo y qué conviene digitalizar primero.
+      </p>
+
+      <div class="tarjeta mt-10">
+        <form
+          class="space-y-5"
+          data-endpoint={site.formularios.diagnosticoEndpoint}
+          data-nombre="diagnostico"
+          data-evento-exito="formulario_enviado"
+          data-exito="Recibimos tu diagnóstico. Te escribimos pronto para agendar la conversación."
+        >
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div>
+              <label for="dg-nombre" class={etiqueta}>Nombre</label>
+              <input id="dg-nombre" name="nombre" type="text" class="campo" autocomplete="name" required maxlength="120" />
+            </div>
+            <div>
+              <label for="dg-empresa" class={etiqueta}>Empresa u organización</label>
+              <input id="dg-empresa" name="empresa" type="text" class="campo" autocomplete="organization" required maxlength="160" />
+            </div>
+          </div>
+
+          <div>
+            <label for="dg-contacto" class={etiqueta}>Correo o WhatsApp para responderte</label>
+            <input id="dg-contacto" name="contacto" type="text" class="campo" autocomplete="email" required maxlength="160" />
+          </div>
+
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div>
+              <label for="dg-sector" class={etiqueta}>Sector</label>
+              <select id="dg-sector" name="sector" class="campo">
+                <option value="">Elige uno</option>
+                {sectores.map((s) => <option value={s}>{s}</option>)}
+              </select>
+            </div>
+            <div>
+              <label for="dg-tamano" class={etiqueta}>Tamaño del equipo</label>
+              <select id="dg-tamano" name="tamano" class="campo">
+                <option value="">Elige uno</option>
+                {tamanos.map((t) => <option value={t}>{t}</option>)}
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label for="dg-gestion" class={etiqueta}>¿Cómo llevas hoy tus procesos principales?</label>
+            <select id="dg-gestion" name="como_gestiona" class="campo">
+              <option value="">Elige uno</option>
+              {gestion.map((g) => <option value={g}>{g}</option>)}
+            </select>
+          </div>
+
+          <div>
+            <label for="dg-herramientas" class={etiqueta}>¿Qué herramientas usas? (Excel, WhatsApp, un software, etc.)</label>
+            <input id="dg-herramientas" name="herramientas" type="text" class="campo" maxlength="600" />
+          </div>
+
+          <div>
+            <label for="dg-indicadores" class={etiqueta}>¿Ves tus cifras e indicadores sin armarlos a mano?</label>
+            <select id="dg-indicadores" name="indicadores" class="campo">
+              <option value="">Elige uno</option>
+              {indicadores.map((i) => <option value={i}>{i}</option>)}
+            </select>
+          </div>
+
+          <div>
+            <label for="dg-tiempo" class={etiqueta}>¿Qué proceso te quita más tiempo o genera más errores?</label>
+            <textarea id="dg-tiempo" name="tiempo_perdido" rows="4" class="campo resize-y" required maxlength="2000"></textarea>
+          </div>
+
+          <div>
+            <label for="dg-objetivo" class={etiqueta}>¿Qué te gustaría lograr? (opcional)</label>
+            <textarea id="dg-objetivo" name="objetivo" rows="3" class="campo resize-y" maxlength="2000"></textarea>
+          </div>
+
+          <div class="absolute -left-[9999px]" aria-hidden="true">
+            <label>No llenes este campo <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" /></label>
+          </div>
+
+          <button
+            type="submit"
+            class="btn w-full bg-turquesa font-semibold text-fondo hover:bg-turquesa-claro shadow-[0_4px_16px_rgba(127,214,203,0.3)] hover:shadow-[0_6px_22px_rgba(127,214,203,0.45)] active:scale-[0.98] transition-all disabled:opacity-60"
+          >
+            Enviar diagnóstico
+          </button>
+          <p data-estado role="status" aria-live="polite" class="min-h-6 text-sm"></p>
+        </form>
+      </div>
+
+      <p class="mt-8 text-suave">
+        ¿Prefieres hablarlo directamente?
+        <a
+          href={wa}
+          class="inline-flex items-center gap-2 text-turquesa hover:text-turquesa-claro"
+          data-evento="whatsapp_click"
+          data-ubicacion="diagnostico"
+          target={enlaceExterno ? '_blank' : undefined}
+          rel={enlaceExterno ? 'noopener noreferrer' : undefined}
+        >
+          <Icono nombre="whatsapp" class="h-5 w-5" />
+          Escríbenos por WhatsApp
+        </a>
+      </p>
+    </div>
+  </section>
+</Base>
