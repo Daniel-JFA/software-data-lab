@@ -44,6 +44,11 @@ Fuera del registro público (personales o sensibles): `trading`, `deriv-mcp`, `g
 ## 3. Sprints
 
 ### S1 — Publicar la landing (semana 1–2)
+**Estado: PARCIAL (cerrado por el usuario sin completar).**
+- Hechas: S1-01 logos reales (`124ee2a`), S1-04 Plausible activo (`61ebf4d`).
+- Pendientes: S1-02 contacto, S1-03 IDs de Formspree, S1-05 GitHub + Vercel + DNS, S1-06 Lighthouse y revisión a 375 px (Chrome headless no abre en esta máquina), S1-07 textos reales de casos y curso.
+- Antes de publicar: en Plausible crear el sitio y los goals `whatsapp_click`, `formulario_enviado`, `suscripcion_curso`.
+
 Meta: sitio en `sdl.danielflorez.dev`, medible y con marca real.
 - S1-01 Reemplazar logos por los de `software-data-lab-logo/svg` y regenerar `og.png`.
 - S1-02 Llenar `site.json`: WhatsApp, correo, redes.
