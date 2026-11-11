@@ -46,7 +46,7 @@ Fuera del registro público (personales o sensibles): `trading`, `deriv-mcp`, `g
 ### S1 — Publicar la landing (semana 1–2)
 **Estado: PARCIAL (cerrado por el usuario sin completar).**
 - Hechas: S1-01 logos reales (`124ee2a`), S1-04 Plausible activo (`61ebf4d`).
-- Pendientes: S1-02 contacto, S1-03 IDs de Formspree, S1-05 GitHub + Vercel + DNS, S1-06 Lighthouse y revisión a 375 px (Chrome headless no abre en esta máquina), S1-07 textos reales de casos y curso.
+- Pendientes: S1-02 contacto, S1-03 IDs de Formspree, S1-05 despliegue en servidor propio + DNS (repo privado en GitHub ya creado), S1-06 Lighthouse y revisión a 375 px (Chrome headless no abre en esta máquina), S1-07 textos reales de casos y curso.
 - Antes de publicar: en Plausible crear el sitio y los goals `whatsapp_click`, `formulario_enviado`, `suscripcion_curso`.
 
 Meta: sitio en `sdl.danielflorez.dev`, medible y con marca real.
@@ -54,7 +54,7 @@ Meta: sitio en `sdl.danielflorez.dev`, medible y con marca real.
 - S1-02 Llenar `site.json`: WhatsApp, correo, redes.
 - S1-03 Crear los 2 formularios en Formspree y probar envío real.
 - S1-04 Activar Plausible y declarar los 3 goals.
-- S1-05 Desplegar en Vercel + DNS del subdominio.
+- S1-05 Desplegar en el servidor propio (nginx sirviendo `dist/`, HTTPS con Let's Encrypt) + registro `A` del subdominio.
 - S1-06 Revisión a 375 px en dispositivo real, teclado y Lighthouse móvil ≥ 90 en las 4 categorías.
 - S1-07 Reescribir textos de casos y curso con datos reales.
 - **Hecho cuando:** URL pública, formularios llegando, evento de WhatsApp visible en analítica.
@@ -84,7 +84,7 @@ Meta: sitio en `sdl.danielflorez.dev`, medible y con marca real.
 - **Hecho cuando:** 2 aplicativos cumplen el estándar y un backup se restauró con éxito.
 
 ### S5 — Panel interno v1: estado (semana 9–10)
-- S5-01 Repo privado `sdl-control` (Astro o Next en Vercel) con acceso protegido.
+- S5-01 Repo privado `sdl-control` (Astro o Node, en el servidor propio) con acceso protegido.
 - S5-02 Workflow programado que consulta `healthUrl` de cada app y guarda `status.json`.
 - S5-03 Tablero: semáforo por aplicativo, versión desplegada, último chequeo.
 - S5-04 Alerta por correo o WhatsApp (reutilizando NEXION / `whatsapp-mcp`) cuando una app cae.
@@ -134,5 +134,5 @@ Seguridad de dependencias, Lighthouse en cada despliegue, copia de seguridad del
 
 1. ¿Cuáles aplicativos son públicos y cuáles tienen permiso del cliente?
 2. ¿Dónde está la plataforma GPS deportiva?
-3. ¿Dónde corre cada aplicativo hoy (VPS, Vercel, Railway, local)? Define cómo se hace el chequeo de salud en S5.
+3. ¿Dónde corre cada aplicativo hoy (tu servidor, otro VPS, local)? Define cómo se hace el chequeo de salud en S5.
 4. ¿El panel es solo para ti o también lo verán clientes? Cambia la autenticación de S5 y S7.

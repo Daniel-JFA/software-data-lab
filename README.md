@@ -17,7 +17,6 @@ npm run og         # regenera public/og.png (1200x630)
 
 ```
 ├── astro.config.mjs        # site + sitemap + Tailwind
-├── netlify.toml / vercel.json
 ├── public/
 │   ├── logo.svg  icono.svg  favicon.svg   # PLACEHOLDERS: reemplázalos por los tuyos
 │   ├── og.png                             # imagen para compartir (1200x630)
@@ -63,22 +62,39 @@ En Plausible, declara `whatsapp_click`, `formulario_enviado` y `suscripcion_curs
 
 ## Despliegue con el subdominio sdl.danielflorez.dev
 
-Sube el proyecto a un repositorio de GitHub primero (`git init`, commit, push).
+El sitio es estático: el resultado de `npm run build` es la carpeta `dist/`, que cualquier servidor web puede servir. Se publica en tu propio servidor.
 
-### Opción A — Vercel
+1. **DNS** de `danielflorez.dev`: registro `A` (y `AAAA` si usas IPv6) · nombre `sdl` · valor la IP pública de tu servidor.
+2. **Compilar** (en tu máquina o en el servidor): `npm ci && npm run build`.
+3. **Copiar** `dist/` al servidor, por ejemplo: `rsync -az --delete dist/ usuario@servidor:/var/www/sdl/`.
+4. **Servidor web** (ejemplo con nginx, con las cabeceras de seguridad y la caché de los archivos con hash):
 
-1. vercel.com → **Add New → Project** → importa el repo. Astro se detecta solo (build `npm run build`, salida `dist`).
-2. **Deploy**.
-3. En **Settings → Domains** agrega `sdl.danielflorez.dev`.
-4. En el DNS de `danielflorez.dev` crea: `CNAME` · nombre `sdl` · valor `cname.vercel-dns.com` (usa el valor exacto que Vercel te muestre).
-5. Espera a que Vercel marque el dominio en verde (HTTPS automático).
+```nginx
+server {
+    listen 80;
+    server_name sdl.danielflorez.dev;
+    root /var/www/sdl;
+    index index.html;
 
-### Opción B — Netlify
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-Frame-Options "DENY" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Permissions-Policy "camera=(), microphone=(), geolocation=()" always;
 
-1. app.netlify.com → **Add new site → Import an existing project** → elige el repo. `netlify.toml` ya trae build y carpeta.
-2. **Domain management → Add a domain** → `sdl.danielflorez.dev`.
-3. En el DNS: `CNAME` · nombre `sdl` · valor `<tu-sitio>.netlify.app`.
-4. Activa HTTPS (Let's Encrypt) en la misma pantalla.
+    location /_astro/ {
+        add_header Cache-Control "public, max-age=31536000, immutable";
+        access_log off;
+    }
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+```
+
+5. **HTTPS** con Let's Encrypt: `sudo certbot --nginx -d sdl.danielflorez.dev`.
+
+> Si repites las cabeceras dentro de un `location` con `add_header`, nginx descarta las del nivel superior; vuelve a declararlas ahí. Si usas Caddy o Apache, aplica las mismas cabeceras.
 
 Después de publicar, verifica: `https://sdl.danielflorez.dev/sitemap-index.xml` y `/robots.txt`, y prueba el enlace en el depurador de Facebook (Sharing Debugger) para refrescar la vista previa.
 
