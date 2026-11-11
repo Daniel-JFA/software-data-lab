@@ -4,6 +4,11 @@ import { mostrarPendientes } from '../lib/site';
 
 type Cliente = { nombre: string; logo: string; url?: string };
 const clientes = datos.clientes as Cliente[];
+
+// Años completos desde el inicio de la trayectoria (se recalcula en cada build).
+const [anioInicio, mesInicio] = datos.inicio.split('-').map(Number);
+const hoy = new Date();
+const anos = hoy.getFullYear() - anioInicio - (hoy.getMonth() + 1 < mesInicio ? 1 : 0);
 ---
 
 <section
@@ -24,6 +29,24 @@ const clientes = datos.clientes as Cliente[];
         ))
       }
     </ul>
+
+    <div class="mt-12">
+      <h3 class="font-mono text-sm uppercase tracking-widest text-suave">
+        {datos.trayectoriaTitulo} · Más de {anos} años construyendo software
+      </h3>
+      <ul class="mt-4 grid gap-4 sm:grid-cols-2">
+        {
+          datos.trayectoria.map((t) => (
+            <li class="tarjeta">
+              <p class="etiqueta">{t.sector}</p>
+              <h4 class="mt-2 text-lg font-semibold">{t.organizacion}</h4>
+              <p class="mt-1 text-suave">{t.rol}</p>
+              <p class="mt-2 font-mono text-xs text-suave">{t.periodo}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
 
     {
       clientes.length > 0 ? (

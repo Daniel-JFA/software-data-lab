@@ -1,7 +1,39 @@
 {
-  "_ayuda": "Agrega solo clientes que te hayan autorizado a mostrar su marca. Cada logo va en /public/clientes/ (SVG o PNG). Deja 'clientes' vacío si aún no tienes autorizaciones: en producción ese bloque se oculta.",
+  "_ayuda": [
+    "'trayectoria' es la experiencia personal de Daniel (tomada de danielflorez.dev). NO son clientes de SDL: confirma cuáles quieres mostrar y con qué descripción.",
+    "'inicio' (año-mes) calcula 'Más de N años' en cada build.",
+    "'clientes' es para logos de clientes autorizados (cada logo en /public/clientes/). Vacío = en producción ese bloque se oculta. No uses logos institucionales sin autorización."
+  ],
   "titulo": "Experiencia",
   "frase": "Hemos trabajado con el sector público, salud, fundaciones y educación.",
   "sectores": ["Sector público", "Salud", "Fundaciones", "Educación"],
+  "trayectoriaTitulo": "Trayectoria de Daniel Flórez",
+  "inicio": "2019-06",
+  "trayectoria": [
+    {
+      "sector": "Sector público",
+      "organizacion": "Alcaldía de Medellín · Secretaría de Participación Ciudadana",
+      "rol": "Desarrollador/Arquitecto de software y Data Engineer",
+      "periodo": "2024 – hoy"
+    },
+    {
+      "sector": "Salud",
+      "organizacion": "Coopsana IPS",
+      "rol": "Desarrollador de software: proyectos del área administrativa, servidores Linux e IoT con Raspberry Pi, Arduino y ESP32",
+      "periodo": "2019 – 2023"
+    },
+    {
+      "sector": "Educación",
+      "organizacion": "Institución Universitaria Pascual Bravo",
+      "rol": "Desarrollador de software y docente de Power BI",
+      "periodo": "2023 – hoy"
+    },
+    {
+      "sector": "Educación",
+      "organizacion": "Docencia universitaria",
+      "rol": "Universidad de Antioquia, Universidad San Buenaventura y EAFIT: programación, machine learning, IA y analítica de datos",
+      "periodo": "2024 – hoy"
+    }
+  ],
   "clientes": []
 }
