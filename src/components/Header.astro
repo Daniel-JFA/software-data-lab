@@ -6,16 +6,23 @@ const wa = whatsappUrl();
 const enlaceExterno = wa.startsWith('http');
 ---
 
-<header class="sticky top-0 z-50 border-b border-borde/70 bg-fondo/92 backdrop-blur">
+<header class="sticky top-0 z-50 border-b border-white/[0.08] bg-fondo/80 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.25)]">
   <div class="contenedor flex h-16 items-center justify-between gap-4">
-    <a href="/#inicio" class="flex shrink-0 items-center" aria-label={`${site.nombre}, ir al inicio`}>
+    <a
+      href="/#inicio"
+      class="flex shrink-0 items-center transition-opacity hover:opacity-90"
+      aria-label={`${site.nombre}, ir al inicio`}
+    >
       <img src="/logo.svg" alt={site.nombre} width="737" height="274" class="h-9 w-auto" />
     </a>
 
-    <nav aria-label="Principal" class="hidden items-center gap-6 lg:flex">
+    <nav aria-label="Principal" class="hidden items-center gap-1.5 lg:flex">
       {
         site.navegacion.map((n) => (
-          <a href={`/${n.href}`} class="text-sm text-suave transition-colors hover:text-turquesa-claro">
+          <a
+            href={`/${n.href}`}
+            class="rounded-lg px-3 py-1.5 text-sm font-medium text-suave transition-all hover:bg-white/[0.06] hover:text-texto"
+          >
             {n.etiqueta}
           </a>
         ))
@@ -36,7 +43,7 @@ const enlaceExterno = wa.startsWith('http');
     <button
       type="button"
       id="menu-boton"
-      class="grid h-11 w-11 place-items-center rounded-lg border border-borde text-texto lg:hidden"
+      class="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/[0.04] text-texto backdrop-blur transition-all hover:border-turquesa/30 hover:bg-white/[0.08] lg:hidden"
       aria-expanded="false"
       aria-controls="menu-movil"
       aria-label="Abrir menú"
@@ -46,13 +53,13 @@ const enlaceExterno = wa.startsWith('http');
     </button>
   </div>
 
-  <div id="menu-movil" hidden class="border-t border-borde/70 bg-fondo lg:hidden">
-    <nav aria-label="Principal (móvil)" class="contenedor flex flex-col py-3">
+  <div id="menu-movil" hidden class="border-t border-white/[0.08] bg-fondo/95 backdrop-blur-2xl lg:hidden">
+    <nav aria-label="Principal (móvil)" class="contenedor flex flex-col py-4">
       {
         site.navegacion.map((n) => (
           <a
             href={`/${n.href}`}
-            class="border-b border-borde/50 py-3 text-lg text-texto last:border-0"
+            class="rounded-xl border-b border-white/[0.06] px-3 py-3 text-base font-medium text-texto transition-colors hover:bg-white/[0.05] last:border-0"
             data-cerrar-menu
           >
             {n.etiqueta}

@@ -13,36 +13,41 @@ const anos = hoy.getFullYear() - anioInicio - (hoy.getMonth() + 1 < mesInicio ? 
 
 <section
   id="experiencia"
-  class="seccion border-y border-borde/60 bg-superficie/40"
+  class="seccion border-y border-white/[0.06] bg-superficie/30 backdrop-blur-sm"
   aria-labelledby="experiencia-titulo"
 >
   <div class="contenedor">
-    <p class="etiqueta">// 02 · {datos.titulo}</p>
-    <h2 id="experiencia-titulo" class="titulo-seccion mt-3 max-w-3xl">{datos.frase}</h2>
+    <div class="badge-seccion">
+      <span class="punto"></span>
+      {datos.titulo}
+    </div>
+    <h2 id="experiencia-titulo" class="titulo-seccion mt-4 max-w-3xl">{datos.frase}</h2>
 
-    <ul class="mt-8 flex flex-wrap gap-3" aria-label="Sectores">
+    <ul class="mt-8 flex flex-wrap gap-2.5" aria-label="Sectores">
       {
         datos.sectores.map((s) => (
-          <li class="rounded-full border border-borde bg-fondo px-4 py-2 font-mono text-sm text-turquesa-claro">
+          <li class="rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-1.5 font-mono text-xs text-turquesa-claro backdrop-blur-sm transition-colors hover:border-turquesa/30 hover:bg-white/[0.06]">
             {s}
           </li>
         ))
       }
     </ul>
 
-    <div class="mt-12">
-      <h3 class="font-mono text-sm uppercase tracking-widest text-suave">
+    <div class="mt-14">
+      <h3 class="font-mono text-xs uppercase tracking-widest text-turquesa">
         {datos.trayectoriaTitulo} · Más de {anos} años construyendo software
       </h3>
-      <ul class="mt-4 grid gap-4 sm:grid-cols-2">
+      <ul class="mt-5 grid gap-5 sm:grid-cols-2">
         {
           datos.trayectoria.map((t) => (
             <li class="tarjeta">
-              <p class="etiqueta">{t.sector}</p>
-              <h4 class="mt-2 text-lg font-semibold">{t.organizacion}</h4>
-              <p class="mt-1 text-suave">{t.rol}</p>
-              {t.periodo && <p class="mt-2 font-mono text-xs text-suave">{t.periodo}</p>}
-              {t.nota && <p class="mt-2 text-sm italic text-suave">{t.nota}</p>}
+              <span class="inline-block rounded-md border border-turquesa/20 bg-turquesa/[0.06] px-2 py-0.5 font-mono text-[0.7rem] uppercase tracking-wider text-turquesa-claro">
+                {t.sector}
+              </span>
+              <h4 class="mt-3 text-lg font-bold text-texto">{t.organizacion}</h4>
+              <p class="mt-1 text-sm text-suave">{t.rol}</p>
+              {t.periodo && <p class="mt-3 font-mono text-xs text-suave/80">{t.periodo}</p>}
+              {t.nota && <p class="mt-2 text-xs italic text-suave/90">{t.nota}</p>}
             </li>
           ))
         }
@@ -51,19 +56,22 @@ const anos = hoy.getFullYear() - anioInicio - (hoy.getMonth() + 1 < mesInicio ? 
 
     {
       clientes.length > 0 ? (
-        <ul class="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4" aria-label="Clientes">
-          {clientes.map((c) => (
-            <li class="grid h-24 place-items-center rounded-lg bg-texto p-4">
-              {c.url ? (
-                <a href={c.url} target="_blank" rel="noopener noreferrer" aria-label={`Sitio de ${c.nombre}`}>
-                  <img src={c.logo} alt={`Logo de ${c.nombre}`} height="56" loading="lazy" class="max-h-14 w-auto" />
-                </a>
-              ) : (
-                <img src={c.logo} alt={`Logo de ${c.nombre}`} height="56" loading="lazy" class="max-h-14 w-auto" />
-              )}
-            </li>
-          ))}
-        </ul>
+        <div class="mt-14">
+          <p class="font-mono text-xs uppercase tracking-widest text-turquesa mb-5">Organizaciones que confían en nosotros</p>
+          <ul class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4" aria-label="Clientes">
+            {clientes.map((c) => (
+              <li class="grid h-24 place-items-center rounded-2xl border border-white/[0.08] bg-white/[0.04] p-4 backdrop-blur-sm transition-all hover:border-turquesa/30 hover:bg-white/[0.08]">
+                {c.url ? (
+                  <a href={c.url} target="_blank" rel="noopener noreferrer" aria-label={`Sitio de ${c.nombre}`} class="transition-transform hover:scale-105">
+                    <img src={c.logo} alt={`Logo de ${c.nombre}`} height="56" loading="lazy" class="max-h-12 w-auto object-contain brightness-90 hover:brightness-100" />
+                  </a>
+                ) : (
+                  <img src={c.logo} alt={`Logo de ${c.nombre}`} height="56" loading="lazy" class="max-h-12 w-auto object-contain brightness-90" />
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
       ) : (
         mostrarPendientes && (
           <p class="pendiente mt-10">

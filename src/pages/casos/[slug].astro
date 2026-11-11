@@ -21,61 +21,68 @@ const waExterno = wa.startsWith('http');
     <div class="contenedor">
       <div class="max-w-3xl">
         <nav aria-label="Ruta de navegación" class="text-sm text-suave">
-          <a href="/" class="hover:text-turquesa-claro hover:underline">Inicio</a>
-          <span aria-hidden="true"> / </span>
-          <a href="/portafolio" class="hover:text-turquesa-claro hover:underline">Portafolio</a>
-          <span aria-hidden="true"> / </span>
-          <span aria-current="page" class="text-texto">{app.nombre}</span>
+          <a href="/" class="hover:text-turquesa-claro hover:underline transition-colors">Inicio</a>
+          <span aria-hidden="true" class="mx-1.5 opacity-40"> / </span>
+          <a href="/portafolio" class="hover:text-turquesa-claro hover:underline transition-colors">Portafolio</a>
+          <span aria-hidden="true" class="mx-1.5 opacity-40"> / </span>
+          <span aria-current="page" class="text-texto font-medium">{app.nombre}</span>
         </nav>
 
-        <p class="etiqueta mt-8">{app.categoria}</p>
-        <h1 id="caso-titulo" class="titulo-seccion mt-3">{app.nombre}</h1>
+        <div class="badge-seccion mt-8">
+          <span class="punto"></span>
+          {app.categoria}
+        </div>
+        <h1 id="caso-titulo" class="titulo-seccion mt-4">{app.nombre}</h1>
 
-        {
-          estado ? (
-            <p class="mt-4 w-fit rounded-full border border-borde px-3 py-1 font-mono text-xs text-turquesa-claro">
-              {estado}
-            </p>
-          ) : (
-            mostrarPendientes && <span class="pendiente mt-4">[PENDIENTE] confirmar estado</span>
-          )
-        }
-
-        <p class="mt-6 text-lg text-suave">{app.resumen}</p>
-
-        <section class="mt-10" aria-labelledby="caso-problema">
-          <h2 id="caso-problema" class="etiqueta">Problema</h2>
-          <p class="mt-2 text-lg">{app.problema}</p>
-        </section>
-
-        <section class="mt-8" aria-labelledby="caso-solucion">
-          <h2 id="caso-solucion" class="etiqueta">Solución</h2>
-          <p class="mt-2 text-lg">{app.solucion}</p>
-        </section>
-
-        <section class="mt-8" aria-labelledby="caso-tecnologias">
-          <h2 id="caso-tecnologias" class="etiqueta">Tecnologías</h2>
+        <div class="mt-4">
           {
-            app.tecnologias.length > 0 ? (
-              <ul class="mt-3 flex flex-wrap gap-2">
-                {app.tecnologias.map((t) => (
-                  <li class="rounded border border-borde bg-superficie px-3 py-1 font-mono text-sm text-turquesa-claro">
-                    {t}
-                  </li>
-                ))}
-              </ul>
+            estado ? (
+              <span class="inline-block rounded-full border border-white/[0.08] bg-white/[0.04] px-3.5 py-1 font-mono text-xs text-turquesa-claro">
+                {estado}
+              </span>
             ) : (
-              mostrarPendientes && <span class="pendiente mt-3">[PENDIENTE] tecnologías</span>
+              mostrarPendientes && <span class="pendiente">[PENDIENTE] confirmar estado</span>
             )
           }
-        </section>
+        </div>
+
+        <p class="mt-6 text-xl leading-relaxed text-suave">{app.resumen}</p>
+
+        <div class="mt-12 space-y-8 border-y border-white/[0.06] py-10">
+          <section aria-labelledby="caso-problema">
+            <h2 id="caso-problema" class="font-mono text-xs uppercase tracking-wider text-turquesa">El Problema</h2>
+            <p class="mt-2 text-lg leading-relaxed text-texto/90">{app.problema}</p>
+          </section>
+
+          <section aria-labelledby="caso-solucion">
+            <h2 id="caso-solucion" class="font-mono text-xs uppercase tracking-wider text-turquesa">La Solución</h2>
+            <p class="mt-2 text-lg leading-relaxed text-texto/90">{app.solucion}</p>
+          </section>
+
+          <section aria-labelledby="caso-tecnologias">
+            <h2 id="caso-tecnologias" class="font-mono text-xs uppercase tracking-wider text-turquesa mb-3">Stack Tecnológico</h2>
+            {
+              app.tecnologias.length > 0 ? (
+                <ul class="flex flex-wrap gap-2">
+                  {app.tecnologias.map((t) => (
+                    <li class="rounded-lg border border-white/[0.08] bg-white/[0.04] px-3 py-1.5 font-mono text-xs text-turquesa-claro">
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                mostrarPendientes && <span class="pendiente">[PENDIENTE] tecnologías</span>
+              )
+            }
+          </section>
+        </div>
 
         {
           !vacio(app.enlace) ? (
             <p class="mt-8">
               <a
                 href={app.enlace}
-                class="inline-flex items-center gap-2 font-semibold text-turquesa underline-offset-4 hover:text-turquesa-claro hover:underline"
+                class="inline-flex items-center gap-2 font-semibold text-turquesa hover:text-turquesa-claro transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -89,10 +96,10 @@ const waExterno = wa.startsWith('http');
           )
         }
 
-        <div class="tarjeta mt-12">
-          <h2 class="text-xl font-semibold">¿Necesitas algo parecido?</h2>
-          <p class="mt-2 text-suave">Cuéntanos tu caso en un diagnóstico gratis de 30 minutos.</p>
-          <div class="mt-5 flex flex-col gap-3 sm:flex-row">
+        <div class="tarjeta mt-14 p-8">
+          <h2 class="text-2xl font-bold tracking-tight text-texto">¿Necesitas algo parecido?</h2>
+          <p class="mt-2 text-base text-suave">Cuéntanos tu caso en un diagnóstico gratis de 30 minutos sin costo.</p>
+          <div class="mt-6 flex flex-col gap-3.5 sm:flex-row">
             <a
               href={wa}
               class="btn btn-primario"

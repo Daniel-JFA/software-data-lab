@@ -9,21 +9,26 @@ const pendientes = todasLasRedes().filter((r) => vacio(r.url));
 
 <section
   id="lab"
-  class="seccion overflow-hidden border-y border-borde/60 bg-superficie/40"
+  class="seccion overflow-hidden border-y border-white/[0.06] bg-superficie/30 backdrop-blur-sm"
   aria-labelledby="lab-titulo"
 >
   <div class="contenedor">
-    <p class="etiqueta">// 04 · {datos.titulo}</p>
-    <h2 id="lab-titulo" class="titulo-seccion mt-3 max-w-3xl">{datos.frase}</h2>
+    <div class="badge-seccion">
+      <span class="punto"></span>
+      {datos.titulo}
+    </div>
+    <h2 id="lab-titulo" class="titulo-seccion mt-4 max-w-3xl">{datos.frase}</h2>
 
-    <h3 class="mt-10 font-mono text-sm uppercase tracking-widest text-suave">{datos.seriesTitulo}</h3>
-    <ul class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <h3 class="mt-12 font-mono text-xs uppercase tracking-widest text-turquesa">{datos.seriesTitulo}</h3>
+    <ul class="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {
         datos.series.map((s) => (
           <li class="tarjeta">
-            <p class="etiqueta">{s.formato}</p>
-            <h4 class="mt-2 text-lg font-semibold">{s.nombre}</h4>
-            <p class="mt-1 text-suave">{s.descripcion}</p>
+            <span class="inline-block rounded-md border border-turquesa/20 bg-turquesa/[0.06] px-2.5 py-0.5 font-mono text-[0.7rem] uppercase tracking-wider text-turquesa-claro">
+              {s.formato}
+            </span>
+            <h4 class="mt-3 text-lg font-bold text-texto">{s.nombre}</h4>
+            <p class="mt-1.5 text-sm leading-relaxed text-suave">{s.descripcion}</p>
           </li>
         ))
       }
@@ -31,9 +36,9 @@ const pendientes = todasLasRedes().filter((r) => vacio(r.url));
 
     {
       (redes.length > 0 || (mostrarPendientes && pendientes.length > 0)) && (
-        <div class="mt-10">
-          <p class="font-mono text-sm uppercase tracking-widest text-suave">Síguenos</p>
-          <ul class="mt-4 flex flex-wrap gap-3">
+        <div class="mt-14">
+          <p class="font-mono text-xs uppercase tracking-widest text-turquesa mb-4">Síguenos en nuestras plataformas</p>
+          <ul class="flex flex-wrap gap-3">
             {redes.map((r) => (
               <li>
                 <a
@@ -42,7 +47,7 @@ const pendientes = todasLasRedes().filter((r) => vacio(r.url));
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Icono nombre={r.id} class="h-5 w-5" />
+                  <Icono nombre={r.id} class="h-4 w-4" />
                   {r.nombre}
                   <span class="sr-only"> (se abre en otra pestaña)</span>
                 </a>
@@ -58,5 +63,7 @@ const pendientes = todasLasRedes().filter((r) => vacio(r.url));
         </div>
       )
     }
+  </div>
+</section>
   </div>
 </section>

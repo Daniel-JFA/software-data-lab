@@ -5,8 +5,11 @@ import Base from '../layouts/Base.astro';
 <Base titulo="Página no encontrada | Software Data Lab" descripcion="La página que buscas no existe.">
   <section class="seccion" aria-labelledby="no-encontrada">
     <div class="contenedor">
-      <p class="etiqueta">// Error 404</p>
-      <h1 id="no-encontrada" class="titulo-seccion mt-3">No encontramos esa página</h1>
+      <div class="badge-seccion">
+        <span class="punto"></span>
+        Error 404
+      </div>
+      <h1 id="no-encontrada" class="titulo-seccion mt-4">No encontramos esa página</h1>
       <p class="mt-4 max-w-xl text-suave">Puede que el enlace haya cambiado. Vuelve al inicio o mira el portafolio.</p>
       <div class="mt-8 flex flex-col gap-3 sm:flex-row">
         <a href="/" class="btn btn-primario">Ir al inicio</a>

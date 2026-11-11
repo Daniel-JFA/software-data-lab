@@ -10,35 +10,38 @@ const destacados = destacadas();
 
 <section id="casos" class="seccion" aria-labelledby="casos-titulo">
   <div class="contenedor">
-    <p class="etiqueta">// 03 · Casos</p>
-    <h2 id="casos-titulo" class="titulo-seccion mt-3">{datos.titulo}</h2>
-    <p class="mt-4 max-w-2xl text-suave">{datos.intro}</p>
+    <div class="badge-seccion">
+      <span class="punto"></span>
+      Casos de estudio
+    </div>
+    <h2 id="casos-titulo" class="titulo-seccion mt-4">{datos.titulo}</h2>
+    <p class="mt-4 max-w-2xl text-lg text-suave">{datos.intro}</p>
 
-    <ul class="mt-10 grid gap-5 lg:grid-cols-3">
+    <ul class="mt-12 grid gap-6 lg:grid-cols-3">
       {
         destacados.map((c) => (
-          <li class="tarjeta flex flex-col gap-5">
+          <li class="tarjeta group flex flex-col justify-between">
             <div>
-              <p class="etiqueta">{c.categoria}</p>
-              <h3 class="mt-2 text-2xl font-semibold">{c.nombre}</h3>
-            </div>
+              <span class="inline-block rounded-md border border-turquesa/20 bg-turquesa/[0.06] px-2.5 py-0.5 font-mono text-[0.7rem] uppercase tracking-wider text-turquesa-claro">
+                {c.categoria}
+              </span>
+              <h3 class="mt-3 text-2xl font-bold tracking-tight text-texto">{c.nombre}</h3>
 
-            <dl class="space-y-4 text-suave">
-              <div>
-                <dt class="etiqueta">Problema</dt>
-                <dd class="mt-1">{c.problema}</dd>
-              </div>
-              <div>
-                <dt class="etiqueta">Solución</dt>
-                <dd class="mt-1">{c.solucion}</dd>
-              </div>
-              <div>
-                <dt class="etiqueta">Tecnologías</dt>
-                <dd class="mt-2">
+              <div class="mt-6 space-y-4 text-sm leading-relaxed text-suave">
+                <div>
+                  <p class="font-mono text-xs uppercase tracking-wider text-turquesa">Problema</p>
+                  <p class="mt-1">{c.problema}</p>
+                </div>
+                <div>
+                  <p class="font-mono text-xs uppercase tracking-wider text-turquesa">Solución</p>
+                  <p class="mt-1">{c.solucion}</p>
+                </div>
+                <div>
+                  <p class="font-mono text-xs uppercase tracking-wider text-turquesa mb-2">Tecnologías</p>
                   {c.tecnologias.length > 0 ? (
-                    <ul class="flex flex-wrap gap-2">
+                    <ul class="flex flex-wrap gap-1.5">
                       {c.tecnologias.map((t) => (
-                        <li class="rounded border border-borde bg-fondo px-2 py-1 font-mono text-xs text-turquesa-claro">
+                        <li class="rounded-md border border-white/[0.08] bg-white/[0.04] px-2.5 py-1 font-mono text-xs text-turquesa-claro">
                           {t}
                         </li>
                       ))}
@@ -46,18 +49,20 @@ const destacados = destacadas();
                   ) : (
                     mostrarPendientes && <span class="pendiente">[PENDIENTE] tecnologías</span>
                   )}
-                </dd>
+                </div>
               </div>
-            </dl>
+            </div>
 
-            <div class="mt-auto pt-2">
+            <div class="mt-8 border-t border-white/[0.06] pt-4">
               <a
                 href={`/casos/${c.slug}`}
-                class="inline-flex items-center gap-2 font-semibold text-turquesa underline-offset-4 hover:text-turquesa-claro hover:underline"
+                class="inline-flex items-center gap-2 font-semibold text-turquesa hover:text-turquesa-claro transition-colors"
               >
                 {datos.enlaceTexto}
                 <span class="sr-only"> de {c.nombre}</span>
-                <Icono nombre="flecha" class="h-4 w-4" />
+                <span class="transition-transform duration-200 group-hover:translate-x-1">
+                  <Icono nombre="flecha" class="h-4 w-4" />
+                </span>
               </a>
             </div>
           </li>
@@ -65,11 +70,11 @@ const destacados = destacadas();
       }
     </ul>
 
-    <p class="mt-8">
+    <div class="mt-10 flex justify-center sm:justify-start">
       <a href="/portafolio" class="btn btn-secundario">
         Ver todo el portafolio
-        <Icono nombre="flecha" class="h-5 w-5" />
+        <Icono nombre="flecha" class="h-4 w-4" />
       </a>
-    </p>
+    </div>
   </div>
 </section>

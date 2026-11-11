@@ -21,9 +21,12 @@ const enlaceExterno = wa.startsWith('http');
 
   <div class="contenedor relative grid gap-10 lg:grid-cols-2 lg:gap-14">
     <div>
-      <p class="etiqueta">// 07 · Contacto</p>
-      <h2 id="contacto-titulo" class="titulo-seccion mt-3">{c.titulo}</h2>
-      <p class="mt-4 max-w-md text-suave">{c.subtitulo}</p>
+      <div class="badge-seccion">
+        <span class="punto"></span>
+        Contacto directo
+      </div>
+      <h2 id="contacto-titulo" class="titulo-seccion mt-4">{c.titulo}</h2>
+      <p class="mt-4 max-w-md text-lg text-suave">{c.subtitulo}</p>
 
       <div class="mt-8 flex flex-col gap-4">
         <a
@@ -40,7 +43,10 @@ const enlaceExterno = wa.startsWith('http');
 
         {
           whatsappListo() ? (
-            <p class="font-mono text-sm text-suave">{site.contacto.whatsappVisible || ''}</p>
+            <div class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-verde animate-pulse"></span>
+              <p class="font-mono text-sm text-suave/90">{site.contacto.whatsappVisible || ''}</p>
+            </div>
           ) : (
             mostrarPendientes && <span class="pendiente w-fit">[WHATSAPP] número en src/data/site.json</span>
           )
@@ -50,12 +56,12 @@ const enlaceExterno = wa.startsWith('http');
           correoListo() ? (
             <a
               href={correoUrl()}
-              class="inline-flex w-fit items-center gap-2 text-turquesa underline-offset-4 hover:text-turquesa-claro hover:underline"
+              class="inline-flex w-fit items-center gap-2.5 text-turquesa hover:text-turquesa-claro transition-colors"
               data-evento="correo_click"
               data-ubicacion="contacto"
             >
               <Icono nombre="correo" class="h-5 w-5" />
-              {site.contacto.correo}
+              <span class="font-mono text-sm">{site.contacto.correo}</span>
             </a>
           ) : (
             mostrarPendientes && <span class="pendiente w-fit">[CORREO] en src/data/site.json</span>
@@ -65,7 +71,7 @@ const enlaceExterno = wa.startsWith('http');
     </div>
 
     <div class="tarjeta">
-      <h3 class="text-xl font-semibold">{c.formularioTitulo}</h3>
+      <h3 class="text-xl font-bold tracking-tight text-texto">{c.formularioTitulo}</h3>
 
       <form
         class="mt-6 space-y-4"
@@ -75,19 +81,19 @@ const enlaceExterno = wa.startsWith('http');
         data-exito={c.exito}
       >
         <div>
-          <label for="ct-nombre" class="mb-1 block text-sm font-medium">Nombre</label>
+          <label for="ct-nombre" class="mb-1.5 block text-xs font-mono uppercase tracking-wider text-turquesa">Nombre</label>
           <input id="ct-nombre" name="nombre" type="text" class="campo" autocomplete="name" required maxlength="120" />
         </div>
         <div>
-          <label for="ct-empresa" class="mb-1 block text-sm font-medium">Empresa u organización</label>
+          <label for="ct-empresa" class="mb-1.5 block text-xs font-mono uppercase tracking-wider text-turquesa">Empresa u organización</label>
           <input id="ct-empresa" name="empresa" type="text" class="campo" autocomplete="organization" maxlength="160" />
         </div>
         <div>
-          <label for="ct-contacto" class="mb-1 block text-sm font-medium">Correo o WhatsApp para responderte</label>
+          <label for="ct-contacto" class="mb-1.5 block text-xs font-mono uppercase tracking-wider text-turquesa">Correo o WhatsApp para responderte</label>
           <input id="ct-contacto" name="contacto" type="text" class="campo" autocomplete="email" required maxlength="160" />
         </div>
         <div>
-          <label for="ct-necesidad" class="mb-1 block text-sm font-medium">¿Qué necesitas?</label>
+          <label for="ct-necesidad" class="mb-1.5 block text-xs font-mono uppercase tracking-wider text-turquesa">¿Qué necesitas?</label>
           <textarea id="ct-necesidad" name="necesidad" rows="4" class="campo resize-y" required maxlength="2000"></textarea>
         </div>
 
@@ -96,7 +102,7 @@ const enlaceExterno = wa.startsWith('http');
           <label>No llenes este campo <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" /></label>
         </div>
 
-        <button type="submit" class="btn w-full bg-turquesa text-fondo hover:bg-turquesa-claro disabled:opacity-60">
+        <button type="submit" class="btn w-full bg-turquesa font-semibold text-fondo hover:bg-turquesa-claro shadow-[0_4px_16px_rgba(127,214,203,0.3)] hover:shadow-[0_6px_22px_rgba(127,214,203,0.45)] active:scale-[0.98] transition-all disabled:opacity-60">
           {c.boton}
         </button>
         <p data-estado role="status" aria-live="polite" class="min-h-6 text-sm"></p>

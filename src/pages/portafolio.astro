@@ -20,15 +20,18 @@ const estados = [...new Set(lista.map((a) => etiquetaEstado(a)).filter((e): e is
         <span aria-current="page" class="text-texto">Portafolio</span>
       </nav>
 
-      <p class="etiqueta mt-8">// Portafolio</p>
-      <h1 id="portafolio-titulo" class="titulo-seccion mt-3">Aplicativos que hemos construido</h1>
-      <p class="mt-4 max-w-2xl text-suave">
+      <div class="badge-seccion mt-8">
+        <span class="punto"></span>
+        Portafolio
+      </div>
+      <h1 id="portafolio-titulo" class="titulo-seccion mt-4">Aplicativos que hemos construido</h1>
+      <p class="mt-4 max-w-2xl text-lg text-suave">
         Elige uno para ver el problema, la solución y las tecnologías.
       </p>
 
       {
         estados.length > 1 && (
-          <div role="group" aria-label="Filtrar por estado" class="mt-8 flex flex-wrap gap-2">
+          <div role="group" aria-label="Filtrar por estado" class="mt-8 flex flex-wrap gap-2.5">
             <button type="button" data-filtro="todos" aria-pressed="true" class="filtro">
               Todos
             </button>
@@ -41,29 +44,38 @@ const estados = [...new Set(lista.map((a) => etiquetaEstado(a)).filter((e): e is
         )
       }
 
-      <ul id="lista-apps" class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <ul id="lista-apps" class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {
           lista.map((a) => (
-            <li class="tarjeta flex flex-col gap-4" data-estado={etiquetaEstado(a) ?? ''}>
+            <li class="tarjeta group flex flex-col justify-between gap-4" data-estado={etiquetaEstado(a) ?? ''}>
               <div>
-                <p class="etiqueta">{a.categoria}</p>
-                <h2 class="mt-2 text-2xl font-semibold">{a.nombre}</h2>
+                <span class="inline-block rounded-md border border-turquesa/20 bg-turquesa/[0.06] px-2.5 py-0.5 font-mono text-[0.7rem] uppercase tracking-wider text-turquesa-claro">
+                  {a.categoria}
+                </span>
+                <h2 class="mt-3 text-2xl font-bold tracking-tight text-texto">{a.nombre}</h2>
+                <div class="mt-3">
+                  {etiquetaEstado(a) ? (
+                    <span class="inline-block rounded-full border border-white/[0.08] bg-white/[0.04] px-3 py-1 font-mono text-xs text-turquesa-claro">
+                      {etiquetaEstado(a)}
+                    </span>
+                  ) : (
+                    mostrarPendientes && <span class="pendiente w-fit">[PENDIENTE] confirmar estado</span>
+                  )}
+                </div>
+                <p class="mt-4 text-sm leading-relaxed text-suave">{a.resumen}</p>
               </div>
-              {etiquetaEstado(a) ? (
-                <p class="w-fit rounded-full border border-borde px-3 py-1 font-mono text-xs text-turquesa-claro">
-                  {etiquetaEstado(a)}
-                </p>
-              ) : (
-                mostrarPendientes && <span class="pendiente w-fit">[PENDIENTE] confirmar estado</span>
-              )}
-              <p class="text-suave">{a.resumen}</p>
-              <a
-                href={`/casos/${a.slug}`}
-                class="mt-auto inline-flex items-center gap-2 font-semibold text-turquesa underline-offset-4 hover:text-turquesa-claro hover:underline"
-              >
-                Ver caso<span class="sr-only"> de {a.nombre}</span>
-                <Icono nombre="flecha" class="h-4 w-4" />
-              </a>
+
+              <div class="mt-4 border-t border-white/[0.06] pt-4">
+                <a
+                  href={`/casos/${a.slug}`}
+                  class="inline-flex items-center gap-2 font-semibold text-turquesa hover:text-turquesa-claro transition-colors"
+                >
+                  Ver caso<span class="sr-only"> de {a.nombre}</span>
+                  <span class="transition-transform duration-200 group-hover:translate-x-1">
+                    <Icono nombre="flecha" class="h-4 w-4" />
+                  </span>
+                </a>
+              </div>
             </li>
           ))
         }
@@ -75,22 +87,29 @@ const estados = [...new Set(lista.map((a) => etiquetaEstado(a)).filter((e): e is
 
 <style is:global>
   .filtro {
-    border: 1px solid var(--color-borde);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.03);
     border-radius: 9999px;
-    padding: 0.5rem 1rem;
-    font-size: 0.875rem;
+    padding: 0.5rem 1.125rem;
+    font-size: 0.8125rem;
     font-weight: 500;
     color: var(--color-suave);
-    min-height: 2.75rem;
+    min-height: 2.5rem;
     cursor: pointer;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: all 0.2s ease;
   }
   .filtro:hover {
-    border-color: var(--color-turquesa);
+    border-color: rgba(127, 214, 203, 0.4);
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.07);
   }
   .filtro[aria-pressed='true'] {
-    border-color: var(--color-turquesa);
-    background: rgb(127 214 203 / 0.15);
+    border-color: rgba(127, 214, 203, 0.6);
+    background: rgba(127, 214, 203, 0.15);
     color: var(--color-turquesa-claro);
+    box-shadow: 0 0 16px rgba(127, 214, 203, 0.15);
   }
 </style>
 

@@ -6,22 +6,27 @@ const f = datos.formulario;
 ---
 
 <section id="curso" class="seccion" aria-labelledby="curso-titulo">
-  <div class="contenedor grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-14">
+  <div class="contenedor grid gap-12 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
     <div>
-      <p class="etiqueta">// 05 · {datos.etiqueta}</p>
-      <h2 id="curso-titulo" class="titulo-seccion mt-3">
-        {datos.titulo} — <span class="text-turquesa">{datos.subtitulo}.</span>
+      <div class="badge-seccion">
+        <span class="punto"></span>
+        {datos.etiqueta}
+      </div>
+      <h2 id="curso-titulo" class="titulo-seccion mt-4">
+        {datos.titulo} — <span class="text-turquesa-claro">{datos.subtitulo}.</span>
       </h2>
-      <p class="mt-4 max-w-xl text-suave">{datos.descripcion}</p>
+      <p class="mt-4 max-w-xl text-lg text-suave">{datos.descripcion}</p>
 
-      <ol class="mt-8 divide-y divide-borde border-y border-borde">
+      <ol class="mt-10 divide-y divide-white/[0.06] border-y border-white/[0.06]">
         {
           datos.lecciones.map((l, i) => (
-            <li class="flex gap-4 py-4">
-              <span class="pt-0.5 font-mono text-sm text-turquesa">{String(i + 1).padStart(2, '0')}</span>
+            <li class="group flex gap-5 py-4.5 transition-colors hover:bg-white/[0.02] px-2 rounded-xl">
+              <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-turquesa/30 bg-turquesa/[0.08] font-mono text-xs font-semibold text-turquesa-claro">
+                {String(i + 1).padStart(2, '0')}
+              </span>
               <div>
-                <h3 class="font-semibold">{l.titulo}</h3>
-                <p class="text-sm text-suave">{l.resumen}</p>
+                <h3 class="font-bold text-texto text-base tracking-tight">{l.titulo}</h3>
+                <p class="mt-1 text-sm text-suave leading-relaxed">{l.resumen}</p>
               </div>
             </li>
           ))
@@ -29,9 +34,9 @@ const f = datos.formulario;
       </ol>
     </div>
 
-    <div class="tarjeta h-fit lg:sticky lg:top-24">
-      <h3 class="text-xl font-semibold">{f.titulo}</h3>
-      <p class="mt-1 text-suave">{f.descripcion}</p>
+    <div class="tarjeta h-fit lg:sticky lg:top-28">
+      <h3 class="text-xl font-bold tracking-tight text-texto">{f.titulo}</h3>
+      <p class="mt-1.5 text-sm text-suave">{f.descripcion}</p>
 
       <form
         class="mt-6 space-y-4"
@@ -41,7 +46,7 @@ const f = datos.formulario;
         data-exito={f.exito}
       >
         <div>
-          <label for="curso-nombre" class="mb-1 block text-sm font-medium">Nombre</label>
+          <label for="curso-nombre" class="mb-1.5 block text-xs font-mono uppercase tracking-wider text-turquesa">Nombre</label>
           <input
             id="curso-nombre"
             name="nombre"
@@ -53,11 +58,32 @@ const f = datos.formulario;
           />
         </div>
         <div>
-          <label for="curso-correo" class="mb-1 block text-sm font-medium">Correo</label>
+          <label for="curso-correo" class="mb-1.5 block text-xs font-mono uppercase tracking-wider text-turquesa">Correo</label>
           <input
             id="curso-correo"
             name="email"
             type="email"
+            class="campo"
+            autocomplete="email"
+            required
+            maxlength="120"
+          />
+        </div>
+
+        <div style="position: absolute; left: -9999px;" aria-hidden="true">
+          <input name="_gotcha" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <button type="submit" class="btn btn-primario w-full">
+          {f.boton}
+        </button>
+
+        <p class="text-xs leading-relaxed text-suave/80">{f.consentimiento}</p>
+        <p data-estado class="min-h-6 text-sm" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</section>
             class="campo"
             autocomplete="email"
             inputmode="email"

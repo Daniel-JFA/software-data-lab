@@ -5,23 +5,30 @@ import datos from '../data/servicios.json';
 
 <section id="servicios" class="seccion" aria-labelledby="servicios-titulo">
   <div class="contenedor">
-    <p class="etiqueta">// 01 · Servicios</p>
-    <h2 id="servicios-titulo" class="titulo-seccion mt-3">{datos.titulo}</h2>
-    <p class="mt-4 max-w-2xl text-suave">{datos.intro}</p>
+    <div class="badge-seccion">
+      <span class="punto"></span>
+      Servicios
+    </div>
+    <h2 id="servicios-titulo" class="titulo-seccion mt-4">{datos.titulo}</h2>
+    <p class="mt-4 max-w-2xl text-lg text-suave">{datos.intro}</p>
 
-    <ul class="mt-10 grid gap-5 sm:grid-cols-2">
+    <ul class="mt-12 grid gap-6 sm:grid-cols-2">
       {
         datos.items.map((s) => (
-          <li class="tarjeta flex flex-col">
-            <span class="grid h-12 w-12 place-items-center rounded-lg border border-borde bg-fondo text-turquesa">
-              <Icono nombre={s.icono as 'codigo' | 'grafico' | 'cerebro' | 'sensor'} class="h-7 w-7" />
-            </span>
-            <h3 class="mt-5 text-xl font-semibold">{s.titulo}</h3>
-            <p class="mt-2 text-suave">{s.descripcion}</p>
-            <p class="mt-auto border-t border-borde pt-4 text-sm text-suave">
-              <span class="etiqueta mb-1 block">Ejemplo</span>
-              {s.ejemplo}
-            </p>
+          <li class="tarjeta group flex flex-col justify-between">
+            <div>
+              <span class="grid h-12 w-12 place-items-center rounded-xl border border-turquesa/30 bg-gradient-to-br from-white/[0.08] to-white/[0.02] text-turquesa-claro shadow-inner transition-transform duration-300 group-hover:scale-110">
+                <Icono nombre={s.icono as 'codigo' | 'grafico' | 'cerebro' | 'sensor'} class="h-6 w-6" />
+              </span>
+              <h3 class="mt-5 text-xl font-bold tracking-tight text-texto">{s.titulo}</h3>
+              <p class="mt-2.5 text-base leading-relaxed text-suave">{s.descripcion}</p>
+            </div>
+            <div class="mt-6 border-t border-white/[0.06] pt-4">
+              <span class="inline-block rounded-md border border-turquesa/20 bg-turquesa/[0.06] px-2 py-0.5 font-mono text-[0.7rem] uppercase tracking-wider text-turquesa-claro">
+                Ejemplo real
+              </span>
+              <p class="mt-2 text-sm leading-relaxed text-suave/90">{s.ejemplo}</p>
+            </div>
           </li>
         ))
       }
