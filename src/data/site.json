@@ -43,15 +43,15 @@
   },
   "contacto": {
     "_ayuda_whatsapp": "Solo dígitos con indicativo de país, sin + ni espacios. Ejemplo Colombia: 573001234567",
-    "whatsapp": "",
-    "whatsappVisible": "",
+    "whatsapp": "573122115299",
+    "whatsappVisible": "+57 312 211 5299",
     "mensajeWhatsapp": "Hola Daniel, vi Software Data Lab y quiero agendar el diagnóstico gratis de 30 minutos.",
-    "correo": ""
+    "correo": "florezaguirredaniel@gmail.com"
   },
   "redes": {
-    "facebook": "",
-    "instagram": "",
-    "youtube": ""
+    "facebook": "https://www.facebook.com/softwaredatalab",
+    "instagram": "https://www.instagram.com/softwaredatalab/",
+    "youtube": "https://www.youtube.com/@softwaredatalab"
   },
   "formularios": {
     "_ayuda": "Crea dos formularios en formspree.io y pega aquí el ID (la parte final de https://formspree.io/f/XXXXXXXX). Si lo dejas vacío, el formulario avisa que aún no está activo.",
