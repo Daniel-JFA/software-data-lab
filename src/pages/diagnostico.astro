@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Icono from '../components/Icono.astro';
 import { site, whatsappUrl } from '../lib/site';
 import d from '../data/diagnostico.json';
+import politica from '../data/politica.json';
 
 const wa = whatsappUrl();
 const enlaceExterno = wa.startsWith('http');
@@ -10,18 +11,29 @@ const enlaceExterno = wa.startsWith('http');
 const etiqueta = 'mb-1.5 block text-xs font-mono uppercase tracking-wider text-turquesa';
 const opcion =
   'flex cursor-pointer items-start gap-3 rounded-lg border border-borde bg-fondo/40 p-3 text-sm text-texto transition-colors hover:border-turquesa/60 has-[:checked]:border-turquesa has-[:checked]:bg-turquesa/10';
-const pasos = ['Tu empresa', 'Brecha digital', 'Tu equipo', 'Servicios'];
+const pasos = ['Contacto', 'Servicios', 'Tu empresa', 'Tu caso'];
 
-// Datos mínimos para que el script calcule el puntaje en el navegador.
+type Extra = { id: string; tipo: string; texto: string; opciones: string[] };
+// Solo la dimensión de gobierno trae preguntas "extras" (según el tipo de dato que maneja la empresa).
+const extrasDe = (dim: object): Extra[] => ('extras' in dim ? (dim.extras as Extra[]) : []);
+
+// Datos mínimos para que el script arme las preguntas y calcule el puntaje en el navegador.
 const config = {
   niveles: d.niveles,
-  dimensiones: d.dimensiones.map((x) => ({ id: x.id, titulo: x.titulo, preguntas: x.preguntas.map((p) => p.id) })),
+  dimensiones: d.dimensiones.map((x) => ({
+    id: x.id,
+    titulo: x.titulo,
+    preguntas: [...x.preguntas.map((p) => p.id), ...extrasDe(x).map((e) => e.id)],
+  })),
+  servicios: Object.fromEntries(d.servicios.map((s) => [s.id, s.dimensiones])),
+  titulos: Object.fromEntries(d.servicios.map((s) => [s.id, s.titulo])),
+  pistas: d.pistasSector,
 };
 ---
 
 <Base
   titulo="Diagnóstico de brecha digital | Software Data Lab"
-  descripcion="Mide la brecha digital de tu empresa en 5 minutos: procesos, herramientas, datos, atención y seguridad. Recibe tu nivel por dimensión al terminar."
+  descripcion="Déjanos tus datos, elige uno o varios servicios y mide la brecha digital y el gobierno de datos de tu empresa en 5 minutos. Recibe tu nivel por área al terminar."
 >
   <section class="seccion" aria-labelledby="diagnostico-titulo">
     <div class="contenedor max-w-3xl">
@@ -37,7 +49,8 @@ const config = {
       </div>
       <h1 id="diagnostico-titulo" class="titulo-seccion mt-4">Mide la brecha digital de tu empresa</h1>
       <p class="mt-4 text-lg text-suave">
-        Cuatro pasos y unos 5 minutos. Al terminar ves tu nivel en cada área y nosotros preparamos la conversación de 30 minutos.
+        Déjanos tus datos, elige uno o varios servicios y te hacemos preguntas a la medida de tu sector. Cuatro pasos y unos 5 minutos; al
+        terminar ves tu nivel en cada área y nosotros preparamos la conversación de 30 minutos.
       </p>
 
       <script type="application/json" id="dg-config" set:html={JSON.stringify(config)} />
@@ -55,9 +68,10 @@ const config = {
         </ol>
 
         <form id="dg-form" class="space-y-5" novalidate data-api={site.formularios.diagnosticoEndpoint}>
-          <!-- Paso 1 -->
+          <!-- Paso 1: contacto y autorización (todo obligatorio) -->
           <fieldset data-paso="0" class="space-y-5">
-            <legend class="mb-2 text-xl font-bold tracking-tight text-texto">Tu empresa</legend>
+            <legend class="mb-2 text-xl font-bold tracking-tight text-texto">¿Dónde te respondemos?</legend>
+            <p class="text-sm text-suave">Todos los campos son obligatorios. Usamos estos datos solo para responderte sobre tu diagnóstico.</p>
             <div class="grid gap-5 sm:grid-cols-2">
               <div>
                 <label for="dg-nombre" class={etiqueta}>Nombre</label>
@@ -68,10 +82,65 @@ const config = {
                 <input id="dg-empresa" name="empresa" type="text" class="campo" autocomplete="organization" required maxlength="160" />
               </div>
             </div>
-            <div>
-              <label for="dg-contacto" class={etiqueta}>Correo o WhatsApp para responderte</label>
-              <input id="dg-contacto" name="contacto" type="text" class="campo" autocomplete="email" required maxlength="160" />
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label for="dg-correo" class={etiqueta}>Correo</label>
+                <input id="dg-correo" name="correo" type="email" class="campo" autocomplete="email" required maxlength="160" data-correo />
+              </div>
+              <div>
+                <label for="dg-whatsapp" class={etiqueta}>WhatsApp</label>
+                <input
+                  id="dg-whatsapp"
+                  name="whatsapp"
+                  type="tel"
+                  class="campo"
+                  autocomplete="tel"
+                  inputmode="tel"
+                  placeholder="+57 300 123 4567"
+                  required
+                  maxlength="30"
+                  data-whatsapp
+                />
+              </div>
             </div>
+            <label class={opcion}>
+              <input type="checkbox" name="acepta" required class="mt-0.5 accent-turquesa" />
+              <span>
+                Autorizo el tratamiento de mis datos personales para responder a este diagnóstico y contactarme, según la
+                <a
+                  href="/politica-datos"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-turquesa underline underline-offset-4 hover:text-turquesa-claro"
+                  >política de tratamiento de datos<span class="sr-only"> (se abre en otra pestaña)</span></a
+                >. Puedo revocar esta autorización cuando quiera.
+              </span>
+            </label>
+            <input type="hidden" name="politica" value={politica.version} />
+          </fieldset>
+
+          <!-- Paso 2: uno o varios servicios -->
+          <fieldset data-paso="1" class="space-y-5" hidden>
+            <legend class="mb-2 text-xl font-bold tracking-tight text-texto">¿Qué servicios necesitas?</legend>
+            <p class="text-sm text-suave">Marca uno o varios. Con base en lo que elijas armamos las preguntas.</p>
+            <div class="space-y-2" role="group" aria-label="Servicios" data-servicios>
+              {
+                d.servicios.map((s) => (
+                  <label class={opcion}>
+                    <input type="checkbox" name="servicios" value={s.id} class="mt-0.5 accent-turquesa" />
+                    <span>
+                      <span class="font-semibold">{s.titulo}</span>
+                      <span class="block text-suave">{s.descripcion}</span>
+                    </span>
+                  </label>
+                ))
+              }
+            </div>
+          </fieldset>
+
+          <!-- Paso 3: empresa y tipos de dato (de aquí depende la parte de normativa) -->
+          <fieldset data-paso="2" class="space-y-5" hidden>
+            <legend class="mb-2 text-xl font-bold tracking-tight text-texto">Tu empresa</legend>
             <div class="grid gap-5 sm:grid-cols-2">
               <div>
                 <label for="dg-sector" class={etiqueta}>Sector</label>
@@ -88,22 +157,35 @@ const config = {
                 </select>
               </div>
             </div>
+            <div class="space-y-2" role="group" aria-labelledby="dg-tipos-titulo" data-tipos>
+              <p id="dg-tipos-titulo" class={etiqueta}>¿Qué datos de personas manejan?</p>
+              <p class="text-sm text-suave">Clientes, pacientes, beneficiarios, empleados… Marca todos los que apliquen.</p>
+              {
+                d.tiposDato.map((t) => (
+                  <label class={opcion}>
+                    <input type="checkbox" name="datos_tipos" value={t.id} class="mt-0.5 accent-turquesa" />
+                    <span>{t.titulo}</span>
+                  </label>
+                ))
+              }
+            </div>
           </fieldset>
 
-          <!-- Paso 2 -->
-          <fieldset data-paso="1" class="space-y-8" hidden>
-            <legend class="mb-2 text-xl font-bold tracking-tight text-texto">Brecha digital</legend>
+          <!-- Paso 4: preguntas según los servicios, el sector y los datos -->
+          <fieldset data-paso="3" class="space-y-8" hidden>
+            <legend class="mb-2 text-xl font-bold tracking-tight text-texto">Tu caso</legend>
             <p class="text-sm text-suave">Elige la opción que más se parezca a cómo trabajan hoy, no a cómo quisieras.</p>
+
             {
-              d.dimensiones.map((dim) => (
-                <div class="space-y-5">
-                  <h3 class="font-mono text-sm uppercase tracking-widest text-turquesa-claro">{dim.titulo}</h3>
-                  {dim.preguntas.map((p) => (
+              d.servicios.map((s) => (
+                <div class="space-y-5" data-bloque={s.id} hidden>
+                  <h3 class="font-mono text-sm uppercase tracking-widest text-turquesa">{s.titulo}</h3>
+                  {s.preguntas.map((p) => (
                     <div role="radiogroup" aria-labelledby={`q-${p.id}`} class="space-y-2">
                       <p id={`q-${p.id}`} class="font-medium text-texto">{p.texto}</p>
-                      {p.opciones.map((o, i) => (
+                      {p.opciones.map((o) => (
                         <label class={opcion}>
-                          <input type="radio" name={`brecha.${p.id}`} value={String(i)} required class="mt-0.5 accent-turquesa" />
+                          <input type="radio" name={`detalle.${p.id}`} value={o} required disabled class="mt-0.5 accent-turquesa" />
                           <span>{o}</span>
                         </label>
                       ))}
@@ -112,57 +194,74 @@ const config = {
                 </div>
               ))
             }
-          </fieldset>
 
-          <!-- Paso 3 -->
-          <fieldset data-paso="2" class="space-y-6" hidden>
-            <legend class="mb-2 text-xl font-bold tracking-tight text-texto">Tu equipo</legend>
+            <!-- Brecha digital: cada área se pregunta una sola vez aunque la compartan varios servicios -->
             {
-              d.equipo.map((p) => (
-                <div role="radiogroup" aria-labelledby={`q-${p.id}`} class="space-y-2">
-                  <p id={`q-${p.id}`} class="font-medium text-texto">{p.texto}</p>
-                  {p.opciones.map((o) => (
-                    <label class={opcion}>
-                      <input type="radio" name={`equipo.${p.id}`} value={o} required class="mt-0.5 accent-turquesa" />
-                      <span>{o}</span>
-                    </label>
+              d.dimensiones.map((dim) => (
+                <div class="space-y-5" data-dim={dim.id} hidden>
+                  <h3 class="font-mono text-sm uppercase tracking-widest text-turquesa-claro">
+                    {dim.id === 'gobierno' ? dim.titulo : `Brecha digital · ${dim.titulo}`}
+                  </h3>
+                  {dim.id === 'gobierno' && (
+                    <>
+                      <p data-pista class="rounded-lg border border-turquesa/30 bg-turquesa/5 p-3 text-sm text-suave" hidden />
+                      <p class="text-sm text-suave">
+                        Es una orientación general sobre cómo cuidan los datos de las personas; no es asesoría legal.
+                      </p>
+                    </>
+                  )}
+                  {dim.preguntas.map((p) => (
+                    <div role="radiogroup" aria-labelledby={`q-${p.id}`} class="space-y-2">
+                      <p id={`q-${p.id}`} class="font-medium text-texto">{p.texto}</p>
+                      {p.opciones.map((o, i) => (
+                        <label class={opcion}>
+                          <input type="radio" name={`brecha.${p.id}`} value={String(i)} required disabled class="mt-0.5 accent-turquesa" />
+                          <span>{o}</span>
+                        </label>
+                      ))}
+                    </div>
+                  ))}
+                  {extrasDe(dim).map((e) => (
+                    <div role="radiogroup" aria-labelledby={`q-${e.id}`} class="space-y-2" data-extra={e.tipo} hidden>
+                      <p id={`q-${e.id}`} class="font-medium text-texto">{e.texto}</p>
+                      {e.opciones.map((o, i) => (
+                        <label class={opcion}>
+                          <input type="radio" name={`brecha.${e.id}`} value={String(i)} required disabled class="mt-0.5 accent-turquesa" />
+                          <span>{o}</span>
+                        </label>
+                      ))}
+                    </div>
                   ))}
                 </div>
               ))
             }
-            <div>
-              <label for="dg-friccion" class={etiqueta}>¿Qué es lo que más frena o genera errores en tu equipo hoy?</label>
-              <textarea id="dg-friccion" name="friccion" rows="4" class="campo resize-y" required maxlength="2000"></textarea>
-            </div>
-          </fieldset>
 
-          <!-- Paso 4 -->
-          <fieldset data-paso="3" class="space-y-6" hidden>
-            <legend class="mb-2 text-xl font-bold tracking-tight text-texto">Servicios de tu interés</legend>
-            <p class="text-sm text-suave">Marca los que te interesen (puedes dejar todos sin marcar).</p>
-            <div class="space-y-2">
-              {
-                d.servicios.map((s) => (
-                  <label class={opcion}>
-                    <input type="checkbox" name="servicios" value={s.id} class="mt-0.5 accent-turquesa" />
-                    <span>
-                      <span class="font-semibold">{s.titulo}</span>
-                      <span class="block text-suave">{s.descripcion}</span>
-                    </span>
-                  </label>
-                ))
-              }
-            </div>
-            <div>
-              <label for="dg-urgencia" class={etiqueta}>¿Para cuándo lo necesitas?</label>
-              <select id="dg-urgencia" name="urgencia" class="campo">
-                <option value="">Elige uno</option>
-                {d.urgencias.map((u) => <option value={u}>{u}</option>)}
-              </select>
-            </div>
-            <div>
-              <label for="dg-objetivo" class={etiqueta}>¿Qué te gustaría lograr? (opcional)</label>
-              <textarea id="dg-objetivo" name="objetivo" rows="3" class="campo resize-y" maxlength="2000"></textarea>
+            <div class="space-y-5">
+              <h3 class="font-mono text-sm uppercase tracking-widest text-turquesa">Cuéntanos más</h3>
+              <div>
+                <label for="dg-friccion" class={etiqueta}>¿Qué problema quieres resolver?</label>
+                <textarea
+                  id="dg-friccion"
+                  name="friccion"
+                  rows="4"
+                  class="campo resize-y"
+                  required
+                  minlength="3"
+                  maxlength="2000"
+                  placeholder="Ej: Pérdida de tiempo consolidando archivos a mano, procesos sin seguimiento o falta de tableros de indicadores."
+                ></textarea>
+              </div>
+              <div>
+                <label for="dg-urgencia" class={etiqueta}>¿Para cuándo lo necesitas?</label>
+                <select id="dg-urgencia" name="urgencia" class="campo">
+                  <option value="">Elige uno</option>
+                  {d.urgencias.map((u) => <option value={u}>{u}</option>)}
+                </select>
+              </div>
+              <div>
+                <label for="dg-objetivo" class={etiqueta}>¿Qué te gustaría lograr? (opcional)</label>
+                <textarea id="dg-objetivo" name="objetivo" rows="3" class="campo resize-y" maxlength="2000"></textarea>
+              </div>
             </div>
           </fieldset>
 
@@ -194,21 +293,48 @@ const config = {
 
         <div id="dg-resultado" hidden aria-live="polite">
           <h2 class="text-2xl font-bold tracking-tight text-texto">Tu resultado</h2>
-          <p class="mt-2 text-suave">Recibimos tus respuestas. Este es tu nivel de madurez digital según lo que contestaste.</p>
+          <p class="mt-2 text-suave">
+            Recibimos tus respuestas sobre <strong id="dg-servicio" class="text-texto"></strong>. Este es tu nivel de madurez digital en las
+            áreas que importan para lo que elegiste.
+          </p>
           <div class="mt-6 rounded-xl border border-turquesa/40 bg-turquesa/10 p-5">
             <p class="font-mono text-xs uppercase tracking-wider text-turquesa">Nivel general</p>
             <p class="mt-1 text-3xl font-bold text-texto"><span id="dg-total"></span> / 100 · <span id="dg-nivel"></span></p>
             <p id="dg-nivel-texto" class="mt-2 text-suave"></p>
           </div>
           <ul id="dg-dimensiones" class="mt-6 space-y-4"></ul>
-          <p class="mt-8 text-sm text-suave">
-            Es una medición orientativa, basada en tus respuestas. En la conversación de 30 minutos la revisamos contigo y definimos qué
-            digitalizar primero. Te escribimos pronto.
+          <p id="dg-aviso-legal" hidden class="mt-6 text-sm text-suave">
+            El área de gobierno y normativa de datos es una orientación general, no asesoría legal.
+          </p>
+
+          <div class="mt-8 rounded-xl border border-turquesa/30 bg-superficie/60 p-6 flex flex-col sm:flex-row items-center justify-between gap-5">
+            <div>
+              <h3 class="text-lg font-bold text-texto">Revisemos este resultado en 30 minutos</h3>
+              <p class="mt-1 text-sm text-suave">
+                Conversación directa por WhatsApp. Revisamos tus números y te decimos qué conviene digitalizar primero. Sin costo.
+              </p>
+            </div>
+            <a
+              id="dg-wa-btn"
+              href={wa}
+              class="btn btn-primario w-full sm:w-auto shrink-0 !px-6 !py-3 font-semibold text-center"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-evento="whatsapp_click"
+              data-ubicacion="diagnostico-resultado"
+            >
+              <Icono nombre="whatsapp" class="h-5 w-5" />
+              Conversar por WhatsApp
+            </a>
+          </div>
+
+          <p class="mt-6 text-sm text-suave">
+            Es una medición orientativa, basada en tus respuestas. También te responderemos al correo o al WhatsApp que registraste.
           </p>
         </div>
       </div>
 
-      <p class="mt-8 text-suave">
+      <p class="mt-8 flex flex-wrap items-center gap-x-2 gap-y-1 text-suave">
         ¿Prefieres hablarlo directamente?
         <a
           href={wa}

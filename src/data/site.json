@@ -10,10 +10,9 @@
     { "etiqueta": "Servicios", "href": "#servicios" },
     { "etiqueta": "Experiencia", "href": "#experiencia" },
     { "etiqueta": "Casos", "href": "#casos" },
-    { "etiqueta": "El Lab", "href": "#lab" },
-    { "etiqueta": "Curso", "href": "#curso" },
     { "etiqueta": "Cómo trabajamos", "href": "#proceso" },
-    { "etiqueta": "Contacto", "href": "#contacto" }
+    { "etiqueta": "Contacto", "href": "#contacto" },
+    { "etiqueta": "El Lab", "href": "#lab" }
   ],
   "cta": {
     "hablemos": "Hablemos"
@@ -28,11 +27,11 @@
       "servicios": "1.480",
       "experiencia": "1.540",
       "casos": "1.600",
-      "lab": "1.660",
-      "curso": "1.720",
-      "proceso": "1.780",
-      "contacto": "1.840",
-      "confianza": "1.900"
+      "proceso": "1.660",
+      "confianza": "1.720",
+      "contacto": "1.780",
+      "lab": "1.840",
+      "curso": "1.900"
     }
   },
   "inicio": {
