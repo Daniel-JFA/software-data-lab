@@ -1,0 +1,78 @@
+{
+  "_ayuda": [
+    "BORRADOR para revisar con un asesor jurídico antes de publicar: es un texto orientativo basado en la Ley 1581 de 2012 y el Decreto 1074 de 2015.",
+    "'version' se guarda con cada envío del formulario como prueba de qué texto aceptó la persona. Cámbiala cada vez que cambie el contenido.",
+    "'retencionMeses' es una decisión de negocio; la eliminación hoy es manual (revisión periódica de la base de la API)."
+  ],
+  "version": "2026-11-12",
+  "actualizada": "12 de noviembre de 2026",
+  "retencionMeses": 12,
+  "resumen": "Esta política explica qué datos personales recogemos cuando usas el formulario de diagnóstico o nos escribes, para qué los usamos y cómo ejerces tus derechos.",
+  "secciones": [
+    {
+      "titulo": "1. Quién es el responsable",
+      "parrafos": [
+        "El responsable del tratamiento es Daniel Flórez, titular de Software Data Lab (SDL), con sede en Medellín, Colombia."
+      ],
+      "contacto": true
+    },
+    {
+      "titulo": "2. Qué datos recogemos",
+      "parrafos": ["En el formulario de diagnóstico de brecha digital recogemos:"],
+      "items": [
+        "Datos de contacto: nombre, empresa u organización, correo electrónico y número de WhatsApp.",
+        "Datos de tu organización: servicios que te interesan, sector, tamaño del equipo, tipos de datos que manejan y tus respuestas sobre cómo trabajan hoy.",
+        "El problema que quieres resolver y lo que te gustaría lograr, que escribes tú en texto libre.",
+        "Un código irreversible (hash) derivado de tu dirección IP, solo para evitar abusos y envíos automáticos. No guardamos tu IP en claro."
+      ],
+      "cierre": "No pedimos datos sensibles ni de menores de edad. Por favor no escribas datos personales de terceros en los campos de texto libre."
+    },
+    {
+      "titulo": "3. Para qué los usamos",
+      "items": [
+        "Responderte sobre tu diagnóstico y mostrarte tu resultado.",
+        "Contactarte por correo o WhatsApp para la conversación de 30 minutos y, si lo pides, preparar una propuesta.",
+        "Llevar un registro interno de las solicitudes que recibimos."
+      ],
+      "cierre": "No vendemos ni cedemos tus datos a terceros ni los usamos para fines distintos a los anteriores."
+    },
+    {
+      "titulo": "4. Tu autorización",
+      "parrafos": [
+        "Tratamos tus datos solo con tu autorización previa, expresa e informada, que das al marcar la casilla del formulario. Guardamos la fecha del envío y la versión de esta política que aceptaste.",
+        "La autorización es voluntaria. Puedes revocarla en cualquier momento escribiéndonos."
+      ]
+    },
+    {
+      "titulo": "5. Tus derechos",
+      "parrafos": ["Como titular de los datos puedes:"],
+      "items": [
+        "Conocer qué datos tuyos tenemos y para qué los usamos.",
+        "Actualizarlos y rectificarlos cuando sean inexactos o estén incompletos.",
+        "Pedir su supresión y revocar la autorización.",
+        "Presentar quejas ante la Superintendencia de Industria y Comercio."
+      ],
+      "cierre": "Para ejercerlos, escríbenos al correo de contacto. Respondemos las consultas en un máximo de 10 días hábiles y los reclamos en un máximo de 15 días hábiles.",
+      "contacto": true
+    },
+    {
+      "titulo": "6. Por cuánto tiempo los guardamos",
+      "parrafos": [
+        "Conservamos los datos del formulario hasta {retencionMeses} meses después de nuestro último contacto contigo. Vencido ese plazo los eliminamos o los anonimizamos (revisamos la base periódicamente para hacerlo), salvo que la ley nos exija conservarlos o hayamos iniciado una relación comercial, caso en el que aplican las reglas de esa relación."
+      ]
+    },
+    {
+      "titulo": "7. Seguridad y proveedores",
+      "parrafos": [
+        "El formulario viaja por una conexión cifrada (HTTPS) y solo accede a los datos la persona responsable de SDL. Para guardarlos y avisarnos usamos infraestructura propia de SDL y el correo de Google (Gmail) para recibir los avisos de cada envío; ese servicio puede procesar datos en servidores fuera de Colombia.",
+        "Si cambiamos de proveedor o alguno guarda o procesa datos en otros países, lo informaremos aquí y, cuando corresponda, tomaremos las medidas que exige la ley para esa transmisión."
+      ]
+    },
+    {
+      "titulo": "8. Cambios a esta política",
+      "parrafos": [
+        "Si esta política cambia, publicaremos la nueva versión en esta página con su fecha. La versión que aceptaste queda registrada con tu envío."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+---
+import Base from '../layouts/Base.astro';
+import { correoListo, correoUrl, site } from '../lib/site';
+import politica from '../data/politica.json';
+
+const llenar = (texto: string): string => texto.replace('{retencionMeses}', String(politica.retencionMeses));
+---
+
+<Base
+  titulo="Política de tratamiento de datos personales | Software Data Lab"
+  descripcion="Qué datos personales recogemos en el formulario de diagnóstico, para qué los usamos, cuánto tiempo los guardamos y cómo ejerces tus derechos."
+>
+  <section class="seccion" aria-labelledby="politica-titulo">
+    <div class="contenedor max-w-3xl">
+      <nav aria-label="Ruta de navegación" class="text-sm text-suave">
+        <a href="/" class="hover:text-turquesa-claro hover:underline">Inicio</a>
+        <span aria-hidden="true"> / </span>
+        <span aria-current="page" class="text-texto">Política de datos</span>
+      </nav>
+
+      <div class="badge-seccion mt-8">
+        <span class="punto"></span>
+        Versión {politica.version}
+      </div>
+      <h1 id="politica-titulo" class="titulo-seccion mt-4">Política de tratamiento de datos personales</h1>
+      <p class="mt-4 text-lg text-suave">{politica.resumen}</p>
+      <p class="mt-2 font-mono text-xs text-suave/80">Actualizada el {politica.actualizada}</p>
+
+      <div class="mt-10 space-y-10">
+        {
+          politica.secciones.map((s) => (
+            <section>
+              <h2 class="text-xl font-bold tracking-tight text-texto">{s.titulo}</h2>
+              {s.parrafos?.map((p) => <p class="mt-3 text-suave">{llenar(p)}</p>)}
+              {
+                s.items && (
+                  <ul class="mt-3 list-disc space-y-2 pl-5 text-suave marker:text-turquesa">
+                    {s.items.map((i) => (
+                      <li>{i}</li>
+                    ))}
+                  </ul>
+                )
+              }
+              {s.cierre && <p class="mt-3 text-suave">{llenar(s.cierre)}</p>}
+              {
+                s.contacto && correoListo() && (
+                  <p class="mt-3 text-suave">
+                    Contacto: <a href={correoUrl()} class="text-turquesa underline-offset-4 hover:text-turquesa-claro hover:underline">{site.contacto.correo}</a>
+                  </p>
+                )
+              }
+            </section>
+          ))
+        }
+      </div>
+
+      <p class="mt-12 text-sm text-suave/80">
+        Este documento es informativo y no constituye asesoría legal.
+      </p>
+    </div>
+  </section>
+</Base>

@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "astro dev",
     "validar": "node scripts/validar-apps.mjs",
-    "prebuild": "node scripts/validar-apps.mjs",
+    "sincronizar": "node scripts/sincronizar-api.mjs",
+    "prebuild": "node scripts/validar-apps.mjs && node scripts/sincronizar-api.mjs",
     "build": "astro build",
     "preview": "astro preview",
     "og": "node scripts/generar-og.mjs"

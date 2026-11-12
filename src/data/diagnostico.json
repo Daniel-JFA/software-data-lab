@@ -1,8 +1,9 @@
 {
   "_ayuda": [
-    "Preguntas del diagnóstico de brecha digital. Cada pregunta de 'dimensiones' tiene 4 opciones ordenadas de menor a mayor madurez (valen 0, 1, 2 y 3).",
-    "Los ids de dimensiones, preguntas y servicios también están en api/app/main.py (BRECHA, SERVICIOS). Si cambias un id aquí, cámbialo allá.",
-    "El puntaje es metodología propia de SDL: promedio de las respuestas de cada dimensión, expresado de 0 a 100."
+    "Gobierno de datos: la dimensión 'gobierno' se pregunta solo si algún servicio elegido la incluye Y la empresa maneja datos de personas (tiposDato distinto de solo 'ninguno'). Sus 'extras' (menores, salud, biométricos, financieros) aparecen según el tipo de dato marcado. 'pistasSector' son notas orientativas por sector. Las reglas viven también en api/app/main.py (SERVICIO_BRECHA, EXTRAS_GOBIERNO, TIPOS_DATO). Es orientativo, no asesoría legal: revisa los textos con un asesor jurídico.",
+    "Flujo: contacto + autorización (obligatorio) -> uno o varios servicios -> tu empresa (sector, tamaño, tipos de dato) -> tu caso. Cada servicio trae: las dimensiones de brecha digital que le aplican ('dimensiones', ids de la lista de abajo) y sus propias preguntas ('preguntas', sin puntaje: sirven para dimensionar el proyecto). Si dos servicios comparten una dimensión, se pregunta una sola vez.",
+    "Cada pregunta de 'dimensiones' tiene 4 opciones ordenadas de menor a mayor madurez (valen 0, 1, 2 y 3). El puntaje es metodología propia de SDL: promedio de las respuestas de las dimensiones de los servicios elegidos, de 0 a 100.",
+    "Los ids de servicios, dimensiones y preguntas también están en api/app/main.py (SERVICIOS, SERVICIO_BRECHA, BRECHA, DETALLE). Si cambias un id aquí, cámbialo allá."
   ],
   "sectores": ["Salud", "Educación", "Sector público", "Comercio", "Industria o manufactura", "Servicios", "Fundación u ONG", "Otro"],
   "tamanos": ["Solo yo", "2 a 10 personas", "11 a 50 personas", "Más de 50 personas"],
@@ -132,46 +133,283 @@
           ]
         }
       ]
-    }
-  ],
-  "equipo": [
-    {
-      "id": "asignacion",
-      "texto": "¿Cómo se asignan las tareas en tu equipo?",
-      "opciones": [
-        "De palabra o por chat",
-        "En una lista de Excel o en papel",
-        "En una herramienta de tareas (Trello, Asana u otra)",
-        "En un sistema propio ligado al proceso"
-      ]
     },
     {
-      "id": "seguimiento",
-      "texto": "¿Cómo sabes en qué va cada tarea o proyecto?",
-      "opciones": [
-        "Le pregunto a cada persona",
-        "En reuniones periódicas",
-        "Con un reporte manual",
-        "En un tablero que se actualiza solo"
-      ]
-    },
-    {
-      "id": "comunicacion",
-      "texto": "¿Cómo se comunica el equipo día a día?",
-      "opciones": [
-        "WhatsApp personal",
-        "Grupos de WhatsApp y correo",
-        "Una herramienta de equipo (Teams, Slack, Meet)",
-        "Una herramienta de equipo ligada a los procesos"
+      "id": "gobierno",
+      "titulo": "Gobierno y normativa de datos",
+      "preguntas": [
+        {
+          "id": "gob_politica",
+          "texto": "¿Tienen una política de tratamiento de datos personales y piden autorización a las personas?",
+          "opciones": [
+            "No tenemos política ni pedimos autorización",
+            "Tenemos un texto, pero no lo mostramos ni pedimos autorización siempre",
+            "Política publicada y autorización solo en algunos canales",
+            "Política publicada y autorización previa, con prueba guardada, en todos los canales"
+          ]
+        },
+        {
+          "id": "gob_arco",
+          "texto": "¿Qué pasa si una persona pide ver, corregir o borrar sus datos?",
+          "opciones": [
+            "No sabríamos cómo responder",
+            "Se atiende caso a caso, sin responsable ni plazo",
+            "Hay un responsable y un canal, pero no se registran los reclamos",
+            "Hay un procedimiento con responsable, canal, registro y respuesta dentro de los plazos de ley"
+          ]
+        },
+        {
+          "id": "gob_retencion",
+          "texto": "¿Por cuánto tiempo guardan los datos personales y qué hacen cuando vence?",
+          "opciones": [
+            "Se guarda todo para siempre",
+            "Se borra a veces, sin un criterio definido",
+            "Hay plazos definidos, pero la eliminación es manual",
+            "Hay plazos definidos y la eliminación o anonimización es automática y queda registrada"
+          ]
+        },
+        {
+          "id": "gob_responsables",
+          "texto": "¿Está claro quién responde por los datos y con qué proveedores se comparten (nube, WhatsApp, correo)?",
+          "opciones": [
+            "No está definido",
+            "Una persona los gestiona, pero no está documentado",
+            "Hay responsable y lista de proveedores, pero sin contratos",
+            "Hay responsable, inventario de proveedores y contratos de encargo o transmisión, incluida la nube fuera de Colombia"
+          ]
+        },
+        {
+          "id": "gob_incidentes",
+          "texto": "¿Qué harían si se filtran o se pierden datos personales?",
+          "opciones": [
+            "No hay ningún plan",
+            "Se improvisaría en el momento",
+            "Hay un plan básico, pero nunca se ha probado",
+            "Hay un procedimiento escrito, responsables, bitácora y aviso a la autoridad cuando corresponde"
+          ]
+        }
+      ],
+      "extras": [
+        {
+          "id": "gob_menores",
+          "tipo": "menores",
+          "texto": "¿Cómo tratan los datos de menores de edad?",
+          "opciones": [
+            "Sin ninguna medida especial",
+            "Se piden a los padres de manera informal",
+            "Autorización del representante legal, sin prueba guardada",
+            "Autorización del representante legal con prueba, acceso restringido y finalidad limitada"
+          ]
+        },
+        {
+          "id": "gob_salud",
+          "tipo": "salud",
+          "texto": "¿Cómo protegen los datos de salud (historias, diagnósticos, fórmulas)?",
+          "opciones": [
+            "En papel o en archivos sin control",
+            "En un sistema, pero casi todos pueden verlos",
+            "Acceso por rol y copias de seguridad",
+            "Acceso por rol, registro de quién consulta y reglas de conservación definidas"
+          ]
+        },
+        {
+          "id": "gob_biometria",
+          "tipo": "biometricos",
+          "texto": "¿Cómo manejan los datos biométricos, de ubicación o las cámaras?",
+          "opciones": [
+            "Sin aviso ni autorización específica",
+            "Con un aviso general, sin autorización específica",
+            "Con autorización específica, pero sin cifrado ni plazo de retención",
+            "Con autorización específica, cifrado, acceso restringido y plazo de retención definido"
+          ]
+        },
+        {
+          "id": "gob_financieros",
+          "tipo": "financieros",
+          "texto": "¿Cómo protegen los datos financieros y de pagos (cuentas, comprobantes, tarjetas)?",
+          "opciones": [
+            "Sin ninguna protección especial",
+            "Se comparten por WhatsApp o correo",
+            "Solo dentro de un sistema, con acceso por rol",
+            "Cifrados, con acceso por rol, registro de quién consulta y pagos por una pasarela certificada"
+          ]
+        }
       ]
     }
   ],
   "servicios": [
-    { "id": "software", "titulo": "Software a la medida", "descripcion": "Sistemas, integraciones con pagos, tienda o contabilidad, y salir del Excel." },
-    { "id": "datos", "titulo": "Tableros y analítica de datos", "descripcion": "Indicadores, reportes y Power BI con datos confiables." },
-    { "id": "automatizacion", "titulo": "Automatización con WhatsApp e IA", "descripcion": "Recordatorios, campañas, bots y transcripción de voz." },
-    { "id": "soporte", "titulo": "Auditoría, mantenimiento y soporte", "descripcion": "Revisión técnica, seguridad, mejoras y bolsa de horas." },
-    { "id": "formacion", "titulo": "Formación para equipos", "descripcion": "Power BI, programación, analítica e IA aplicada." }
+    {
+      "id": "software",
+      "titulo": "Software a la medida",
+      "descripcion": "Sistemas, integraciones con pagos, tienda o contabilidad, y salir del Excel.",
+      "dimensiones": ["procesos", "herramientas", "gobierno"],
+      "preguntas": [
+        {
+          "id": "sw_tipo",
+          "texto": "¿Qué necesitas construir?",
+          "opciones": [
+            "Un sistema nuevo desde cero",
+            "Reemplazar Excel u hojas de cálculo",
+            "Conectar sistemas que ya uso (pagos, tienda, contabilidad)",
+            "Mejorar o ampliar un software que ya tengo"
+          ]
+        },
+        {
+          "id": "sw_usuarios",
+          "texto": "¿Quiénes lo usarían?",
+          "opciones": [
+            "Solo yo o mi equipo directo (hasta 5 personas)",
+            "Todo mi equipo (6 a 30 personas)",
+            "Mi equipo y mis clientes o usuarios externos",
+            "Una comunidad grande o el público en general"
+          ]
+        },
+        {
+          "id": "sw_estado",
+          "texto": "¿En qué punto estás?",
+          "opciones": [
+            "Solo tengo la idea",
+            "Tengo los procesos descritos o en papel",
+            "Tengo requisitos, diseños o un prototipo",
+            "Ya existe una versión y necesito continuarla"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "datos",
+      "titulo": "Tableros y analítica de datos",
+      "descripcion": "Indicadores, reportes y Power BI con datos confiables.",
+      "dimensiones": ["datos", "herramientas", "gobierno"],
+      "preguntas": [
+        {
+          "id": "da_fuentes",
+          "texto": "¿Dónde están hoy tus datos?",
+          "opciones": [
+            "En Excel o Google Sheets",
+            "En un sistema o base de datos propia",
+            "En varias aplicaciones que no se conectan",
+            "No sé dónde están todos mis datos"
+          ]
+        },
+        {
+          "id": "da_necesidad",
+          "texto": "¿Qué necesitas ver o decidir con ellos?",
+          "opciones": ["Ventas y finanzas", "Operación e inventario", "Clientes o usuarios atendidos", "Varias áreas a la vez"]
+        },
+        {
+          "id": "da_herramienta",
+          "texto": "¿Qué usas hoy para reportar?",
+          "opciones": ["Nada, todo es manual", "Excel", "Power BI u otra herramienta de BI", "Los reportes propios de un sistema"]
+        }
+      ]
+    },
+    {
+      "id": "automatizacion",
+      "titulo": "Automatización con WhatsApp e IA",
+      "descripcion": "Recordatorios, campañas, bots y transcripción de voz.",
+      "dimensiones": ["procesos", "atencion", "gobierno"],
+      "preguntas": [
+        {
+          "id": "au_canal",
+          "texto": "¿Por dónde te escriben o atiendes hoy?",
+          "opciones": ["WhatsApp (personal o Business)", "Correo", "Redes sociales y página web", "Varios canales a la vez"]
+        },
+        {
+          "id": "au_volumen",
+          "texto": "¿Cuántos mensajes o solicitudes manejan al día?",
+          "opciones": ["Menos de 20", "Entre 20 y 100", "Entre 100 y 500", "Más de 500"]
+        },
+        {
+          "id": "au_tarea",
+          "texto": "¿Qué te gustaría automatizar primero?",
+          "opciones": [
+            "Responder preguntas frecuentes",
+            "Recordatorios de citas, pagos o entregas",
+            "Campañas y seguimiento a clientes",
+            "Transcribir audios y procesar documentos con IA"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "soporte",
+      "titulo": "Auditoría, mantenimiento y soporte",
+      "descripcion": "Revisión técnica, seguridad, mejoras y bolsa de horas.",
+      "dimensiones": ["herramientas", "seguridad", "gobierno"],
+      "preguntas": [
+        {
+          "id": "so_sistema",
+          "texto": "¿Qué sistema o plataforma necesita atención?",
+          "opciones": [
+            "Un software hecho a la medida",
+            "Un sitio web o tienda en línea",
+            "Servidores o infraestructura",
+            "Varios, o no estoy seguro"
+          ]
+        },
+        {
+          "id": "so_motivo",
+          "texto": "¿Qué te preocupa hoy?",
+          "opciones": [
+            "Falla o se cae con frecuencia",
+            "Seguridad y copias de respaldo",
+            "Está lento o necesita optimización",
+            "Quiero una revisión general"
+          ]
+        },
+        {
+          "id": "so_modalidad",
+          "texto": "¿Cómo prefieres el acompañamiento?",
+          "opciones": ["Una revisión puntual", "Mantenimiento mensual", "Bolsa de horas para cuando lo necesite", "No lo sé, quiero una recomendación"]
+        }
+      ]
+    },
+    {
+      "id": "formacion",
+      "titulo": "Formación para equipos",
+      "descripcion": "Power BI, programación, analítica e IA aplicada.",
+      "dimensiones": ["herramientas", "datos"],
+      "preguntas": [
+        {
+          "id": "fo_tema",
+          "texto": "¿Qué quieren aprender?",
+          "opciones": [
+            "Power BI y tableros",
+            "Analítica de datos y Excel avanzado",
+            "Programación",
+            "Machine learning e IA aplicada"
+          ]
+        },
+        {
+          "id": "fo_personas",
+          "texto": "¿Cuántas personas participarían?",
+          "opciones": ["1 a 5", "6 a 15", "16 a 40", "Más de 40"]
+        },
+        {
+          "id": "fo_nivel",
+          "texto": "¿Cuál es su nivel actual?",
+          "opciones": ["Parten de cero", "Conocimientos básicos", "Nivel intermedio", "Nivel mixto en el grupo"]
+        }
+      ]
+    }
   ],
+  "tiposDato": [
+    { "id": "basicos", "titulo": "De contacto (nombre, teléfono, correo, dirección)" },
+    { "id": "financieros", "titulo": "Financieros o de pagos" },
+    { "id": "menores", "titulo": "De menores de edad" },
+    { "id": "salud", "titulo": "De salud" },
+    { "id": "biometricos", "titulo": "Biométricos, de ubicación o de cámaras" },
+    { "id": "ninguno", "titulo": "No manejamos datos de personas" }
+  ],
+  "pistasSector": {
+    "Salud": "En salud casi todos los datos son sensibles (historias, diagnósticos) y la historia clínica tiene reglas propias de conservación.",
+    "Educación": "Es frecuente tratar datos de menores de edad, que tienen un régimen de protección reforzado.",
+    "Sector público": "Además de proteger los datos personales, las entidades públicas tienen deberes de transparencia y de seguridad digital.",
+    "Comercio": "Con clientes y proveedores importan la autorización, la atención de reclamos y, si hay cobranza o reportes a centrales de riesgo, reglas adicionales.",
+    "Servicios": "Con clientes y proveedores importan la autorización, la atención de reclamos y, si hay cobranza o reportes a centrales de riesgo, reglas adicionales.",
+    "Industria o manufactura": "Aplica sobre todo a datos de empleados, proveedores y clientes: autorización, retención y control de acceso.",
+    "Fundación u ONG": "Beneficiarios, donantes y voluntarios suelen incluir menores de edad y datos sensibles, con un régimen reforzado."
+  },
   "urgencias": ["Solo estoy explorando", "En los próximos 6 meses", "En los próximos 3 meses", "Lo antes posible"]
 }

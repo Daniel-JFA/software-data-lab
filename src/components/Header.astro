@@ -1,9 +1,6 @@
 ---
 import Icono from './Icono.astro';
-import { site, whatsappUrl } from '../lib/site';
-
-const wa = whatsappUrl();
-const enlaceExterno = wa.startsWith('http');
+import { site } from '../lib/site';
 ---
 
 <header class="sticky top-0 z-50 w-full border-b border-borde/70 bg-[#0b1f2a]/90 backdrop-blur-md">
@@ -31,12 +28,10 @@ const enlaceExterno = wa.startsWith('http');
 
     <div class="flex items-center gap-2">
       <a
-        href={wa}
+        href="/diagnostico"
         class="btn btn-primario !min-h-9 !px-4 !py-1.5 text-xs font-semibold hidden sm:inline-flex"
-        data-evento="whatsapp_click"
+        data-evento="diagnostico_click"
         data-ubicacion="header"
-        target={enlaceExterno ? '_blank' : undefined}
-        rel={enlaceExterno ? 'noopener noreferrer' : undefined}
       >
         Diagnóstico gratis
       </a>
@@ -70,13 +65,11 @@ const enlaceExterno = wa.startsWith('http');
         ))
       }
       <a
-        href={wa}
+        href="/diagnostico"
         class="btn btn-primario mt-3"
-        data-evento="whatsapp_click"
+        data-evento="diagnostico_click"
         data-ubicacion="menu-movil"
         data-cerrar-menu
-        target={enlaceExterno ? '_blank' : undefined}
-        rel={enlaceExterno ? 'noopener noreferrer' : undefined}
       >
         Agenda tu diagnóstico gratis
       </a>

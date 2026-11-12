@@ -1,0 +1,117 @@
+{
+  "_ayuda": "GENERADO por scripts/sincronizar-api.mjs desde src/data/diagnostico.json. No lo edites a mano: ejecuta `npm run sincronizar`.",
+  "sectores": [
+    "Salud",
+    "Educación",
+    "Sector público",
+    "Comercio",
+    "Industria o manufactura",
+    "Servicios",
+    "Fundación u ONG",
+    "Otro"
+  ],
+  "tamanos": [
+    "Solo yo",
+    "2 a 10 personas",
+    "11 a 50 personas",
+    "Más de 50 personas"
+  ],
+  "urgencias": [
+    "Solo estoy explorando",
+    "En los próximos 6 meses",
+    "En los próximos 3 meses",
+    "Lo antes posible"
+  ],
+  "detalle": {
+    "sw_tipo": [
+      "Un sistema nuevo desde cero",
+      "Reemplazar Excel u hojas de cálculo",
+      "Conectar sistemas que ya uso (pagos, tienda, contabilidad)",
+      "Mejorar o ampliar un software que ya tengo"
+    ],
+    "sw_usuarios": [
+      "Solo yo o mi equipo directo (hasta 5 personas)",
+      "Todo mi equipo (6 a 30 personas)",
+      "Mi equipo y mis clientes o usuarios externos",
+      "Una comunidad grande o el público en general"
+    ],
+    "sw_estado": [
+      "Solo tengo la idea",
+      "Tengo los procesos descritos o en papel",
+      "Tengo requisitos, diseños o un prototipo",
+      "Ya existe una versión y necesito continuarla"
+    ],
+    "da_fuentes": [
+      "En Excel o Google Sheets",
+      "En un sistema o base de datos propia",
+      "En varias aplicaciones que no se conectan",
+      "No sé dónde están todos mis datos"
+    ],
+    "da_necesidad": [
+      "Ventas y finanzas",
+      "Operación e inventario",
+      "Clientes o usuarios atendidos",
+      "Varias áreas a la vez"
+    ],
+    "da_herramienta": [
+      "Nada, todo es manual",
+      "Excel",
+      "Power BI u otra herramienta de BI",
+      "Los reportes propios de un sistema"
+    ],
+    "au_canal": [
+      "WhatsApp (personal o Business)",
+      "Correo",
+      "Redes sociales y página web",
+      "Varios canales a la vez"
+    ],
+    "au_volumen": [
+      "Menos de 20",
+      "Entre 20 y 100",
+      "Entre 100 y 500",
+      "Más de 500"
+    ],
+    "au_tarea": [
+      "Responder preguntas frecuentes",
+      "Recordatorios de citas, pagos o entregas",
+      "Campañas y seguimiento a clientes",
+      "Transcribir audios y procesar documentos con IA"
+    ],
+    "so_sistema": [
+      "Un software hecho a la medida",
+      "Un sitio web o tienda en línea",
+      "Servidores o infraestructura",
+      "Varios, o no estoy seguro"
+    ],
+    "so_motivo": [
+      "Falla o se cae con frecuencia",
+      "Seguridad y copias de respaldo",
+      "Está lento o necesita optimización",
+      "Quiero una revisión general"
+    ],
+    "so_modalidad": [
+      "Una revisión puntual",
+      "Mantenimiento mensual",
+      "Bolsa de horas para cuando lo necesite",
+      "No lo sé, quiero una recomendación"
+    ],
+    "fo_tema": [
+      "Power BI y tableros",
+      "Analítica de datos y Excel avanzado",
+      "Programación",
+      "Machine learning e IA aplicada"
+    ],
+    "fo_personas": [
+      "1 a 5",
+      "6 a 15",
+      "16 a 40",
+      "Más de 40"
+    ],
+    "fo_nivel": [
+      "Parten de cero",
+      "Conocimientos básicos",
+      "Nivel intermedio",
+      "Nivel mixto en el grupo"
+    ]
+  }
+}

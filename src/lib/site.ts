@@ -21,6 +21,10 @@ export function whatsappUrl(mensaje?: string): string {
   return `https://wa.me/${numero}?text=${encodeURIComponent(texto)}`;
 }
 
+/** Cota (altitud) que se muestra en la etiqueta de cada bloque, p. ej. "Cota 1.480". */
+export const cotaDe = (id: keyof typeof site.cota.secciones): string =>
+  `${site.cota.etiqueta} ${site.cota.secciones[id]}`;
+
 export const correoListo = (): boolean => !vacio(site.contacto.correo);
 
 export const correoUrl = (): string =>

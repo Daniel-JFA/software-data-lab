@@ -69,7 +69,13 @@ Con Gmail necesitas una *contraseña de aplicación* (verificación en dos pasos
 - Si el correo falla, el envío igual queda guardado en la base.
 - `GET /api/health` sirve para el chequeo de salud del sprint 5.
 
-**Diagnóstico de brecha digital** (`/diagnostico`): formulario de 4 pasos. Las preguntas, opciones y servicios se editan en `src/data/diagnostico.json`; sus ids también están en `api/app/main.py` (`BRECHA`, `SERVICIOS`) y deben coincidir. La API valida los ids y rangos, recalcula el puntaje de 0 a 100 por área y lo guarda con el envío (`datos.resultado`); el correo de aviso trae el desglose.
+**Diagnóstico de brecha digital** (`/diagnostico`): formulario de 4 pasos: contacto con autorización de datos (todo obligatorio: nombre, empresa, correo y WhatsApp válidos, y la casilla de la política), uno o varios servicios, datos de la empresa (sector, tamaño y tipos de datos de personas que maneja) y las preguntas según todo lo anterior. Las preguntas, opciones y servicios se editan en `src/data/diagnostico.json`; sus ids y reglas también están en `api/app/main.py` (`SERVICIOS`, `SERVICIO_BRECHA`, `BRECHA`, `DETALLE`, `TIPOS_DATO`, `EXTRAS_GOBIERNO`) y deben coincidir. La API valida los ids y rangos de las respuestas, rechaza sectores, tamaños, urgencias y respuestas que no existan, recalcula el puntaje de 0 a 100 por área y lo guarda con el envío (`datos.resultado`); el correo de aviso trae el desglose. Cuando algo falla, devuelve el campo y el paso para que el formulario vuelva a ese punto.
+
+**Sincronizar sitio y API**: `npm run sincronizar` (corre solo antes de `npm run build`) genera `api/app/opciones.json` desde `src/data/diagnostico.json` y falla si la versión de `src/data/politica.json` no está en `POLITICAS_VALIDAS` de `api/app/main.py`. Tras cambiar opciones del formulario o la política, reconstruye la API (`docker compose up -d --build`). Sitio y API se publican juntos.
+
+**Gobierno y normativa de datos** (basado en el informe DAMA de RentMotor, Ley 1581 de 2012 y Decreto 1074 de 2015): es un área más de la brecha, puntuada de 0 a 100. Aparece solo si algún servicio elegido la incluye (todos menos formación) y la empresa maneja datos de personas; las preguntas extra (menores, salud, biométricos, financieros) dependen de los tipos de dato marcados, y cada sector muestra una nota orientativa (`pistasSector`). El correo de aviso agrega «alertas normativas» (críticas, altas, medias) y el asunto lleva `[ALERTAS n]`. Es orientativo, no asesoría legal: revisa los textos con un asesor jurídico.
+
+**Política de datos de SDL** (`/politica-datos`, contenido en `src/data/politica.json`, **borrador para revisión jurídica**): cada envío guarda que la persona aceptó y la versión de la política (`politica`). Si cambias el texto, cambia `version` y agrégala a `POLITICAS_VALIDAS` en `api/app/main.py`. La eliminación por retención (`retencionMeses`) es hoy una revisión manual de la base de la API (no hay tarea automática). La política nombra a Gmail como proveedor del correo de aviso; si usas otro, actualiza la sección 7.
 
 **Ver lo recibido**
 
@@ -91,11 +97,12 @@ Los eventos ya están conectados:
 | Evento | Cuándo |
 |---|---|
 | `whatsapp_click` | Cualquier botón de WhatsApp (propiedad `ubicacion`: hero, header, menu-movil, contacto, flotante) |
-| `formulario_enviado` | Envío exitoso del formulario de contacto |
+| `diagnostico_click` | Botones «Diagnóstico» (hero, header, menú móvil); antes eran `whatsapp_click` |
+| `formulario_enviado` | Envío exitoso de un formulario (contacto o diagnóstico) |
 | `suscripcion_curso` | Envío exitoso de la lista de espera |
 | `correo_click` | Clic en el correo |
 
-En Plausible, declara `whatsapp_click`, `formulario_enviado` y `suscripcion_curso` como *goals*.
+En Plausible, declara `whatsapp_click`, `diagnostico_click`, `formulario_enviado` y `suscripcion_curso` como *goals*. El histórico de `whatsapp_click` baja para los botones que ahora van al diagnóstico.
 
 ## Despliegue local completo (sitio + API)
 
