@@ -49,17 +49,20 @@ const { inicio } = site;
     <!-- Pilares de capacidades reales de ingeniería -->
     {
       inicio.pilares && (
-        <div class="mt-16 sm:mt-24 grid w-full max-w-4xl grid-cols-1 sm:grid-cols-3 gap-4 text-left">
-          {inicio.pilares.map((p) => (
-            <div class="tarjeta">
-              <span class="font-mono text-xs font-semibold text-turquesa tracking-wider uppercase">
-                {p.numero} · {p.etiqueta}
-              </span>
-              <h3 class="mt-2 text-base font-bold text-texto">{p.titulo}</h3>
-              <p class="mt-1.5 text-xs text-suave leading-relaxed">{p.descripcion}</p>
-            </div>
-          ))}
-        </div>
+        <>
+          <h2 class="sr-only">Capacidades de ingeniería</h2>
+          <div class="mt-16 sm:mt-24 grid w-full max-w-4xl grid-cols-1 sm:grid-cols-3 gap-4 text-left">
+            {inicio.pilares.map((p) => (
+              <div class="tarjeta">
+                <span class="font-mono text-xs font-semibold text-turquesa tracking-wider uppercase">
+                  {p.numero} · {p.etiqueta}
+                </span>
+                <h3 class="mt-2 text-base font-bold text-texto">{p.titulo}</h3>
+                <p class="mt-1.5 text-xs text-suave leading-relaxed">{p.descripcion}</p>
+              </div>
+            ))}
+          </div>
+        </>
       )
     }
 

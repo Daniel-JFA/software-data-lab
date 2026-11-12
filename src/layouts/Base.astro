@@ -22,13 +22,29 @@ const FUENTES =
 
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'Organization',
+  '@type': ['ProfessionalService', 'Organization'],
   name: site.nombre,
+  alternateName: site.nombreCorto,
   url: site.url,
   logo: new URL('/icono.svg', site.url).href,
+  image: imagenOg,
   description: site.seo.descripcion,
-  address: { '@type': 'PostalAddress', addressLocality: 'Medellín', addressCountry: 'CO' },
-  founder: { '@type': 'Person', name: site.autor, url: site.sitioPersonal },
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Medellín',
+    addressRegion: 'Antioquia',
+    addressCountry: 'CO',
+  },
+  areaServed: [
+    { '@type': 'City', name: 'Medellín' },
+    { '@type': 'Country', name: 'Colombia' },
+  ],
+  founder: {
+    '@type': 'Person',
+    name: site.autor,
+    url: site.sitioPersonal,
+    jobTitle: 'Consultor y Arquitecto de Software',
+  },
   sameAs: redesActivas().map((r) => r.url),
 };
 
