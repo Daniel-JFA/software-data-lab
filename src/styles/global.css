@@ -25,6 +25,13 @@
     color-scheme: dark;
   }
 
+  /* Escala 125% en pantallas medianas y grandes (equivale al zoom del navegador al 125%) */
+  @media (min-width: 768px) {
+    html {
+      font-size: 125%;
+    }
+  }
+
   body {
     background-color: var(--color-fondo);
     color: var(--color-texto);
@@ -179,7 +186,7 @@
   }
 
   .titulo-seccion {
-    font-size: clamp(2rem, 5vw, 2.75rem);
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
     font-weight: 700;
     line-height: 1.15;
     letter-spacing: -0.02em;
@@ -299,17 +306,41 @@ html[data-tema='claro'] .campo {
   background-color: #fff;
   color: var(--color-texto);
 }
-/* El encabezado se mantiene oscuro en el tema claro (el logo es para fondo oscuro): su texto sigue claro. */
+html[data-tema='claro'] .campo option {
+  background-color: #fff;
+  color: var(--color-texto);
+}
+/* El encabezado y el pie se mantienen oscuros en el tema claro (el logo es para fondo oscuro): su texto sigue claro. */
+html[data-tema='claro'] header,
+html[data-tema='claro'] footer {
+  background-color: #0b1f2a;
+  border-color: #23495b;
+}
 html[data-tema='claro'] header .text-suave,
 html[data-tema='claro'] header .text-texto\/90,
+html[data-tema='claro'] footer .text-suave,
+html[data-tema='claro'] footer .text-suave\/80,
 html[data-tema='claro'] #menu-movil a {
   color: #d5e0e2;
 }
 html[data-tema='claro'] header a:hover,
+html[data-tema='claro'] footer a:hover,
 html[data-tema='claro'] #menu-movil a:hover {
   color: #9be5da;
 }
 html[data-tema='claro'] header .btn-primario,
 html[data-tema='claro'] header .btn-primario:hover {
   color: #0b1f2a;
+}
+html[data-tema='claro'] #menu-boton {
+  background-color: #102c3a;
+  color: #f4f7f6;
+  border-color: #23495b;
+}
+html[data-tema='claro'] #proceso .border-ambar {
+  border-color: #d97706;
+  color: #b45309;
+}
+html[data-tema='claro'] [class*='divide-white/'] > :not([hidden]) ~ :not([hidden]) {
+  border-color: var(--color-borde);
 }
