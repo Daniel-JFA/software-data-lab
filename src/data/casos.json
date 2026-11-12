@@ -1,6 +1,11 @@
 {
   "_ayuda": "Los casos salen de src/data/apps.json (aplicativos con destacado=true, visibilidad 'publica' y autorizado=true). Aquí solo se editan el título y los textos de la sección.",
+  "etiqueta": "Casos",
   "titulo": "Casos",
+  "problema": "Problema",
+  "solucion": "Solución",
+  "tecnologias": "Tecnologías",
+  "portafolio": "Ver todo el portafolio",
   "intro": "Sistemas que ya están en marcha.",
   "enlaceTexto": "Ver caso"
 }

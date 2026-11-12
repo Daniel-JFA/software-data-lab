@@ -37,7 +37,7 @@ const pendientes = todasLasRedes().filter((r) => vacio(r.url));
     {
       (redes.length > 0 || (mostrarPendientes && pendientes.length > 0)) && (
         <div class="mt-14">
-          <p class="font-mono text-xs uppercase tracking-widest text-turquesa mb-4">Síguenos en nuestras plataformas</p>
+          <p class="font-mono text-xs uppercase tracking-widest text-turquesa mb-4">{datos.redesTitulo || 'Síguenos en nuestras plataformas'}</p>
           <ul class="flex flex-wrap gap-3">
             {redes.map((r) => (
               <li>

@@ -1,10 +1,14 @@
 {
+  "etiqueta": "Servicios",
+  "ejemploEtiqueta": "Ejemplo real",
   "titulo": "Lo que hacemos",
   "intro": "Cuatro frentes. Un mismo equipo que entiende tus datos y tus procesos.",
   "items": [
     {
       "id": "software",
       "icono": "codigo",
+      "badge": "Full Stack & APIs",
+      "casoEtiqueta": "CASO REAL · ARQUITECTURA",
       "titulo": "Software a la medida",
       "descripcion": "Construimos sistemas web y móviles que se ajustan a tu operación. No te obligamos a cambiar tu forma de trabajar.",
       "ejemplo": "Un sistema para gestionar reservas, contratos y pagos en un solo lugar."
@@ -12,6 +16,7 @@
     {
       "id": "analitica",
       "icono": "grafico",
+      "badge": "BI & SQL",
       "titulo": "Analítica y tableros de datos",
       "descripcion": "Unimos tus fuentes de datos y las convertimos en tableros claros. Decides con información al día.",
       "ejemplo": "Un tablero que cruza ventas e inventario y marca lo que se sale de lo normal."
@@ -19,6 +24,7 @@
     {
       "id": "ia",
       "icono": "cerebro",
+      "badge": "Whisper · LLMs",
       "titulo": "IA aplicada y agentes",
       "descripcion": "Usamos modelos de lenguaje y automatización donde ahorran tiempo real. Agentes que clasifican, responden y ejecutan tareas repetitivas.",
       "ejemplo": "Un asistente que transcribe audios y deja el resumen listo para revisar."
@@ -26,6 +32,8 @@
     {
       "id": "iot",
       "icono": "sensor",
+      "badge": "Telemetría · Tiempo Real",
+      "casoEtiqueta": "DISPOSITIVOS & ALERTAS",
       "titulo": "IoT y sensores",
       "descripcion": "Conectamos sensores y dispositivos a tu sistema. Mides en campo y ves los datos en tiempo real.",
       "ejemplo": "Sensores de temperatura que avisan al celular cuando algo sale del rango."

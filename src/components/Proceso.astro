@@ -10,7 +10,7 @@ import datos from '../data/proceso.json';
   <div class="contenedor">
     <div class="badge-seccion">
       <span class="punto"></span>
-      Metodología
+      {datos.etiqueta || 'Cómo trabajamos'}
     </div>
     <h2 id="proceso-titulo" class="titulo-seccion mt-4">{datos.titulo}</h2>
     <p class="mt-4 max-w-2xl text-lg text-suave">{datos.intro}</p>
@@ -20,29 +20,41 @@ import datos from '../data/proceso.json';
     >
       {
         datos.pasos.map((p, i) => (
-          <li class="tarjeta relative !p-6 pl-16 md:pl-6 md:pt-14">
-            <span
-              class:list={[
-                'absolute left-4 top-4 z-10 grid h-10 w-10 place-items-center rounded-xl border bg-superficie font-mono text-xs font-bold md:left-6 md:top-[-1.25rem]',
-                i === datos.pasos.length - 1
-                  ? 'border-ambar text-ambar'
-                  : 'border-borde text-turquesa-claro',
-              ]}
-            >
-              {p.paso}
-            </span>
-            <h3 class="text-lg font-bold tracking-tight text-texto">{p.titulo}</h3>
-            <p class="mt-2 text-sm leading-relaxed text-suave">{p.descripcion}</p>
+          <li class="tarjeta relative !p-6 pl-16 md:pl-6 md:pt-14 flex flex-col justify-between">
+            <div>
+              <span
+                class:list={[
+                  'absolute left-4 top-4 z-10 grid h-10 w-10 place-items-center rounded-xl border bg-superficie font-mono text-xs font-bold md:left-6 md:top-[-1.25rem]',
+                  i === datos.pasos.length - 1
+                    ? 'border-ambar text-ambar'
+                    : 'border-borde text-turquesa-claro',
+                ]}
+              >
+                {p.paso}
+              </span>
+              <h3 class="text-lg font-bold tracking-tight text-texto">{p.titulo}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-suave">{p.descripcion}</p>
+            </div>
+            {p.recibes && (
+              <div class="mt-4 border-t border-white/[0.06] pt-3 text-xs text-suave">
+                <span class="font-mono text-turquesa font-semibold uppercase tracking-wider">{datos.recibesEtiqueta || 'Recibes:'}</span>{' '}
+                <span class="text-texto/90">{p.recibes}</span>
+              </div>
+            )}
           </li>
         ))
       }
     </ol>
 
-    <p class="mt-10 text-suave">
-      ¿Quieres adelantar el paso 01?
-      <a href="/diagnostico" class="text-turquesa underline-offset-4 hover:text-turquesa-claro hover:underline">
-        Responde el formulario de diagnóstico
-      </a>
-    </p>
+    {
+      datos.adelantar && (
+        <p class="mt-10 text-suave">
+          {datos.adelantar.texto}{' '}
+          <a href="/diagnostico" class="text-turquesa underline-offset-4 hover:text-turquesa-claro hover:underline font-medium">
+            {datos.adelantar.enlace}
+          </a>
+        </p>
+      )
+    }
   </div>
 </section>

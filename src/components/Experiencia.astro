@@ -21,21 +21,19 @@ const anos = hoy.getFullYear() - anioInicio - (hoy.getMonth() + 1 < mesInicio ? 
 
     <!-- Métricas clave estilo Apple Keynote -->
     <div class="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3">
-      <div class="tarjeta !p-6 text-center">
-        <p class="text-3xl sm:text-4xl font-bold font-mono text-turquesa-claro tracking-tight">+{anos}</p>
-        <p class="mt-1.5 text-xs uppercase tracking-wider text-suave font-medium">Años construyendo software</p>
-      </div>
-      <div class="tarjeta !p-6 text-center">
-        <p class="text-3xl sm:text-4xl font-bold font-mono text-turquesa-claro tracking-tight">4</p>
-        <p class="mt-1.5 text-xs uppercase tracking-wider text-suave font-medium">Sectores clave</p>
-      </div>
-      <div class="tarjeta !p-6 text-center col-span-2 sm:col-span-1">
-        <p class="text-3xl sm:text-4xl font-bold font-mono text-turquesa-claro tracking-tight">100%</p>
-        <p class="mt-1.5 text-xs uppercase tracking-wider text-suave font-medium">Código a la medida</p>
-      </div>
+      {
+        datos.metricas?.map((m, i) => (
+          <div class:list={['tarjeta !p-6 text-center', i === 2 && 'col-span-2 sm:col-span-1']}>
+            <p class="text-3xl sm:text-4xl font-bold font-mono text-turquesa-claro tracking-tight">
+              {m.tipo === 'anos' ? `+${anos}` : m.tipo === 'sectores' ? String(datos.sectores.length) : m.valor}
+            </p>
+            <p class="mt-1.5 text-xs uppercase tracking-wider text-suave font-medium">{m.etiqueta}</p>
+          </div>
+        ))
+      }
     </div>
 
-    <ul class="mt-8 flex flex-wrap gap-2.5" aria-label="Sectores">
+    <ul class="mt-8 flex flex-wrap gap-2.5" aria-label={datos.sectoresEtiqueta || 'Sectores'}>
       {
         datos.sectores.map((s) => (
           <li class="rounded-full border border-white/[0.1] bg-white/[0.04] px-4 py-1.5 font-mono text-xs text-turquesa-claro backdrop-blur-md transition-colors hover:border-turquesa/40 hover:bg-white/[0.08]">
@@ -47,7 +45,7 @@ const anos = hoy.getFullYear() - anioInicio - (hoy.getMonth() + 1 < mesInicio ? 
 
     <div class="mt-14">
       <h3 class="font-mono text-xs uppercase tracking-widest text-turquesa">
-        {datos.trayectoriaTitulo} · Más de {anos} años construyendo software
+        {datos.trayectoriaTitulo} · {(datos.trayectoriaSufijo || 'Más de {anos} años construyendo software').replace('{anos}', String(anos))}
       </h3>
       <ul class="mt-5 grid gap-5 sm:grid-cols-2">
         {

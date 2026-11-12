@@ -4,6 +4,10 @@
     "'icono' es el nombre del icono en Simple Icons (https://simpleicons.org). Vacío = se muestra solo el nombre.",
     "Agregar o quitar tecnologías aquí no requiere tocar componentes."
   ],
+  "etiqueta": "Con qué y con quién",
+  "tituloSeccion": "Con qué y con quién trabajamos",
+  "empresasTitulo": "Empresas con las que hemos trabajado",
+  "aplicativosTitulo": "Aplicativos que hemos construido o mejorado",
   "titulo": "Tecnologías con las que trabajamos",
   "grupos": [
     {

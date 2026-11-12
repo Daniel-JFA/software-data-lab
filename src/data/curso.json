@@ -4,6 +4,7 @@
   "titulo": "Análisis de fútbol con datos",
   "subtitulo": "6 lecciones gratis",
   "descripcion": "Aprende a leer un partido con datos. Sin fórmulas raras y con ejemplos reales.",
+  "prefijoLeccion": "L",
   "lecciones": [
     { "titulo": "Qué datos tiene un partido", "resumen": "Eventos, posiciones y tiempos: de dónde sale cada dato." },
     { "titulo": "Cómo leer una tabla", "resumen": "Qué dice una tabla de posiciones y qué se le escapa." },
@@ -15,6 +16,8 @@
   "formulario": {
     "titulo": "Entra a la lista de espera",
     "descripcion": "Te escribimos cuando abramos las lecciones. Sin spam.",
+    "campoNombre": "Nombre",
+    "campoCorreo": "Correo",
     "boton": "Quiero entrar",
     "exito": "Listo. Quedaste en la lista de espera.",
     "consentimiento": "Al suscribirte aceptas recibir correos del Lab. Puedes salirte cuando quieras."

@@ -1,26 +1,36 @@
 {
+  "etiqueta": "Ruta SDL",
   "titulo": "Cómo trabajamos",
   "intro": "Cuatro pasos. Sin sorpresas.",
+  "recibesEtiqueta": "Recibes:",
+  "adelantar": {
+    "texto": "¿Quieres adelantar el paso 01?",
+    "enlace": "Responde el formulario de diagnóstico"
+  },
   "pasos": [
     {
       "paso": "01",
       "titulo": "Diagnóstico gratis",
-      "descripcion": "30 minutos por WhatsApp. Revisamos tu proceso, dónde se pierde el tiempo y cuál es la brecha digital de tu empresa: qué haces hoy a mano, con qué herramientas y datos cuentas, y qué te conviene digitalizar primero."
+      "descripcion": "30 minutos por WhatsApp. Revisamos tu proceso, dónde se pierde el tiempo y cuál es la brecha digital de tu empresa: qué haces hoy a mano, con qué herramientas y datos cuentas, y qué te conviene digitalizar primero.",
+      "recibes": "Lectura de tu brecha digital"
     },
     {
       "paso": "02",
       "titulo": "Propuesta",
-      "descripcion": "Te enviamos alcance, tiempos y costo por escrito. Claro y sin letra pequeña."
+      "descripcion": "Te enviamos alcance, tiempos y costo por escrito. Claro y sin letra pequeña.",
+      "recibes": "Alcance, tiempos y costo por escrito"
     },
     {
       "paso": "03",
       "titulo": "Desarrollo por entregas",
-      "descripcion": "Construimos en ciclos cortos. Ves avances reales y ajustas sobre la marcha."
+      "descripcion": "Construimos en ciclos cortos. Ves avances reales y ajustas sobre la marcha.",
+      "recibes": "Avances reales en cada ciclo"
     },
     {
       "paso": "04",
       "titulo": "Soporte",
-      "descripcion": "Seguimos contigo después de entregar: ajustes, mejoras y respuesta a tus dudas."
+      "descripcion": "Seguimos contigo después de entregar: ajustes, mejoras y respuesta a tus dudas.",
+      "recibes": "Ajustes, mejoras y respuesta a dudas"
     }
   ]
 }

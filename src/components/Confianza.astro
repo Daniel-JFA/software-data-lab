@@ -33,9 +33,9 @@ const copias = [false, true];
   <div class="contenedor">
     <div class="badge-seccion">
       <span class="punto"></span>
-      Con qué y con quién
+      {tecnologias.etiqueta || 'Con qué y con quién'}
     </div>
-    <h2 id="confianza-titulo" class="titulo-seccion mt-4 max-w-3xl">Con qué y con quién trabajamos</h2>
+    <h2 id="confianza-titulo" class="titulo-seccion mt-4 max-w-3xl">{tecnologias.tituloSeccion || 'Con qué y con quién trabajamos'}</h2>
 
     <!-- Tecnologías -->
     <div class="mt-12">
@@ -65,8 +65,8 @@ const copias = [false, true];
     {
       clientes.length > 0 && (
         <div class="mt-16">
-          <h3 class="etiqueta">Empresas con las que hemos trabajado</h3>
-          <div class="marq mt-6" role="group" aria-label="Empresas con las que hemos trabajado" tabindex="0">
+          <h3 class="etiqueta">{tecnologias.empresasTitulo || 'Empresas con las que hemos trabajado'}</h3>
+          <div class="marq mt-6" role="group" aria-label={tecnologias.empresasTitulo || 'Empresas con las que hemos trabajado'} tabindex="0">
             <ul class="marq-pista">
               {copias.map((oculta) =>
                 clientes.map((c) => (
@@ -87,8 +87,8 @@ const copias = [false, true];
     {
       apps.length > 0 && (
         <div class="mt-14">
-          <h3 class="etiqueta">Aplicativos que hemos construido o mejorado</h3>
-          <div class="marq marq-inv mt-6" role="group" aria-label="Aplicativos que hemos construido o mejorado" tabindex="0">
+          <h3 class="etiqueta">{tecnologias.aplicativosTitulo || 'Aplicativos que hemos construido o mejorado'}</h3>
+          <div class="marq marq-inv mt-6" role="group" aria-label={tecnologias.aplicativosTitulo || 'Aplicativos que hemos construido o mejorado'} tabindex="0">
             <ul class="marq-pista marq-lenta">
               {copias.map((oculta) =>
                 apps.map((a) => (

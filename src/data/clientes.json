@@ -6,17 +6,24 @@
     "'clientes' es para logos de clientes autorizados (cada logo en /public/clientes/). Vacío = en producción ese bloque se oculta. No uses logos institucionales sin autorización."
   ],
   "titulo": "Experiencia",
-  "frase": "Hemos trabajado con el sector público, salud, fundaciones y educación.",
-  "sectores": ["Sector público", "Salud", "Fundaciones", "Educación"],
+  "metricas": [
+    { "tipo": "anos", "etiqueta": "Años construyendo software" },
+    { "tipo": "sectores", "etiqueta": "Sectores clave" },
+    { "tipo": "texto", "valor": "100%", "etiqueta": "Código a la medida" }
+  ],
+  "trayectoriaSufijo": "Más de {anos} años construyendo software",
+  "sectoresEtiqueta": "Sectores",
+  "frase": "Hemos trabajado con el sector público, el privado, el educativo y fundaciones.",
+  "sectores": ["Público", "Privado", "Educativo", "Fundaciones"],
   "trayectoriaTitulo": "Trayectoria de Daniel Flórez",
   "inicio": "2019-06",
   "trayectoria": [
     {
-      "sector": "Sector público",
+      "sector": "Público",
       "organizacion": "Alcaldía de Medellín · Secretaría de Participación Ciudadana",
       "rol": "Desarrollador/Arquitecto de software y Data Engineer",
       "periodo": "2024 – hoy",
-      "nota": "Servicios prestados por Daniel como persona natural"
+      "nota": ""
     },
     {
       "sector": "Fundaciones",
@@ -26,21 +33,21 @@
       "nota": ""
     },
     {
-      "sector": "Educación",
+      "sector": "Educativo",
       "organizacion": "Institución Universitaria Pascual Bravo",
       "rol": "Desarrollador de software y docente de Power BI",
       "periodo": "2023 – hoy",
-      "nota": "Servicios prestados por Daniel como persona natural"
+      "nota": ""
     },
     {
-      "sector": "Salud",
+      "sector": "Privado",
       "organizacion": "Coopsana IPS",
       "rol": "Desarrollador de software: proyectos del área administrativa, servidores Linux e IoT con Raspberry Pi, Arduino y ESP32",
       "periodo": "2019 – 2023",
       "nota": ""
     },
     {
-      "sector": "Educación",
+      "sector": "Educativo",
       "organizacion": "Docencia universitaria",
       "rol": "Universidad de Antioquia, Universidad San Buenaventura y EAFIT: programación, machine learning, IA y analítica de datos",
       "periodo": "2024 – hoy",

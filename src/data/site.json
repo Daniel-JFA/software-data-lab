@@ -15,15 +15,65 @@
     { "etiqueta": "Cómo trabajamos", "href": "#proceso" },
     { "etiqueta": "Contacto", "href": "#contacto" }
   ],
+  "cta": {
+    "hablemos": "Hablemos"
+  },
+  "cota": {
+    "_ayuda": "Altímetro del encabezado: sube de 'inicio' a 'fin' metros mientras se desplaza la página. 'secciones' es la cota que se muestra en la etiqueta de cada bloque.",
+    "etiqueta": "Cota",
+    "unidad": "M",
+    "inicio": 1480,
+    "fin": 2500,
+    "secciones": {
+      "servicios": "1.480",
+      "experiencia": "1.540",
+      "casos": "1.600",
+      "lab": "1.660",
+      "curso": "1.720",
+      "proceso": "1.780",
+      "contacto": "1.840",
+      "confianza": "1.900"
+    }
+  },
   "inicio": {
     "etiqueta": "Medellín, Colombia · Software y datos",
     "titulo": "Software a la medida para cualquier sector",
-    "subtitulo": "Convertimos tus datos y procesos en sistemas que funcionan. Software, analítica, IA e IoT desde Medellín.",
+    "subtitulo": "Convertimos tus datos y procesos en sistemas que trabajan por ti: software a la medida, analítica, IA e IoT. Hecho en Medellín.",
     "botonPrincipal": "Agenda tu diagnóstico gratis",
+    "botonCasos": "Ver casos de estudio",
     "botonSecundario": "Explora el Lab",
-    "nota": "30 minutos. Sin costo. Por WhatsApp."
+    "nota": "5 minutos. Sin costo. Ves tu nivel al terminar.",
+    "pilares": [
+      {
+        "numero": "01",
+        "etiqueta": "Software a la medida",
+        "titulo": "Sistemas que calzan en tu negocio",
+        "descripcion": "Plataformas web, paneles internos y APIs diseñadas exactamente para tu flujo operativo, con código propio y sin pagar licencias innecesarias."
+      },
+      {
+        "numero": "02",
+        "etiqueta": "Datos y analítica",
+        "titulo": "Métricas y tableros en vivo",
+        "descripcion": "Extracción, pipelines automatizados y bases de datos estructuradas para que tomes decisiones con números reales y al instante."
+      },
+      {
+        "numero": "03",
+        "etiqueta": "IA e IoT aplicado",
+        "titulo": "Tecnología en producción",
+        "descripcion": "Transcripción con Whisper, modelos aplicados a datos de tu sector y telemetría de sensores físicos integrados directamente a la nube."
+      }
+    ]
   },
   "contactoSeccion": {
+    "etiqueta": "Contacto",
+    "datosWhatsapp": "WhatsApp",
+    "datosCorreo": "Correo",
+    "campos": {
+      "nombre": "Nombre",
+      "empresa": "Empresa u organización",
+      "contacto": "Correo o WhatsApp para responderte",
+      "necesidad": "¿Qué necesitas?"
+    },
     "titulo": "Hablemos",
     "subtitulo": "Cuéntanos qué necesitas. Te respondemos pronto.",
     "botonWhatsapp": "Escríbenos por WhatsApp",

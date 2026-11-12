@@ -12,7 +12,7 @@ const destacados = destacadas();
   <div class="contenedor">
     <div class="badge-seccion">
       <span class="punto"></span>
-      Casos de estudio
+      {datos.etiqueta || 'Casos de estudio'}
     </div>
     <h2 id="casos-titulo" class="titulo-seccion mt-4">{datos.titulo}</h2>
     <p class="mt-4 max-w-2xl text-lg text-suave">{datos.intro}</p>
@@ -29,15 +29,15 @@ const destacados = destacadas();
 
               <div class="mt-6 space-y-4 text-sm leading-relaxed text-suave">
                 <div>
-                  <p class="font-mono text-xs uppercase tracking-wider text-turquesa">Problema</p>
+                  <p class="font-mono text-xs uppercase tracking-wider text-turquesa">{datos.problema || 'Problema'}</p>
                   <p class="mt-1">{c.problema}</p>
                 </div>
                 <div>
-                  <p class="font-mono text-xs uppercase tracking-wider text-turquesa">Solución</p>
+                  <p class="font-mono text-xs uppercase tracking-wider text-turquesa">{datos.solucion || 'Solución'}</p>
                   <p class="mt-1">{c.solucion}</p>
                 </div>
                 <div>
-                  <p class="font-mono text-xs uppercase tracking-wider text-turquesa mb-2">Tecnologías</p>
+                  <p class="font-mono text-xs uppercase tracking-wider text-turquesa mb-2">{datos.tecnologias || 'Tecnologías'}</p>
                   {c.tecnologias.length > 0 ? (
                     <ul class="flex flex-wrap gap-1.5">
                       {c.tecnologias.map((t) => (
@@ -72,7 +72,7 @@ const destacados = destacadas();
 
     <div class="mt-10 flex justify-center sm:justify-start">
       <a href="/portafolio" class="btn btn-secundario">
-        Ver todo el portafolio
+        {datos.portafolio || 'Ver todo el portafolio'}
         <Icono nombre="flecha" class="h-4 w-4" />
       </a>
     </div>

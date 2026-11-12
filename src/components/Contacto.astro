@@ -21,7 +21,7 @@ const enlaceExterno = wa.startsWith('http');
     <div>
       <div class="badge-seccion">
         <span class="punto"></span>
-        Contacto directo
+        {c.etiqueta || 'Contacto'}
       </div>
       <h2 id="contacto-titulo" class="titulo-seccion mt-4">{c.titulo}</h2>
       <p class="mt-4 max-w-md text-lg text-suave">{c.subtitulo}</p>
@@ -79,19 +79,19 @@ const enlaceExterno = wa.startsWith('http');
         data-exito={c.exito}
       >
         <div>
-          <label for="ct-nombre" class="mb-1.5 block text-xs font-mono uppercase tracking-wider text-turquesa">Nombre</label>
+          <label for="ct-nombre" class="mb-1.5 block text-xs font-mono uppercase tracking-wider text-turquesa">{c.campos?.nombre || 'Nombre'}</label>
           <input id="ct-nombre" name="nombre" type="text" class="campo" autocomplete="name" required maxlength="120" />
         </div>
         <div>
-          <label for="ct-empresa" class="mb-1.5 block text-xs font-mono uppercase tracking-wider text-turquesa">Empresa u organización</label>
+          <label for="ct-empresa" class="mb-1.5 block text-xs font-mono uppercase tracking-wider text-turquesa">{c.campos?.empresa || 'Empresa u organización'}</label>
           <input id="ct-empresa" name="empresa" type="text" class="campo" autocomplete="organization" maxlength="160" />
         </div>
         <div>
-          <label for="ct-contacto" class="mb-1.5 block text-xs font-mono uppercase tracking-wider text-turquesa">Correo o WhatsApp para responderte</label>
+          <label for="ct-contacto" class="mb-1.5 block text-xs font-mono uppercase tracking-wider text-turquesa">{c.campos?.contacto || 'Correo o WhatsApp para responderte'}</label>
           <input id="ct-contacto" name="contacto" type="text" class="campo" autocomplete="email" required maxlength="160" />
         </div>
         <div>
-          <label for="ct-necesidad" class="mb-1.5 block text-xs font-mono uppercase tracking-wider text-turquesa">¿Qué necesitas?</label>
+          <label for="ct-necesidad" class="mb-1.5 block text-xs font-mono uppercase tracking-wider text-turquesa">{c.campos?.necesidad || '¿Qué necesitas?'}</label>
           <textarea id="ct-necesidad" name="necesidad" rows="4" class="campo resize-y" required maxlength="2000"></textarea>
         </div>
 

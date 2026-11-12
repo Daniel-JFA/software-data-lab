@@ -46,7 +46,7 @@ const f = datos.formulario;
         data-exito={f.exito}
       >
         <div>
-          <label for="curso-nombre" class="mb-1.5 block text-xs font-mono uppercase tracking-wider text-turquesa">Nombre</label>
+          <label for="curso-nombre" class="mb-1.5 block text-xs font-mono uppercase tracking-wider text-turquesa">{f.campoNombre || 'Nombre'}</label>
           <input
             id="curso-nombre"
             name="nombre"
@@ -58,7 +58,7 @@ const f = datos.formulario;
           />
         </div>
         <div>
-          <label for="curso-correo" class="mb-1.5 block text-xs font-mono uppercase tracking-wider text-turquesa">Correo</label>
+          <label for="curso-correo" class="mb-1.5 block text-xs font-mono uppercase tracking-wider text-turquesa">{f.campoCorreo || 'Correo'}</label>
           <input
             id="curso-correo"
             name="email"

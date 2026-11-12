@@ -7,7 +7,7 @@ import datos from '../data/servicios.json';
   <div class="contenedor">
     <div class="badge-seccion">
       <span class="punto"></span>
-      Servicios
+      {datos.etiqueta}
     </div>
     <h2 id="servicios-titulo" class="titulo-seccion mt-4">{datos.titulo}</h2>
     <p class="mt-4 max-w-2xl text-lg text-suave">{datos.intro}</p>
@@ -21,9 +21,11 @@ import datos from '../data/servicios.json';
             <span class="grid h-11 w-11 place-items-center rounded-lg border border-borde bg-superficie text-turquesa-claro">
               <Icono nombre="codigo" class="h-5 w-5" />
             </span>
-            <span class="rounded-md border border-turquesa/20 bg-turquesa/[0.06] px-2.5 py-1 font-mono text-[0.7rem] uppercase tracking-wider text-turquesa-claro">
-              Full Stack & APIs
-            </span>
+            {datos.items[0].badge && (
+              <span class="rounded-md border border-turquesa/20 bg-turquesa/[0.06] px-2.5 py-1 font-mono text-[0.7rem] uppercase tracking-wider text-turquesa-claro">
+                {datos.items[0].badge}
+              </span>
+            )}
           </div>
           <h3 class="mt-6 text-2xl font-bold tracking-tight text-texto">{datos.items[0].titulo}</h3>
           <p class="mt-2.5 max-w-xl text-base leading-relaxed text-suave">{datos.items[0].descripcion}</p>
@@ -32,7 +34,7 @@ import datos from '../data/servicios.json';
         <div class="mt-8 rounded-lg border border-white/[0.06] bg-fondo/80 p-4 font-mono text-xs text-suave/90">
           <div class="flex items-center gap-2 border-b border-white/[0.06] pb-2 text-[0.7rem] text-turquesa">
             <span class="h-1.5 w-1.5 rounded-full bg-turquesa"></span>
-            <span>CASO REAL · ARQUITECTURA</span>
+            <span>{datos.items[0].casoEtiqueta || datos.ejemploEtiqueta}</span>
           </div>
           <p class="mt-2.5 text-sm font-sans text-texto/90">{datos.items[0].ejemplo}</p>
         </div>
@@ -45,16 +47,18 @@ import datos from '../data/servicios.json';
             <span class="grid h-11 w-11 place-items-center rounded-lg border border-borde bg-superficie text-turquesa-claro">
               <Icono nombre="grafico" class="h-5 w-5" />
             </span>
-            <span class="rounded-md border border-verde/30 bg-verde/[0.1] px-2.5 py-1 font-mono text-[0.7rem] uppercase tracking-wider text-turquesa-claro">
-              BI & SQL
-            </span>
+            {datos.items[1].badge && (
+              <span class="rounded-md border border-verde/30 bg-verde/[0.1] px-2.5 py-1 font-mono text-[0.7rem] uppercase tracking-wider text-turquesa-claro">
+                {datos.items[1].badge}
+              </span>
+            )}
           </div>
           <h3 class="mt-6 text-xl font-bold tracking-tight text-texto">{datos.items[1].titulo}</h3>
           <p class="mt-2.5 text-sm leading-relaxed text-suave">{datos.items[1].descripcion}</p>
         </div>
 
         <div class="mt-6 border-t border-white/[0.06] pt-4">
-          <span class="font-mono text-[0.7rem] uppercase tracking-wider text-turquesa">Ejemplo real</span>
+          <span class="font-mono text-[0.7rem] uppercase tracking-wider text-turquesa">{datos.ejemploEtiqueta}</span>
           <p class="mt-1 text-xs leading-relaxed text-suave">{datos.items[1].ejemplo}</p>
         </div>
       </div>
@@ -66,16 +70,18 @@ import datos from '../data/servicios.json';
             <span class="grid h-11 w-11 place-items-center rounded-lg border border-borde bg-superficie text-turquesa-claro">
               <Icono nombre="cerebro" class="h-5 w-5" />
             </span>
-            <span class="rounded-md border border-turquesa/20 bg-turquesa/[0.06] px-2.5 py-1 font-mono text-[0.7rem] uppercase tracking-wider text-turquesa-claro">
-              Whisper · LLMs
-            </span>
+            {datos.items[2].badge && (
+              <span class="rounded-md border border-turquesa/20 bg-turquesa/[0.06] px-2.5 py-1 font-mono text-[0.7rem] uppercase tracking-wider text-turquesa-claro">
+                {datos.items[2].badge}
+              </span>
+            )}
           </div>
           <h3 class="mt-6 text-xl font-bold tracking-tight text-texto">{datos.items[2].titulo}</h3>
           <p class="mt-2.5 text-sm leading-relaxed text-suave">{datos.items[2].descripcion}</p>
         </div>
 
         <div class="mt-6 border-t border-white/[0.06] pt-4">
-          <span class="font-mono text-[0.7rem] uppercase tracking-wider text-turquesa">Ejemplo real</span>
+          <span class="font-mono text-[0.7rem] uppercase tracking-wider text-turquesa">{datos.ejemploEtiqueta}</span>
           <p class="mt-1 text-xs leading-relaxed text-suave">{datos.items[2].ejemplo}</p>
         </div>
       </div>
@@ -87,9 +93,11 @@ import datos from '../data/servicios.json';
             <span class="grid h-11 w-11 place-items-center rounded-lg border border-borde bg-superficie text-turquesa-claro">
               <Icono nombre="sensor" class="h-5 w-5" />
             </span>
-            <span class="rounded-md border border-turquesa/20 bg-turquesa/[0.06] px-2.5 py-1 font-mono text-[0.7rem] uppercase tracking-wider text-turquesa-claro">
-              Telemetría · Tiempo Real
-            </span>
+            {datos.items[3].badge && (
+              <span class="rounded-md border border-turquesa/20 bg-turquesa/[0.06] px-2.5 py-1 font-mono text-[0.7rem] uppercase tracking-wider text-turquesa-claro">
+                {datos.items[3].badge}
+              </span>
+            )}
           </div>
           <h3 class="mt-6 text-2xl font-bold tracking-tight text-texto">{datos.items[3].titulo}</h3>
           <p class="mt-2.5 max-w-xl text-base leading-relaxed text-suave">{datos.items[3].descripcion}</p>
@@ -98,7 +106,7 @@ import datos from '../data/servicios.json';
         <div class="mt-8 rounded-lg border border-white/[0.06] bg-fondo/80 p-4 font-mono text-xs text-suave/90">
           <div class="flex items-center gap-2 border-b border-white/[0.06] pb-2 text-[0.7rem] text-turquesa">
             <span class="h-1.5 w-1.5 rounded-full bg-verde"></span>
-            <span>DISPOSITIVOS & ALERTAS</span>
+            <span>{datos.items[3].casoEtiqueta || datos.ejemploEtiqueta}</span>
           </div>
           <p class="mt-2.5 text-sm font-sans text-texto/90">{datos.items[3].ejemplo}</p>
         </div>
