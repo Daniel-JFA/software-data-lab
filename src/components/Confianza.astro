@@ -33,38 +33,14 @@ const copias = [false, true];
   <div class="contenedor">
     <div class="badge-seccion">
       <span class="punto"></span>
-      {tecnologias.etiqueta || 'Con qué y con quién'}
+      {tecnologias.etiqueta || 'Con quién y con qué'}
     </div>
-    <h2 id="confianza-titulo" class="titulo-seccion mt-4 max-w-3xl">{tecnologias.tituloSeccion || 'Con qué y con quién trabajamos'}</h2>
-
-    <!-- Tecnologías -->
-    <div class="mt-12">
-      <h3 class="etiqueta">{tecnologias.titulo}</h3>
-      <div class="mt-6 grid gap-8 sm:grid-cols-2">
-        {
-          tecnologias.grupos.map((g) => (
-            <div>
-              <p class="font-mono text-xs uppercase tracking-wider text-suave">{g.nombre}</p>
-              <ul class="mt-3 flex flex-wrap gap-2">
-                {g.items.map((t) => (
-                  <li class="tec">
-                    {t.icono ? (
-                      <i class="tec-ic" style={`--ic:url(/tec/${t.icono}.svg)`} aria-hidden="true" />
-                    ) : null}
-                    <span>{t.nombre}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))
-        }
-      </div>
-    </div>
+    <h2 id="confianza-titulo" class="titulo-seccion mt-4 max-w-3xl">{tecnologias.tituloSeccion || 'Con quién y con qué trabajamos'}</h2>
 
     <!-- Empresas -->
     {
       clientes.length > 0 && (
-        <div class="mt-16">
+        <div class="mt-12">
           <h3 class="etiqueta">{tecnologias.empresasTitulo || 'Empresas con las que hemos trabajado'}</h3>
           <div class="marq mt-6" role="group" aria-label={tecnologias.empresasTitulo || 'Empresas con las que hemos trabajado'} tabindex="0">
             <ul class="marq-pista">
@@ -114,6 +90,29 @@ const copias = [false, true];
         </div>
       )
     }
+    <!-- Tecnologías -->
+    <div class="mt-14">
+      <h3 class="etiqueta">{tecnologias.titulo}</h3>
+      <div class="mt-6 grid gap-8 sm:grid-cols-2">
+        {
+          tecnologias.grupos.map((g) => (
+            <div>
+              <p class="font-mono text-xs uppercase tracking-wider text-suave">{g.nombre}</p>
+              <ul class="mt-3 flex flex-wrap gap-2">
+                {g.items.map((t) => (
+                  <li class="tec">
+                    {t.icono ? (
+                      <i class="tec-ic" style={`--ic:url(/tec/${t.icono}.svg)`} aria-hidden="true" />
+                    ) : null}
+                    <span>{t.nombre}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </div>
   </div>
 </section>
 

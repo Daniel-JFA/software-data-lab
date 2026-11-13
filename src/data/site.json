@@ -12,7 +12,7 @@
     { "etiqueta": "Casos", "href": "#casos" },
     { "etiqueta": "Cómo trabajamos", "href": "#proceso" },
     { "etiqueta": "Contacto", "href": "#contacto" },
-    { "etiqueta": "El Lab", "href": "#lab" }
+    { "etiqueta": "El Lab", "href": "/lab" }
   ],
   "cta": {
     "hablemos": "Hablemos"
